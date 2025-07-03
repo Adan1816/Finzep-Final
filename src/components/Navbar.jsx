@@ -12,7 +12,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/60 backdrop-blur-lg border-b border-white/30 shadow-md" style={{ WebkitBackdropFilter: 'blur(16px)', backdropFilter: 'blur(16px)' }}>
+    <nav className="sticky top-0 z-50 bg-white/30 backdrop-blur-xl border-b border-white/40 shadow-lg shadow-white/10 ring-1 ring-white/30" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)', boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(255,255,255,0.10)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -98,7 +98,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-white/60 backdrop-blur-lg border-b border-white/30 shadow-md" style={{ WebkitBackdropFilter: 'blur(16px)', backdropFilter: 'blur(16px)' }}>
+        <div className="md:hidden bg-white/30 backdrop-blur-xl border-b border-white/40 shadow-lg shadow-white/10 ring-1 ring-white/30" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)', boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(255,255,255,0.10)' }}>
           <div className="px-4 pt-2 pb-4 space-y-1 flex flex-col">
             {NAV_LINKS.map((link) => (
               <a
