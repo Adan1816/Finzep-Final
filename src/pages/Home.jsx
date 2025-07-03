@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white w-full">
+      <section className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -47,14 +47,14 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl text-black md:text-6xl font-bold mb-6">
               Elevate Your Business with
             </h1>
-            <h2 className="text-3xl md:text-5xl font-bold mb-8 min-h-[60px]">
+            <h2 className="text-3xl text-[#F18A41] md:text-5xl font-bold mb-8 min-h-[60px]">
               {text}
               <span className="animate-blink">|</span>
             </h2>
-            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-blue-100">
+            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-black">
               Scalable platform and plug-and-play APIs simplify checkouts, payment management and effortlessly handle payments, payouts and corporate cards with Finzep and more...
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
