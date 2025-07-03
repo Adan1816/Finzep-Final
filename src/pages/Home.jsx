@@ -24,6 +24,84 @@ const AnimatedCounter = ({ target, duration = 2000 }) => {
   return <span>{count.toLocaleString()}</span>;
 };
 
+// Carousel component
+const services = [
+  { title: 'Payments', description: 'Seamless payment solutions for your business needs.', image: '💸' },
+  { title: 'Collections', description: 'Efficient and automated collections for faster cash flow.', image: '📥' },
+  { title: 'Verification APIs', description: 'Robust APIs for KYC, bank, and identity verification.', image: '🔍' },
+  { title: 'SAAS', description: 'Powerful SaaS tools to streamline your financial operations.', image: '☁️' },
+];
+
+const Carousel = () => {
+  const [current, setCurrent] = useState(0);
+  const visibleCount = 3;
+  const total = services.length;
+  
+  // Duplicate services for infinite scroll
+  const duplicatedServices = [...services, ...services];
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => {
+        const next = prev + 1;
+        // Reset to 0 when we reach the end of original services
+        if (next >= total) {
+          // Use setTimeout to reset position after animation completes
+          setTimeout(() => setCurrent(0), 50);
+          return next;
+        }
+        return next;
+      });
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [total]);
+
+  // Calculate transform percentage
+  const getTransform = () => {
+    const cardWidth = 100 / visibleCount; // Each card takes 1/3 of visible width
+    return -(current * cardWidth);
+  };
+
+  return (
+    <div className="relative w-full overflow-hidden">
+      <div className="w-full">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{
+            width: `${(duplicatedServices.length * 100) / visibleCount}%`,
+            transform: `translateX(${getTransform()}%)`,
+          }}
+        >
+          {duplicatedServices.map((service, idx) => (
+            <div
+              key={`${service.title}-${idx}`}
+              className="flex-shrink-0 px-4"
+              style={{ width: `${100 / duplicatedServices.length}%` }}
+            >
+              <div className="bg-gradient-to-br from-[#F18A41]/10 to-[#9DADE5]/10 rounded-xl shadow-lg flex flex-col items-center justify-center py-12 mx-2 h-full">
+                <div className="text-6xl mb-4">{service.image}</div>
+                <div className="text-2xl font-bold text-[#F18A41] mb-2">{service.title}</div>
+                <div className="text-base text-gray-800 text-center max-w-xs">{service.description}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Dots */}
+      <div className="flex justify-center mt-6 gap-2">
+        {services.map((_, idx) => (
+          <button
+            key={idx}
+            className={`w-3 h-3 rounded-full transition-colors duration-200 ${(current % total) === idx ? 'bg-[#F18A41]' : 'bg-gray-300'}`}
+            onClick={() => setCurrent(idx)}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Home = () => {
   const [text, setText] = useState('');
   const phrases = ["Finzep's Innovative Solutions", "Payment Solutions", "Business Growth"];
@@ -141,6 +219,14 @@ const Home = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Services Section (Carousel) */}
+      <section className="py-20 bg-gray-50 w-full">
+        <div className="w-full text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10">Our Services</h2>
+          <Carousel />
         </div>
       </section>
 
