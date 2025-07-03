@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 const NAV_LINKS = [
   { name: "About Us", href: "#about" },
@@ -8,8 +8,32 @@ const NAV_LINKS = [
   { name: "NAD", href: "#nad" },
 ];
 
+const PRODUCT_LINKS = [
+  { name: "Bulk Payment API", desc: "Efficiently Distribute Funds With Our API-Driven Bulk Payout Solutions", href: "/bulkPayment" },
+  { name: "UPI Payouts API", desc: "Enable Instant Cash Flow With API-Enabled UPI Transactions", href: "/upiPayouts" },
+  { name: "Initiate Payouts API", desc: "Schedule And Automate Payouts Seamlessly Through Our Flexible API", href: "#" },
+  { name: "Remittance API", desc: "Compliant And Reliable Remittance APIs For Secure Transfers", href: "#" },
+  { name: "PPI Wallets API", desc: "Offer A Digital Wallet Solution For Easy, API-Integrated Transactions", href: "#" },
+  { name: "AadhaarPay API", desc: "Expand Reach With Aadhaar-Based Payments Through Our Secure APIs", href: "#" },
+  { name: "Credit Card Bill Payment API", desc: "Simplify Credit Card Bill Payments For Customers With API-Powered Processing", href: "#" },
+  { name: "Utility Bill Payment API", desc: "Streamline Utility Payments With Our Convenient API Integration", href: "#" },
+];
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [productOpen, setProductOpen] = useState(false);
+  const productRef = useRef(null);
+
+  // Close dropdown on click outside
+  React.useEffect(() => {
+    function handleClick(e) {
+      if (productRef.current && !productRef.current.contains(e.target)) {
+        setProductOpen(false);
+      }
+    }
+    if (productOpen) document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [productOpen]);
 
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] bg-white/20 backdrop-blur-xl transition-all duration-300" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)' }}>
@@ -21,7 +45,7 @@ export default function Navbar() {
               <img
                 src="/finzep-logo-navbar.png"
                 alt="Finzep Logo"
-                className="h-8 w-auto transition-transform group-hover:scale-105"
+                className="h- w-auto transition-transform group-hover:scale-105"
                 style={{ maxHeight: '2.5rem' }}
               />
               {/* Optionally, keep the text for accessibility or branding */}
@@ -33,15 +57,64 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex md:items-center md:space-x-6">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
+            <a
+              href="/"
+              className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded"
+            >
+              Home
+            </a>
+            {/* Product Dropdown */}
+            <div
+              className="relative"
+              ref={productRef}
+              onMouseEnter={() => setProductOpen(true)}
+              onMouseLeave={() => setProductOpen(false)}
+            >
+              <button
+                className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded flex items-center gap-1"
+                aria-haspopup="true"
+                aria-expanded={productOpen}
+                style={{ background: 'none' }}
+                tabIndex={-1}
+                type="button"
               >
-                {link.name}
-              </a>
-            ))}
+                Product
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {productOpen && (
+                <div
+                  className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-2xl border border-white/30 bg-white/30 backdrop-blur-xl ring-1 ring-white/20 z-50 overflow-hidden animate-fadeIn border-t-4 border-t-transparent"
+                  style={{
+                    boxShadow: '0 8px 32px 0 rgba(31,38,135,0.15), 0 1.5px 8px 0 rgba(255,255,255,0.10)',
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' fill='white' fill-opacity='0.01'/%3E%3C/svg%3E")`,
+                    backgroundBlendMode: 'overlay',
+                  }}
+                >
+                  <div className="pt-2 p-4 grid grid-cols-1 gap-2">
+                    {PRODUCT_LINKS.map(link => (
+                      <a
+                        key={link.name}
+                        href={link.href}
+                        className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all hover:bg-white/40 hover:backdrop-blur-2xl"
+                      >
+                        <span className="mt-1 text-[#F18A41]">
+                          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="currentColor" opacity="0.15"/><path d="M7 10l3 3 3-3" stroke="#F18A41" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        </span>
+                        <span>
+                          <span className="block font-semibold text-[#233831]">{link.name}</span>
+                          <span className="block text-xs text-[#233831] opacity-80">{link.desc}</span>
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            {/* Other nav links */}
+            <a href="#about" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</a>
+            <a href="#merchants" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Merchants</a>
+            <a href="#developer-api" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Developer API</a>
+            <a href="#nad" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">NAD</a>
           </div>
 
           {/* Right Side Buttons */}
