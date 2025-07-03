@@ -109,22 +109,27 @@ const Home = () => {
       {/* Stats Section */}
       <section className="py-20 bg-white w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                stat: 1200,
-                label: 'Businesses Served',
-                description: 'Trusted by over 1,200 businesses for seamless financial operations.'
+                stat: 250000,
+                label: 'Retailers',
+                description: 'Empowering 250,000+ retailers with seamless payment solutions.'
               },
               {
-                stat: 50000000,
-                label: 'Payments Processed',
-                description: 'Over ₹50,000,000 processed securely through our platform.'
+                stat: 50000,
+                label: 'Merchants',
+                description: 'Serving 50,000 merchants across diverse industries.'
               },
               {
-                stat: 99.99,
-                label: 'Uptime (%)',
-                description: 'Industry-leading reliability with 99.99% uptime guarantee.'
+                stat: 3000,
+                label: 'Distributors',
+                description: 'Trusted by 3,000 distributors for efficient transactions.'
+              },
+              {
+                stat: 200000,
+                label: 'Transactions Everyday',
+                description: 'Processing over 200,000 transactions every single day.'
               },
             ].map((item, idx) => (
               <div key={idx} className="bg-gradient-to-br from-[#F18A41]/10 to-[#9DADE5]/10 rounded-xl shadow-lg p-8 flex flex-col items-center">
