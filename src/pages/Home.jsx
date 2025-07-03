@@ -39,39 +39,48 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full">
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h1 className="text-4xl text-black md:text-6xl font-bold mb-6 drop-shadow-lg">
-              Elevate Your Business with
-            </h1>
-            <h2 className="text-3xl text-[#F18A41] md:text-5xl font-bold mb-8 min-h-[60px] drop-shadow-lg">
-              {text}
-              <span className="animate-blink">|</span>
-            </h2>
-            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-black">
-              Scalable platform and plug-and-play APIs simplify checkouts, payment management and effortlessly handle payments, payouts and corporate cards with Finzep and more...
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                to="/aboutus"
-                className="bg-white text-blue-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-50 transition-colors"
+      <section className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-16">
+        <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
+          <div className="flex flex-col md:flex-row w-full h-full items-center justify-between">
+            {/* Left: Text Content */}
+            <div className="w-full md:w-1/2 text-left flex flex-col justify-center items-start h-full pt-20 pl-12">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="w-full"
               >
-                Learn More
-              </Link>
-              <Link
-                to="/login"
-                className="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-              >
-                Sign Up
-              </Link>
+                <h1 className="text-4xl text-black md:text-6xl font-bold mb-6 drop-shadow-lg">
+                  Elevate Your Business with
+                </h1>
+                <h2 className="text-3xl text-[#F18A41] md:text-5xl font-bold mb-8 min-h-[60px] drop-shadow-lg">
+                  {text}
+                  <span className="animate-blink">|</span>
+                </h2>
+                <p className="text-xl md:text-2xl mb-12 max-w-3xl text-black">
+                  Scalable platform and plug-and-play APIs simplify checkouts, payment management and effortlessly handle payments, payouts and corporate cards with Finzep and more...
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 pl-30">
+                  <Link
+                    to="/aboutus"
+                    className="bg-white text-blue-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-50 transition-colors"
+                  >
+                    Learn More
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+            {/* Right: Media Placeholder */}
+            <div className="hidden md:flex w-1/2 h-full items-center justify-center">
+              {/* Add your media (image, animation, etc.) here */}
+            </div>
+          </div>
         </div>
       </section>
 
