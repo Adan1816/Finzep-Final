@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import ServicesCarousel from '../components/ServicesCarousel';
+import SectorsStack from '../components/SectorsStack';
 
 // Animated Counter component
 const AnimatedCounter = ({ target, duration = 2000 }) => {
@@ -222,11 +224,19 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Services Section (Carousel) */}
-      <section className="py-20 bg-gray-50 w-full">
-        <div className="w-full text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10">Our Services</h2>
-          <Carousel />
+      {/* Services Section - New Carousel */}
+      <section className="py-20 bg-white w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Our Services</h2>
+          <ServicesCarousel />
+        </div>
+      </section>
+
+      {/* Sectors Section - Stacked Cards */}
+      <section className="bg-white w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
+          <SectorsStack />
         </div>
       </section>
 
