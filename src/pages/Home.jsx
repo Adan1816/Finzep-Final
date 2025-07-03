@@ -47,10 +47,10 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl text-black md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl text-black md:text-6xl font-bold mb-6 drop-shadow-lg">
               Elevate Your Business with
             </h1>
-            <h2 className="text-3xl text-[#F18A41] md:text-5xl font-bold mb-8 min-h-[60px]">
+            <h2 className="text-3xl text-[#F18A41] md:text-5xl font-bold mb-8 min-h-[60px] drop-shadow-lg">
               {text}
               <span className="animate-blink">|</span>
             </h2>
