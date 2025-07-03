@@ -5,7 +5,7 @@ const NAV_LINKS = [
   { name: "Products", href: "#products" },
   { name: "Merchants", href: "#merchants" },
   { name: "Developer API", href: "#developer-api" },
-  { name: "NAD", href: "#nad" },
+  
 ];
 
 const PRODUCT_LINKS = [
@@ -83,11 +83,11 @@ export default function Navbar() {
               </button>
               {productOpen && (
                 <div
-                  className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-2xl border border-white/30 bg-white/30 backdrop-blur-xl ring-1 ring-white/20 z-50 overflow-hidden animate-fadeIn border-t-4 border-t-transparent"
+                  className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-lg shadow-white/10 border border-white/40 bg-white/30 backdrop-blur-xl ring-1 ring-white/30 z-50 overflow-hidden animate-fadeIn"
                   style={{
-                    boxShadow: '0 8px 32px 0 rgba(31,38,135,0.15), 0 1.5px 8px 0 rgba(255,255,255,0.10)',
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' fill='white' fill-opacity='0.01'/%3E%3C/svg%3E")`,
-                    backgroundBlendMode: 'overlay',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    backdropFilter: 'blur(20px)',
+                    boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(255,255,255,0.10)',
                   }}
                 >
                   <div className="pt-2 p-4 grid grid-cols-1 gap-2">
