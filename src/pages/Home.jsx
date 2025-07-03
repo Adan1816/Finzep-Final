@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsStack from '../components/SectorsStack';
+import BlogSection from '../components/BlogSection';
 
 // Animated Counter component
 const AnimatedCounter = ({ target, duration = 2000 }) => {
@@ -239,6 +240,9 @@ const Home = () => {
           <SectorsStack />
         </div>
       </section>
+
+      {/* Blog Section */}
+      <BlogSection />
 
       {/* Features Section */}
       <section className="py-20 bg-gray-50 w-full">

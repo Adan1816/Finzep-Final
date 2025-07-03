@@ -70,14 +70,14 @@ const SectorsStack = () => {
           <button
             aria-label="previous"
             onClick={() => handleNav(-1)}
-            className="w-12 h-12 rounded-full bg-[#9DADE5]/20 text-[#233831] text-2xl font-bold flex items-center justify-center border-2 border-[#9DADE5] hover:bg-[#9DADE5] hover:text-white transition-colors duration-200"
+            className="w-12 h-12 rounded-full bg-[#F18A41]/20 text-[#F18A41] text-2xl font-bold flex items-center justify-center border-2 border-[#F18A41] hover:bg-[#F18A41] hover:text-white transition-colors duration-200"
           >
             &#8592;
           </button>
           <button
             aria-label="next"
             onClick={() => handleNav(1)}
-            className="w-12 h-12 rounded-full bg-[#9DADE5]/20 text-[#233831] text-2xl font-bold flex items-center justify-center border-2 border-[#9DADE5] hover:bg-[#9DADE5] hover:text-white transition-colors duration-200"
+            className="w-12 h-12 rounded-full bg-[#F18A41]/20 text-[#F18A41] text-2xl font-bold flex items-center justify-center border-2 border-[#F18A41] hover:bg-[#F18A41] hover:text-white transition-colors duration-200"
           >
             &#8594;
           </button>
