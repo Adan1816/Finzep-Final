@@ -2,6 +2,28 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
+// Animated Counter component
+const AnimatedCounter = ({ target, duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let start = 0;
+    const increment = target / (duration / 16);
+    let frame;
+    const step = () => {
+      start += increment;
+      if (start < target) {
+        setCount(Math.floor(start));
+        frame = requestAnimationFrame(step);
+      } else {
+        setCount(target);
+      }
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [target, duration]);
+  return <span>{count.toLocaleString()}</span>;
+};
+
 const Home = () => {
   const [text, setText] = useState('');
   const phrases = ["Finzep's Innovative Solutions", "Payment Solutions", "Business Growth"];
@@ -80,6 +102,39 @@ const Home = () => {
             <div className="hidden md:flex w-1/2 h-full items-center justify-center">
               {/* Add your media (image, animation, etc.) here */}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-white w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                stat: 1200,
+                label: 'Businesses Served',
+                description: 'Trusted by over 1,200 businesses for seamless financial operations.'
+              },
+              {
+                stat: 50000000,
+                label: 'Payments Processed',
+                description: 'Over ₹50,000,000 processed securely through our platform.'
+              },
+              {
+                stat: 99.99,
+                label: 'Uptime (%)',
+                description: 'Industry-leading reliability with 99.99% uptime guarantee.'
+              },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-gradient-to-br from-[#F18A41]/10 to-[#9DADE5]/10 rounded-xl shadow-lg p-8 flex flex-col items-center">
+                <div className="text-5xl font-extrabold text-[#F18A41] mb-2">
+                  <AnimatedCounter target={item.stat} duration={1800 + idx * 400} />
+                </div>
+                <div className="text-xl font-semibold text-gray-900 mb-2">{item.label}</div>
+                <div className="text-gray-600 text-center">{item.description}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
