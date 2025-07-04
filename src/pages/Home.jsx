@@ -148,7 +148,7 @@ const Home = () => {
         <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
           <div className="flex flex-col md:flex-row w-full h-full items-center justify-between">
             {/* Left: Text Content */}
-            <div className="w-full md:w-1/2 text-left flex flex-col justify-center items-start h-full pt-20 pl-12">
+            <div className="w-full md:w-1/2 flex flex-col justify-center items-start h-full min-h-[400px] mt-12 md:mt-20">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -165,7 +165,7 @@ const Home = () => {
                 <p className="text-xl md:text-2xl mb-12 max-w-3xl text-black">
                   Scalable platform and plug-and-play APIs simplify checkouts, payment management and effortlessly handle payments, payouts and corporate cards with Finzep and more...
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 pl-30">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <Link
                     to="/aboutus"
                     className="bg-white text-blue-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-50 transition-colors"
