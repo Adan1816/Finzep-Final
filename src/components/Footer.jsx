@@ -20,9 +20,16 @@ const Footer = () => {
   };
 
   return (
-    <footer id="footer" className="relative bg-white/5 backdrop-blur-xl border-t border-white/10">
+    <footer id="footer" className="relative bg-white/80 backdrop-blur-xl border-t border-white/10" style={{
+      backgroundImage: `
+        radial-gradient(circle at 1px 1px, rgba(156,163,175,0.18) 1px, transparent 0),
+        radial-gradient(circle at 1px 1px, rgba(107,114,128,0.12) 1px, transparent 0)
+      `,
+      backgroundSize: '20px 20px, 40px 40px',
+      backgroundPosition: '0 0, 10px 10px'
+    }}>
       {/* Enhanced glassy overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-white/5 to-orange-600/10 backdrop-blur-lg"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-white/20 backdrop-blur-lg"></div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Main Links Section */}
