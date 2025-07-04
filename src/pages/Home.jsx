@@ -5,6 +5,7 @@ import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsStack from '../components/SectorsStack';
 import BlogCardsSection from '../components/BlogCardsSection';
 import ProgressLine from '../components/ProgressLine';
+import SectionCover from '../components/SectionCover';
 
 // Animated Counter component
 const AnimatedCounter = ({ target, duration = 2000 }) => {
@@ -106,12 +107,23 @@ const Carousel = () => {
   );
 };
 
+const sectionMeta = [
+  { id: 'hero', name: 'Home' },
+  { id: 'stats', name: 'Stats' },
+  { id: 'services', name: 'Services' },
+  { id: 'sectors', name: 'Sectors' },
+  { id: 'blog', name: 'Blog' },
+  { id: 'features', name: 'Features' },
+];
+
 const Home = () => {
   const [text, setText] = useState('');
   const phrases = ["Finzep's Innovative Solutions", "Payment Solutions", "Business Growth"];
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
+  const [activeSection, setActiveSection] = useState(null);
+  const [coverTrigger, setCoverTrigger] = useState({});
 
   useEffect(() => {
     const currentPhrase = phrases[phraseIndex];
@@ -140,11 +152,40 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, [text, isDeleting, phraseIndex, phrases, typingSpeed]);
 
+  useEffect(() => {
+    function onScroll() {
+      let current = null;
+      for (let i = 0; i < sectionMeta.length; i++) {
+        const el = document.getElementById(sectionMeta[i].id);
+        if (el) {
+          if (el.getBoundingClientRect().top <= window.innerHeight * 0.3 && el.getBoundingClientRect().bottom > window.innerHeight * 0.2) {
+            current = sectionMeta[i].id;
+          }
+        }
+      }
+      if (current && activeSection !== current) {
+        setActiveSection(current);
+        setCoverTrigger((prev) => ({ ...prev, [current]: (prev[current] || 0) + 1 }));
+      }
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [activeSection]);
+
   return (
     <div className="min-h-screen">
-      <ProgressLine />
+      {/* ProgressLine removed */}
       {/* Hero Section */}
-      <section id="hero" className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-24 pb-12">
+      <motion.section
+        id="hero"
+        className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-24 pb-12"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <SectionCover show={!!coverTrigger['hero']} sectionName="Home" />
         <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
           <div className="flex flex-col md:flex-row w-full h-full items-center justify-between">
             {/* Left: Text Content */}
@@ -187,10 +228,18 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Stats Section */}
-      <section id="stats" className="py-20 bg-white w-full">
+      <motion.section
+        id="stats"
+        className="relative py-20 bg-white w-full"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <SectionCover show={!!coverTrigger['stats']} sectionName="Stats" />
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -225,31 +274,63 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Services Section - New Carousel */}
-      <section id="services" className="py-20 bg-white w-full">
+      <motion.section
+        id="services"
+        className="relative py-20 bg-white w-full"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <SectionCover show={!!coverTrigger['services']} sectionName="Services" />
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Our Services</h2>
           <ServicesCarousel />
         </div>
-      </section>
+      </motion.section>
 
       {/* Sectors Section - Stacked Cards */}
-      <section id="sectors" className="bg-white w-full">
+      <motion.section
+        id="sectors"
+        className="relative bg-white w-full"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <SectionCover show={!!coverTrigger['sectors']} sectionName="Sectors" />
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
           <SectorsStack />
         </div>
-      </section>
+      </motion.section>
 
       {/* Blog Section */}
-      <section id="blog">
+      <motion.section
+        id="blog"
+        className="relative w-full"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <SectionCover show={!!coverTrigger['blog']} sectionName="Blog" />
         <BlogCardsSection />
-      </section>
+      </motion.section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50 w-full">
+      <motion.section
+        id="features"
+        className="relative py-20 bg-gray-50 w-full"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <SectionCover show={!!coverTrigger['features']} sectionName="Features" />
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -301,7 +382,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };
