@@ -83,11 +83,14 @@ export default function Navbar() {
               </button>
               {productOpen && (
                 <div
-                  className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-lg shadow-white/10 border border-white/40 bg-white/30 backdrop-blur-xl ring-1 ring-white/30 z-50 overflow-hidden animate-fadeIn"
+                  className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-lg shadow-white/10 border border-white/40 backdrop-blur-xl ring-1 ring-white/30 z-50 overflow-hidden animate-fadeIn"
                   style={{
+                    background: 'rgba(255,255,255,0.95)',
                     WebkitBackdropFilter: 'blur(20px)',
                     backdropFilter: 'blur(20px)',
-                    boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(255,255,255,0.10)',
+                    boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(0,0,0,0.10)',
+                    border: '1px solid rgba(255,255,255,0.4)',
+                    willChange: 'backdrop-filter'
                   }}
                 >
                   <div className="pt-2 p-4 grid grid-cols-1 gap-2">
@@ -95,7 +98,7 @@ export default function Navbar() {
                       <a
                         key={link.name}
                         href={link.href}
-                        className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all hover:bg-white/40 hover:backdrop-blur-2xl"
+                        className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all hover:bg-white/60 hover:backdrop-blur-2xl"
                       >
                         <span className="mt-1 text-[#F18A41]">
                           <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="currentColor" opacity="0.15"/><path d="M7 10l3 3 3-3" stroke="#F18A41" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
