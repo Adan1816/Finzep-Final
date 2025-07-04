@@ -26,6 +26,25 @@
   .btn-secondary {
     @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-50;
   }
+  
+  /* Progress line animations */
+  @keyframes progressGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+  
+  @keyframes sectionPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  .progress-glow {
+    animation: progressGlow 2s ease-in-out infinite;
+  }
+  
+  .section-pulse {
+    animation: sectionPulse 1.5s ease-in-out infinite;
+  }
 }
 
 :root {

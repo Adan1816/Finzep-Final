@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsStack from '../components/SectorsStack';
 import BlogSection from '../components/BlogSection';
+import ProgressLine from '../components/ProgressLine';
 
 // Animated Counter component
 const AnimatedCounter = ({ target, duration = 2000 }) => {
@@ -141,8 +142,9 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
+      <ProgressLine />
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-16">
+      <section id="hero" className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-16">
         <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
           <div className="flex flex-col md:flex-row w-full h-full items-center justify-between">
             {/* Left: Text Content */}
@@ -188,7 +190,7 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white w-full">
+      <section id="stats" className="py-20 bg-white w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -226,7 +228,7 @@ const Home = () => {
       </section>
 
       {/* Services Section - New Carousel */}
-      <section className="py-20 bg-white w-full">
+      <section id="services" className="py-20 bg-white w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Our Services</h2>
           <ServicesCarousel />
@@ -234,7 +236,7 @@ const Home = () => {
       </section>
 
       {/* Sectors Section - Stacked Cards */}
-      <section className="bg-white w-full">
+      <section id="sectors" className="bg-white w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
           <SectorsStack />
@@ -242,10 +244,12 @@ const Home = () => {
       </section>
 
       {/* Blog Section */}
-      <BlogSection />
+      <section id="blog">
+        <BlogSection />
+      </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50 w-full">
+      <section id="features" className="py-20 bg-gray-50 w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
