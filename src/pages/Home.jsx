@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsStack from '../components/SectorsStack';
 import BlogCardsSection from '../components/BlogCardsSection';
 import ProgressLine from '../components/ProgressLine';
-import SectionCover from '../components/SectionCover';
+import Navbar from '../components/Navbar';
 
 // Animated Counter component
 const AnimatedCounter = ({ target, duration = 2000 }) => {
@@ -107,23 +107,70 @@ const Carousel = () => {
   );
 };
 
-const sectionMeta = [
-  { id: 'hero', name: 'Home' },
-  { id: 'stats', name: 'Stats' },
-  { id: 'services', name: 'Services' },
-  { id: 'sectors', name: 'Sectors' },
-  { id: 'blog', name: 'Blog' },
-  { id: 'features', name: 'Features' },
-];
-
 const Home = () => {
   const [text, setText] = useState('');
   const phrases = ["Finzep's Innovative Solutions", "Payment Solutions", "Business Growth"];
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
-  const [activeSection, setActiveSection] = useState(null);
-  const [coverTrigger, setCoverTrigger] = useState({});
+  const [logoProgress, setLogoProgress] = useState(0); // 0 = hero, 1 = navbar
+  const heroLogoRef = useRef(null);
+  const heroSectionRef = useRef(null);
+  const navbarLogoRef = useRef(null);
+  const [logoRects, setLogoRects] = useState({ hero: null, navbar: null });
+
+  // Measure logo positions/sizes
+  useEffect(() => {
+    function measureRects() {
+      const heroRect = heroLogoRef.current?.getBoundingClientRect();
+      const navbarRect = navbarLogoRef.current?.getBoundingClientRect();
+      setLogoRects({ hero: heroRect, navbar: navbarRect });
+    }
+    measureRects();
+    window.addEventListener('resize', measureRects);
+    return () => window.removeEventListener('resize', measureRects);
+  }, []);
+
+  // Track scroll and interpolate logo position
+  useEffect(() => {
+    function onScroll() {
+      if (!heroSectionRef.current) return;
+      const rect = heroSectionRef.current.getBoundingClientRect();
+      // Animate between hero (start) and navbar (end) over a short scroll (160px)
+      const start = window.innerHeight * 0.9;
+      const end = start - 160;
+      let progress = 0;
+      if (rect.bottom <= end) progress = 1;
+      else if (rect.bottom >= start) progress = 0;
+      else progress = 1 - (rect.bottom - end) / (start - end);
+      setLogoProgress(Math.max(0, Math.min(1, progress)));
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Calculate transform for the animated logo
+  let logoStyle = { opacity: 0, pointerEvents: 'none' };
+  if (logoRects.hero && logoRects.navbar) {
+    // Interpolate position and scale
+    const x = logoRects.hero.left + (logoRects.navbar.left - logoRects.hero.left) * logoProgress;
+    const y = logoRects.hero.top + (logoRects.navbar.top - logoRects.hero.top) * logoProgress;
+    const w = logoRects.hero.width + (logoRects.navbar.width - logoRects.hero.width) * logoProgress;
+    const h = logoRects.hero.height + (logoRects.navbar.height - logoRects.hero.height) * logoProgress;
+    logoStyle = {
+      position: 'fixed',
+      left: 0,
+      top: 0,
+      width: w,
+      height: h,
+      transform: `translate(${x}px, ${y}px)` + (logoProgress === 0 ? '' : ''),
+      transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1), width 0.5s, height 0.5s',
+      zIndex: 200,
+      opacity: 1,
+      pointerEvents: 'none',
+    };
+  }
 
   useEffect(() => {
     const currentPhrase = phrases[phraseIndex];
@@ -154,24 +201,19 @@ const Home = () => {
 
   useEffect(() => {
     function onScroll() {
-      let current = null;
-      for (let i = 0; i < sectionMeta.length; i++) {
-        const el = document.getElementById(sectionMeta[i].id);
-        if (el) {
-          if (el.getBoundingClientRect().top <= window.innerHeight * 0.3 && el.getBoundingClientRect().bottom > window.innerHeight * 0.2) {
-            current = sectionMeta[i].id;
-          }
-        }
-      }
-      if (current && activeSection !== current) {
-        setActiveSection(current);
-        setCoverTrigger((prev) => ({ ...prev, [current]: (prev[current] || 0) + 1 }));
+      if (!heroSectionRef.current) return;
+      const rect = heroSectionRef.current.getBoundingClientRect();
+      // If the bottom of the hero section is above the navbar, trigger logo in navbar
+      if (rect.bottom <= 80) {
+        // setLogoInNavbar(true); // This state is no longer needed
+      } else {
+        // setLogoInNavbar(false); // This state is no longer needed
       }
     }
     window.addEventListener('scroll', onScroll);
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
-  }, [activeSection]);
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -179,67 +221,35 @@ const Home = () => {
       {/* Hero Section */}
       <motion.section
         id="hero"
-        className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-24 pb-12"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.2 }}
+        ref={heroSectionRef}
+        className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-24 pb-12 flex items-center justify-center"
+        style={{ overflow: 'hidden' }}
       >
-        <SectionCover show={!!coverTrigger['hero']} sectionName="Home" />
-        <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
-          <div className="flex flex-col md:flex-row w-full h-full items-center justify-between">
-            {/* Left: Text Content */}
-            <div className="w-full md:w-1/2 flex flex-col justify-center items-start h-full min-h-[400px] mt-8 md:mt-20">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="w-full"
-              >
-                <h1 className="text-2xl md:text-6xl font-bold mb-4 md:mb-6 drop-shadow-lg text-center md:text-left text-black">
-                  Elevate Your Business with
-                </h1>
-                <h2 className="text-lg md:text-5xl font-bold mb-6 md:mb-8 min-h-[40px] md:min-h-[60px] drop-shadow-lg text-[#F18A41] text-center md:text-left">
-                  {text}
-                  <span className="animate-blink">|</span>
-                </h2>
-                <p className="text-base md:text-2xl mb-8 md:mb-12 max-w-3xl text-black text-center md:text-left">
-                  Scalable platform and plug-and-play APIs simplify checkouts, payment management and effortlessly handle payments, payouts and corporate cards with Finzep and more...
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 w-full items-center md:items-start justify-center md:justify-start">
-                  <Link
-                    to="/aboutus"
-                    className="bg-white text-blue-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-50 transition-colors w-full sm:w-auto text-center"
-                  >
-                    Learn More
-                  </Link>
-                  <Link
-                    to="/login"
-                    className="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors w-full sm:w-auto text-center"
-                  >
-                    Sign Up
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-            {/* Right: Media Placeholder */}
-            <div className="hidden md:flex w-1/2 h-full items-center justify-center">
-              {/* Add your media (image, animation, etc.) here */}
-            </div>
-          </div>
-        </div>
+        {/* The hero logo is only visible for measurement, not shown to user */}
+        <img
+          ref={heroLogoRef}
+          src="/FINZEP-LOGO-hiDef.png"
+          alt="Finzep Logo Large"
+          className="mx-auto invisible"
+          style={{ maxWidth: '370px', width: '30vw', height: 'auto', display: 'block', position: 'relative', marginTop: '-50px' }}
+        />
       </motion.section>
+      {/* Animated logo morphs between hero and navbar */}
+      {logoRects.hero && logoRects.navbar && (
+        <img
+          src="/FINZEP-LOGO-hiDef.png"
+          alt="Finzep Logo Animated"
+          style={logoStyle}
+        />
+      )}
+      {/* Pass navbarLogoRef to Navbar for measurement */}
+      <Navbar navbarLogoRef={navbarLogoRef} navbarLogoStyle={{ height: '6.5rem' }} />
 
       {/* Stats Section */}
       <motion.section
         id="stats"
         className="relative py-20 bg-white w-full"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.2 }}
       >
-        <SectionCover show={!!coverTrigger['stats']} sectionName="Stats" />
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -280,12 +290,7 @@ const Home = () => {
       <motion.section
         id="services"
         className="relative py-20 bg-white w-full"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.2 }}
       >
-        <SectionCover show={!!coverTrigger['services']} sectionName="Services" />
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Our Services</h2>
           <ServicesCarousel />
@@ -296,12 +301,7 @@ const Home = () => {
       <motion.section
         id="sectors"
         className="relative bg-white w-full"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.2 }}
       >
-        <SectionCover show={!!coverTrigger['sectors']} sectionName="Sectors" />
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
           <SectorsStack />
@@ -312,12 +312,7 @@ const Home = () => {
       <motion.section
         id="blog"
         className="relative w-full"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.2 }}
       >
-        <SectionCover show={!!coverTrigger['blog']} sectionName="Blog" />
         <BlogCardsSection />
       </motion.section>
 
@@ -325,27 +320,16 @@ const Home = () => {
       <motion.section
         id="features"
         className="relative py-20 bg-gray-50 w-full"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        viewport={{ once: true, amount: 0.2 }}
       >
-        <SectionCover show={!!coverTrigger['features']} sectionName="Features" />
         <div className="w-full px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Why Choose Finzep?
             </h2>
             <p className="text-xl text-gray-600 w-full">
               Our comprehensive suite of financial solutions is designed to help your business grow and succeed.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -365,12 +349,8 @@ const Home = () => {
                 icon: '💼',
               },
             ].map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                viewport={{ once: true }}
                 className="bg-white p-8 rounded-lg shadow-lg"
               >
                 <div className="text-4xl mb-4">{feature.icon}</div>
@@ -378,7 +358,7 @@ const Home = () => {
                   {feature.title}
                 </h3>
                 <p className="text-gray-600">{feature.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

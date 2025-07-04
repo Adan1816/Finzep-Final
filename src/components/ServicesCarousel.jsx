@@ -3,26 +3,26 @@ import React, { useRef, useEffect } from 'react';
 const services = [
   {
     title: 'Payments',
-    description: 'Seamless payment solutions for your business needs.',
-    image: '/finzep-logo-navbar.png',
+    description: 'Seamless payment solutions for your business needs. Our comprehensive payment platform ensures secure, fast, and reliable transactions for businesses of all sizes.',
+    icon: '💸',
     link: '#',
   },
   {
     title: 'Collections',
-    description: 'Efficient and automated collections for faster cash flow.',
-    image: '/finzep-logo-navbar.png',
+    description: 'Efficient and automated collections for faster cash flow. Streamline your receivables with intelligent automation and real-time tracking.',
+    icon: '📥',
     link: '#',
   },
   {
     title: 'Verification APIs',
-    description: 'Robust APIs for KYC, bank, and identity verification.',
-    image: '/finzep-logo-navbar.png',
+    description: 'Robust APIs for KYC, bank, and identity verification. Ensure compliance and security with our advanced verification solutions.',
+    icon: '🔍',
     link: '#',
   },
   {
     title: 'SAAS',
-    description: 'Powerful SaaS tools to streamline your financial operations.',
-    image: '/finzep-logo-navbar.png',
+    description: 'Powerful SaaS tools to streamline your financial operations. Cloud-based solutions that scale with your business growth.',
+    icon: '☁️',
     link: '#',
   },
 ];
@@ -49,6 +49,123 @@ const ServicesCarousel = () => {
       }
       .services-carousel-paused {
         animation-play-state: paused !important;
+      }
+      
+      .service-card {
+        --card-color: #F18A41;
+        --card-bg-color: #233831;
+        --card-icon-size: 5rem;
+        --card-title-font-size: 2.5rem;
+        --card-title-margin-top: 2rem;
+        
+        background-color: var(--card-bg-color);
+        padding: 1.5rem;
+        color: var(--card-color);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto 1fr 0 auto;
+        grid-template-areas:
+          "icon"
+          "title"
+          "description"
+          "link";
+        width: 100%;
+        height: 360px;
+        border-radius: 0.5rem;
+        gap: 1rem;
+        overflow: hidden;
+        transition: all 0.5s ease-in-out;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .service-card::before {
+        content: "";
+        display: block;
+        height: 0;
+        width: 0;
+        background-color: var(--card-color);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translate(50%, 50%);
+        border-radius: 50%;
+        transition: all 0.5s ease-in-out;
+        z-index: -1;
+      }
+      
+      .service-card:hover::before {
+        height: 200%;
+        width: 200%;
+        border-radius: 0;
+      }
+      
+      .service-card__icon {
+        grid-area: icon;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--card-icon-size);
+        width: var(--card-icon-size);
+        font-size: 3rem;
+        transition: all 0.5s ease-in-out;
+      }
+      
+      .service-card__title {
+        grid-area: title;
+        font-size: var(--card-title-font-size);
+        margin-top: var(--card-title-margin-top);
+        transition: all 0.5s ease-in-out;
+        align-self: flex-end;
+        font-weight: bold;
+      }
+      
+      .service-card__description {
+        grid-area: description;
+        line-height: 1.4;
+        opacity: 0;
+        transform: translateY(1000px);
+        transition: all 0.5s ease-in-out;
+        color: var(--card-bg-color);
+      }
+      
+      .service-card__link {
+        grid-area: link;
+        border: 2px solid var(--card-color);
+        color: var(--card-color);
+        background-color: var(--card-bg-color);
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        width: fit-content;
+        height: fit-content;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.5s ease-in-out;
+      }
+      
+      .service-card__link:hover {
+        color: var(--card-bg-color);
+        background-color: var(--card-color);
+      }
+      
+      .service-card:hover {
+        --card-color: #233831;
+        --card-bg-color: #F18A41;
+        --card-icon-size: 2.5rem;
+        --card-title-margin-top: 0;
+        --card-title-font-size: 1.5rem;
+        
+        grid-template-rows: auto auto auto auto;
+        grid-template-areas:
+          "icon"
+          "title"
+          "description"
+          "link";
+      }
+      
+      .service-card:hover .service-card__description {
+        opacity: 1;
+        transform: translateY(0);
       }
     `;
     document.head.appendChild(style);
@@ -81,31 +198,21 @@ const ServicesCarousel = () => {
           ref={carouselRef}
         >
           {allServices.map((service, idx) => (
-            <article
+            <div
               key={service.title + idx}
-              className="relative flex-shrink-0 w-80 h-[420px] mx-5 bg-white/30 border border-white/40 rounded-2xl shadow-lg shadow-white/10 backdrop-blur-xl ring-1 ring-white/30 flex flex-col items-center transition-transform duration-300 hover:scale-105"
-              style={{
-                WebkitBackdropFilter: 'blur(20px)',
-                backdropFilter: 'blur(20px)',
-                boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(255,255,255,0.10)',
-              }}
+              className="flex-shrink-0 w-80 mx-5"
             >
-              <img
-                src={service.image}
-                alt={service.title}
-                className="w-full h-48 object-cover rounded-t-2xl"
-              />
-              <h2 className="text-2xl font-bold text-[#F18A41] mt-4 mb-2 text-center">{service.title}</h2>
-              <div className="flex-1 flex flex-col justify-between px-4 pb-4">
-                <p className="text-[#233831] text-base text-center mb-4">{service.description}</p>
-                <a
-                  href={service.link}
-                  className="inline-block border border-[#F18A41] text-[#F18A41] rounded px-4 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-[#F18A41] hover:text-white"
-                >
-                  Read more
+              <div className="service-card">
+                <div className="service-card__icon" aria-hidden="true">
+                  {service.icon}
+                </div>
+                <h3 className="service-card__title">{service.title}</h3>
+                <p className="service-card__description">{service.description}</p>
+                <a href={service.link} className="service-card__link">
+                  Learn more
                 </a>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
