@@ -5,7 +5,6 @@ const NAV_LINKS = [
   { name: "Products", href: "#products" },
   { name: "Merchants", href: "#merchants" },
   { name: "Developer API", href: "#developer-api" },
-  
 ];
 
 const PRODUCT_LINKS = [
@@ -19,7 +18,7 @@ const PRODUCT_LINKS = [
   { name: "Utility Bill Payment API", desc: "Streamline Utility Payments With Our Convenient API Integration", href: "#" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ navbarLogoRef, navbarLogoStyle }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productOpen, setProductOpen] = useState(false);
   const productRef = useRef(null);
@@ -40,20 +39,8 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 w-full z-[100] bg-white/20 backdrop-blur-xl transition-all duration-300" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center w-full justify-between md:relative">
-          {/* Logo - always left */}
-          <div className="flex-shrink-0 flex items-center pl-0">
-            <a href="/" className="flex items-center space-x-2 group">
-              <img
-                src="/finzep-logo-navbar.png"
-                alt="Finzep Logo"
-                className="h- w-auto transition-transform group-hover:scale-105"
-                style={{ maxHeight: '2.5rem' }}
-              />
-            </a>
-          </div>
-
-          {/* Desktop Nav Links - center, only on md+ */}
-          <div className="hidden md:flex md:items-center md:space-x-6 mx-auto">
+          {/* Left: Nav Links */}
+          <div className="flex flex-1 items-center space-x-6">
             {/* Product Dropdown */}
             <div
               className="relative"
@@ -108,6 +95,18 @@ export default function Navbar() {
             <a href="#about" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</a>
             <a href="#merchants" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Merchants</a>
             <a href="#developer-api" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Developer API</a>
+          </div>
+
+          {/* Center: Animated logo appears here on scroll */}
+          <div className="flex-1 flex items-center justify-center">
+            {/* Hidden logo for measurement only */}
+            <img
+              ref={navbarLogoRef}
+              src="/FINZEP-LOGO-hiDef.png"
+              alt="Finzep Logo Navbar"
+              className="w-auto invisible"
+              style={{ maxHeight: 'none', position: 'relative', ...(navbarLogoStyle || {}) }}
+            />
           </div>
 
           {/* Right Side Buttons - right on desktop, hamburger on mobile */}
