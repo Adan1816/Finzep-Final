@@ -144,37 +144,37 @@ const Home = () => {
     <div className="min-h-screen">
       <ProgressLine />
       {/* Hero Section */}
-      <section id="hero" className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-16">
+      <section id="hero" className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-24 pb-12">
         <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
           <div className="flex flex-col md:flex-row w-full h-full items-center justify-between">
             {/* Left: Text Content */}
-            <div className="w-full md:w-1/2 flex flex-col justify-center items-start h-full min-h-[400px] mt-12 md:mt-20">
+            <div className="w-full md:w-1/2 flex flex-col justify-center items-start h-full min-h-[400px] mt-8 md:mt-20">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 className="w-full"
               >
-                <h1 className="text-4xl text-black md:text-6xl font-bold mb-6 drop-shadow-lg">
+                <h1 className="text-2xl md:text-6xl font-bold mb-4 md:mb-6 drop-shadow-lg text-center md:text-left text-black">
                   Elevate Your Business with
                 </h1>
-                <h2 className="text-3xl text-[#F18A41] md:text-5xl font-bold mb-8 min-h-[60px] drop-shadow-lg">
+                <h2 className="text-lg md:text-5xl font-bold mb-6 md:mb-8 min-h-[40px] md:min-h-[60px] drop-shadow-lg text-[#F18A41] text-center md:text-left">
                   {text}
                   <span className="animate-blink">|</span>
                 </h2>
-                <p className="text-xl md:text-2xl mb-12 max-w-3xl text-black">
+                <p className="text-base md:text-2xl mb-8 md:mb-12 max-w-3xl text-black text-center md:text-left">
                   Scalable platform and plug-and-play APIs simplify checkouts, payment management and effortlessly handle payments, payouts and corporate cards with Finzep and more...
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 w-full items-center md:items-start justify-center md:justify-start">
                   <Link
                     to="/aboutus"
-                    className="bg-white text-blue-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-50 transition-colors"
+                    className="bg-white text-blue-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-50 transition-colors w-full sm:w-auto text-center"
                   >
                     Learn More
                   </Link>
                   <Link
                     to="/login"
-                    className="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
+                    className="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors w-full sm:w-auto text-center"
                   >
                     Sign Up
                   </Link>
