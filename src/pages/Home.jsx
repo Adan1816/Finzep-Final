@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsStack from '../components/SectorsStack';
-import BlogSection from '../components/BlogSection';
+import BlogCardsSection from '../components/BlogCardsSection';
 import ProgressLine from '../components/ProgressLine';
 
 // Animated Counter component
@@ -245,7 +245,7 @@ const Home = () => {
 
       {/* Blog Section */}
       <section id="blog">
-        <BlogSection />
+        <BlogCardsSection />
       </section>
 
       {/* Features Section */}
