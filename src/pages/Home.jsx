@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ServicesCarousel from '../components/ServicesCarousel';
@@ -119,18 +119,25 @@ const Home = () => {
   const heroSectionRef = useRef(null);
   const navbarLogoRef = useRef(null);
   const [logoRects, setLogoRects] = useState({ hero: null, navbar: null });
+  const [imagesLoaded, setImagesLoaded] = useState({ hero: false, navbar: false });
 
   // Measure logo positions/sizes
+  const measureRects = useCallback(() => {
+    const heroRect = heroLogoRef.current?.getBoundingClientRect();
+    const navbarRect = navbarLogoRef.current?.getBoundingClientRect();
+    setLogoRects({ hero: heroRect, navbar: navbarRect });
+  }, []);
+
   useEffect(() => {
-    function measureRects() {
-      const heroRect = heroLogoRef.current?.getBoundingClientRect();
-      const navbarRect = navbarLogoRef.current?.getBoundingClientRect();
-      setLogoRects({ hero: heroRect, navbar: navbarRect });
+    if (imagesLoaded.hero && imagesLoaded.navbar) {
+      measureRects();
     }
-    measureRects();
+  }, [imagesLoaded, measureRects]);
+
+  useEffect(() => {
     window.addEventListener('resize', measureRects);
     return () => window.removeEventListener('resize', measureRects);
-  }, []);
+  }, [measureRects]);
 
   // Track scroll and interpolate logo position
   useEffect(() => {
@@ -153,7 +160,7 @@ const Home = () => {
 
   // Calculate transform for the animated logo
   let logoStyle = { opacity: 0, pointerEvents: 'none' };
-  if (logoRects.hero && logoRects.navbar) {
+  if (logoRects.hero && logoRects.navbar && imagesLoaded.hero && imagesLoaded.navbar) {
     // Interpolate position and scale
     const x = logoRects.hero.left + (logoRects.navbar.left - logoRects.hero.left) * logoProgress;
     const y = logoRects.hero.top + (logoRects.navbar.top - logoRects.hero.top) * logoProgress;
@@ -223,8 +230,13 @@ const Home = () => {
       <motion.section
         id="hero"
         ref={heroSectionRef}
-        className="relative bg-gradient-to-br from-white to-[#9DADE5] text-white w-full min-h-[calc(100vh-4rem)] pt-24 pb-12 flex items-center justify-center"
-        style={{ overflow: 'hidden' }}
+        className="relative w-full min-h-[calc(100vh-4rem)] pt-24 pb-12 flex items-center justify-center"
+        style={{
+          overflow: 'hidden',
+          backgroundColor: '#fff',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 600 600' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.08'%3E%3Ctext x='40' y='120' font-size='60' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Ctext x='200' y='200' font-size='48' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Crect x='350' y='100' width='80' height='20' rx='6' fill='%23233831'/%3E%3Crect x='370' y='140' width='40' height='20' rx='6' fill='%23233831'/%3E%3Cpath d='M100 400 l40 -40 l40 40' stroke='%23233831' stroke-width='8' fill='none'/%3E%3Crect x='120' y='320' width='20' height='60' rx='6' fill='%23233831'/%3E%3Crect x='160' y='340' width='20' height='40' rx='6' fill='%23233831'/%3E%3Crect x='200' y='360' width='20' height='20' rx='6' fill='%23233831'/%3E%3Ctext x='500' y='500' font-size='60' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Ctext x='420' y='420' font-size='48' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Ctext x='300' y='80' font-size='36' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Ctext x='100' y='500' font-size='36' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Crect x='250' y='300' width='30' height='10' rx='3' fill='%23233831'/%3E%3Crect x='280' y='320' width='20' height='10' rx='3' fill='%23233831'/%3E%3Crect x='310' y='340' width='10' height='10' rx='3' fill='%23233831'/%3E%3Cpath d='M500 200 l20 -20 l20 20' stroke='%23233831' stroke-width='5' fill='none'/%3E%3Crect x='520' y='220' width='10' height='30' rx='3' fill='%23233831'/%3E%3Crect x='540' y='240' width='10' height='20' rx='3' fill='%23233831'/%3E%3Crect x='560' y='260' width='10' height='10' rx='3' fill='%23233831'/%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+        }}
       >
         {/* The hero logo is only visible for measurement, not shown to user */}
         <img
@@ -232,11 +244,12 @@ const Home = () => {
           src="/FINZEP-LOGO-hiDef.png"
           alt="Finzep Logo Large"
           className="mx-auto invisible"
-          style={{ maxWidth: '370px', width: '30vw', height: 'auto', display: 'block', position: 'relative', marginTop: '-50px' }}
+          style={{ maxWidth: '370px', width: '30vw', height: 'auto', display: 'block', position: 'relative', marginTop: '-300px' }}
+          onLoad={() => setImagesLoaded((prev) => ({ ...prev, hero: true }))}
         />
       </motion.section>
       {/* Animated logo morphs between hero and navbar */}
-      {logoRects.hero && logoRects.navbar && (
+      {logoRects.hero && logoRects.navbar && imagesLoaded.hero && imagesLoaded.navbar && (
         <img
           src="/FINZEP-LOGO-hiDef.png"
           alt="Finzep Logo Animated"
@@ -244,7 +257,7 @@ const Home = () => {
         />
       )}
       {/* Pass navbarLogoRef to Navbar for measurement */}
-      <Navbar navbarLogoRef={navbarLogoRef} navbarLogoStyle={{ height: '6.5rem' }} />
+      <Navbar navbarLogoRef={navbarLogoRef} navbarLogoStyle={{ height: '6.5rem', marginLeft: '-300px' }} onLogoLoad={() => setImagesLoaded((prev) => ({ ...prev, navbar: true }))} />
 
       {/* Stats Section */}
       <motion.section
