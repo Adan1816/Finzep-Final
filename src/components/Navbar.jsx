@@ -18,7 +18,7 @@ const PRODUCT_LINKS = [
   { name: "Utility Bill Payment API", desc: "Streamline Utility Payments With Our Convenient API Integration", href: "#" },
 ];
 
-export default function Navbar({ navbarLogoRef, navbarLogoStyle }) {
+export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productOpen, setProductOpen] = useState(false);
   const productRef = useRef(null);
@@ -106,6 +106,7 @@ export default function Navbar({ navbarLogoRef, navbarLogoStyle }) {
               alt="Finzep Logo Navbar"
               className="w-auto invisible"
               style={{ maxHeight: 'none', position: 'relative', ...(navbarLogoStyle || {}) }}
+              onLoad={onLogoLoad}
             />
           </div>
 

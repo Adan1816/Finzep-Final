@@ -11,6 +11,7 @@
   
   body {
     @apply antialiased text-gray-900;
+    background: url('/grainy-gradient.png') center center / cover no-repeat fixed;
   }
 }
 
