@@ -38,9 +38,9 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] bg-white/20 backdrop-blur-xl transition-all duration-300" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
+        <div className="flex h-16 items-center justify-between w-full">
+          {/* Logo - force to far left */}
+          <div className="flex-shrink-0 flex items-center mr-8">
             <a href="/" className="flex items-center space-x-2 group">
               <img
                 src="/finzep-logo-navbar.png"
@@ -48,15 +48,11 @@ export default function Navbar() {
                 className="h- w-auto transition-transform group-hover:scale-105"
                 style={{ maxHeight: '2.5rem' }}
               />
-              {/* Optionally, keep the text for accessibility or branding */}
-              {/* <span className="text-2xl font-extrabold tracking-tight" style={{ color: '#F18A41' }}>
-                Finzep
-              </span> */}
             </a>
           </div>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          {/* Desktop Nav - center, flex-grow to take up space */}
+          <div className="hidden md:flex md:items-center md:space-x-6 flex-grow justify-center">
             <a
               href="/"
               className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded"
@@ -98,7 +94,7 @@ export default function Navbar() {
                       <a
                         key={link.name}
                         href={link.href}
-                        className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all hover:bg-white/60 hover:backdrop-blur-2xl"
+                        className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all duration-200 hover:bg-white/80 hover:backdrop-blur-2xl hover:shadow-[0_0_16px_2px_rgba(241,138,65,0.35)] focus:shadow-[0_0_16px_2px_rgba(241,138,65,0.45)]"
                       >
                         <span className="mt-1 text-[#F18A41]">
                           <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="currentColor" opacity="0.15"/><path d="M7 10l3 3 3-3" stroke="#F18A41" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -117,11 +113,10 @@ export default function Navbar() {
             <a href="#about" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</a>
             <a href="#merchants" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Merchants</a>
             <a href="#developer-api" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Developer API</a>
-            <a href="#nad" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">NAD</a>
           </div>
 
-          {/* Right Side Buttons */}
-          <div className="hidden md:flex md:items-center md:space-x-3">
+          {/* Right Side Buttons - force to far right */}
+          <div className="hidden md:flex md:items-center md:space-x-3 ml-auto">
             <a
               href="#login"
               className="text-[#233831] hover:text-[#F18A41] font-medium px-3 py-1 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
