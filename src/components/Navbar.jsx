@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { Link } from 'react-router-dom';
 
 const NAV_LINKS = [
   { name: "About Us", href: "#about" },
@@ -92,7 +93,7 @@ export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
               )}
             </div>
             {/* Other nav links */}
-            <a href="#about" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</a>
+            <Link to="/aboutus" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</Link>
             <a href="#merchants" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Merchants</a>
             <a href="#developer-api" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Developer API</a>
           </div>
@@ -196,14 +197,25 @@ export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
             )}
             {/* Other nav links */}
             {NAV_LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="block text-[#233831] hover:text-[#F18A41] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-                onClick={() => setMobileOpen(false)}
-              >
-                {link.name}
-              </a>
+              link.name === 'About Us' ? (
+                <Link
+                  key={link.name}
+                  to="/aboutus"
+                  className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.name}
+                </a>
+              )
             ))}
             <a
               href="#login"
