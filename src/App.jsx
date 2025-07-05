@@ -13,9 +13,9 @@ import Login from './pages/Login';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen w-full flex flex-col">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow w-full">
           <AnimatePresence mode="wait">
             <Routes>
               <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />

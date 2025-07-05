@@ -19,9 +19,9 @@ const AboutScrollText = () => {
       if (mainTextChars) {
         gsap.fromTo(
           mainTextChars,
-          { color: '#ffffff' },
+          { color: '#9DADE5' },
           {
-            color: '#06ffff',
+            color: '#F18A41',
             stagger: 0.05,
             scrollTrigger: {
               trigger: textAnimationRef.current,
@@ -54,7 +54,7 @@ const AboutScrollText = () => {
           onEnter: () => {
             // Expand wrapper
             gsap.to(wrapper, {
-              width: '14vw',
+              width: '8vw',
               duration: 0.5,
               ease: 'power2.out',
             });
@@ -96,9 +96,9 @@ const AboutScrollText = () => {
       if (finalTextChars) {
         gsap.fromTo(
           finalTextChars,
-          { color: '#999999' },
+          { color: '#9DADE5' },
           {
-            color: '#ffffff',
+            color: '#233831',
             stagger: 0.05,
             scrollTrigger: {
               trigger: finalRef.current,
@@ -133,14 +133,14 @@ const AboutScrollText = () => {
     >
       <span className="relative inline-block">
         {/* Blur background */}
-        <span className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full max-w-[13.75vw] max-h-[5.6vw] rounded-full bg-cyan-400 blur-[6.25vw] z-0 pointer-events-none"></span>
+        <span className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full max-w-[8vw] max-h-[3vw] rounded-full bg-orange-400 blur-[3vw] z-0 pointer-events-none"></span>
         
         {/* Image wrapper */}
-        <span className="image-wrapper relative inline-block flex-shrink-0 overflow-hidden mx-[0.5vw] w-0 max-w-[14vw] h-[5.6vw]">
+        <span className="image-wrapper relative inline-block flex-shrink-0 overflow-hidden mx-[0.2vw] w-0 max-w-[8vw] h-[3vw]">
           <img
             src={imageSrc}
             alt={`Animation ${imageIndex + 1}`}
-            className="absolute top-0 left-1/2 w-[14vw] h-full rounded object-cover transform -translate-x-1/2"
+            className="absolute top-0 left-1/2 w-[8vw] h-full rounded object-cover transform -translate-x-1/2"
             loading="lazy"
           />
           <div className="reveal-left absolute top-0 left-0 w-1/2 h-full bg-gray-900 z-10 pointer-events-none"></div>
@@ -148,7 +148,7 @@ const AboutScrollText = () => {
         </span>
       </span>
       
-      <span className="ml-2">{children}</span>
+      <span className="ml-1">{children}</span>
     </span>
   );
 
@@ -161,75 +161,80 @@ const AboutScrollText = () => {
   ];
 
   return (
-    <div className="bg-gray-900 text-white font-sans overflow-x-hidden">
+    <div className="w-full bg-gradient-to-br from-white to-[#9DADE5] text-[#233831] font-sans overflow-hidden">
       {/* Start Screen */}
-      <section ref={startRef} className="relative flex items-center justify-center min-h-screen">
+      <section ref={startRef} className="relative flex items-center justify-center min-h-screen w-full px-0">
         {/* Blur background effect */}
-        <div className="absolute top-[35%] left-1/2 transform -translate-x-1/2 translate-y-1/2 -z-10 w-[400px] h-[160px] bg-cyan-400 rounded-full blur-[300px]"></div>
+        <div className="absolute top-[35%] left-1/2 transform -translate-x-1/2 translate-y-1/2 -z-10 w-[300px] h-[120px] bg-orange-400 rounded-full blur-[200px]"></div>
         
-        <div className="relative flex items-center justify-center flex-col max-w-[575px] text-center px-4">
-          <div className="block w-[120px] mb-8">
-            <div className="w-full h-8 bg-white rounded flex items-center justify-center text-gray-900 font-bold text-sm">
-              YOUR LOGO
-            </div>
+        <div className="relative flex items-center justify-center flex-col w-full max-w-4xl text-center px-4 sm:px-6 lg:px-8">
+          <div className="block w-[80px] sm:w-[100px] lg:w-[120px] mb-6 sm:mb-8">
+            <img 
+              src="/finzep-logo-navbar.png" 
+              alt="Finzep Logo"
+              className="w-full h-auto"
+            />
           </div>
           
-          <h1 className="text-4xl lg:text-6xl font-normal uppercase leading-tight mb-4 font-['Oswald']">
-            SCROLLING ANIMATION
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 text-[#233831] max-w-full">
+            Finzep aims to revolutionize the Digital Payments & Collection system via 3 flagship solutions
           </h1>
           
-          <p className="text-lg lg:text-xl font-medium leading-relaxed text-gray-400 mb-20 font-['Poppins']">
-            Dramatic text presentation is always a good choice. Scroll down to see the animation.
+          <p className="text-base sm:text-lg lg:text-xl font-medium leading-relaxed text-gray-600 mb-16 sm:mb-20 max-w-3xl">
+            Transforming the future of financial technology with innovative solutions.
           </p>
           
-          <div className="absolute top-full mt-20 left-1/2 transform -translate-x-1/2 w-5 animate-bounce">
-            <div className="w-5 h-5 border-2 border-white border-t-0 border-l-0 transform rotate-45"></div>
+          <div className="absolute top-full mt-16 sm:mt-20 left-1/2 transform -translate-x-1/2 w-5 animate-bounce">
+            <div className="w-5 h-5 border-2 border-[#233831] border-t-0 border-l-0 transform rotate-45"></div>
           </div>
         </div>
       </section>
 
       {/* Text Animation */}
-      <section className="flex items-center flex-col mx-[5vw] py-20">
-        <div 
-          ref={textAnimationRef}
-          className="text-[6.5vw] lg:text-[7.35vw] leading-tight font-normal text-center uppercase font-['Oswald']"
-        >
-          {renderTextWithChars('Quality ', 'text-char')}
-          <AnimatedWord imageIndex={0} wordIndex={0} imageSrc={images[0]}>
-            is
-          </AnimatedWord>
-          {renderTextWithChars(' OUR VALUE.', 'text-char')}
-          <br />
-          {renderTextWithChars('We are sure about the quality ', 'text-char')}
-          <AnimatedWord imageIndex={1} wordIndex={1} imageSrc={images[1]}>
-            of
-          </AnimatedWord>
-          {renderTextWithChars(' our', 'text-char')}
-          <br />
-          {renderTextWithChars('services, since delivering pixel perfect ', 'text-char')}
-          <AnimatedWord imageIndex={2} wordIndex={2} imageSrc={images[2]}>
-            AND
-          </AnimatedWord>
-          <br />
-          {renderTextWithChars('smooth product to our ', 'text-char')}
-          <br />
-          <AnimatedWord imageIndex={3} wordIndex={3} imageSrc={images[3]}>
-            clients
-          </AnimatedWord>
-          {renderTextWithChars(' is our main goal.', 'text-char')}
+      <section className="flex items-center flex-col w-full px-2 sm:px-4 lg:px-6 py-12 sm:py-16">
+        <div className="w-full max-w-7xl">
+          <div 
+            ref={textAnimationRef}
+            className="text-[5vw] sm:text-[4vw] md:text-[3.5vw] lg:text-[3vw] xl:text-[2.5vw] leading-tight font-bold text-center uppercase break-words"
+          >
+            {renderTextWithChars('Transforming ', 'text-char')}
+            <AnimatedWord imageIndex={0} wordIndex={0} imageSrc={images[0]}>
+              API
+            </AnimatedWord>
+            {renderTextWithChars(' Banking, Neo Banking,', 'text-char')}
+            <br />
+            {renderTextWithChars('Connected Banking, and ', 'text-char')}
+            <AnimatedWord imageIndex={1} wordIndex={1} imageSrc={images[1]}>
+              TSP
+            </AnimatedWord>
+            {renderTextWithChars(' Business', 'text-char')}
+            <br />
+            {renderTextWithChars('Models directly with ', 'text-char')}
+            <AnimatedWord imageIndex={2} wordIndex={2} imageSrc={images[2]}>
+              India's
+            </AnimatedWord>
+            <br />
+            {renderTextWithChars('Leading Banks with ', 'text-char')}
+            <AnimatedWord imageIndex={3} wordIndex={3} imageSrc={images[3]}>
+              seamless
+            </AnimatedWord>
+            {renderTextWithChars(' solutions.', 'text-char')}
+          </div>
         </div>
       </section>
 
       {/* Final Screen */}
-      <section className="flex items-center flex-col mx-[5vw] py-8">
-        <div 
-          ref={finalRef}
-          className="self-end max-w-[35vw] lg:max-w-full text-2xl lg:text-xl font-medium leading-relaxed text-center lg:text-center font-['Poppins']"
-        >
-          {renderTextWithChars(
-            'By prioritizing quality throughout the development process and beyond, we create exceptional digital experiences that drive user engagement, satisfaction, and business success for our partners.',
-            'final-char'
-          )}
+      <section className="flex items-center flex-col w-full px-2 sm:px-4 lg:px-6 py-12 sm:py-16">
+        <div className="w-full max-w-5xl">
+          <div 
+            ref={finalRef}
+            className="text-lg sm:text-xl md:text-2xl font-medium leading-relaxed text-center max-w-full"
+          >
+            {renderTextWithChars(
+              'Driving fintech innovation through cutting-edge API solutions, empowering businesses with scalability and efficiency across India.',
+              'final-char'
+            )}
+          </div>
         </div>
       </section>
     </div>
