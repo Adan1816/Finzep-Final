@@ -7,6 +7,7 @@ import BlogCardsSection from '../components/BlogCardsSection';
 import ProgressLine from '../components/ProgressLine';
 import Navbar from '../components/Navbar';
 
+
 // Animated Counter component
 const AnimatedCounter = ({ target, duration = 2000 }) => {
   const [count, setCount] = useState(0);
