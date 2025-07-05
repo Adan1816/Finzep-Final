@@ -142,14 +142,10 @@ const Home = () => {
   useEffect(() => {
     function onScroll() {
       if (!heroSectionRef.current) return;
-      const rect = heroSectionRef.current.getBoundingClientRect();
-      // Animate between hero (start) and navbar (end) over a short scroll (160px)
-      const start = window.innerHeight * 0.9;
-      const end = start - 160;
-      let progress = 0;
-      if (rect.bottom <= end) progress = 1;
-      else if (rect.bottom >= start) progress = 0;
-      else progress = 1 - (rect.bottom - end) / (start - end);
+      const scrollY = window.scrollY || window.pageYOffset;
+      // Animate between hero (start) and navbar (end) over a quick scroll (80px)
+      const maxScroll = 80;
+      let progress = Math.min(scrollY / maxScroll, 1);
       setLogoProgress(Math.max(0, Math.min(1, progress)));
     }
     window.addEventListener('scroll', onScroll);
@@ -229,7 +225,7 @@ const Home = () => {
       <motion.section
         id="hero"
         ref={heroSectionRef}
-        className="relative w-full min-h-[calc(100vh-4rem)] pt-24 pb-12 flex items-center justify-center"
+        className="relative w-full min-h-[calc(150vh-4rem)] pt-24 pb-12 flex items-center justify-center"
         style={{
           overflow: 'hidden',
           backgroundColor: '#fff',
@@ -243,7 +239,7 @@ const Home = () => {
           src="/FINZEP-LOGO-hiDef.png"
           alt="Finzep Logo Large"
           className="mx-auto invisible"
-          style={{ maxWidth: '370px', width: '30vw', height: 'auto', display: 'block', position: 'relative', marginTop: '-300px' }}
+          style={{ maxWidth: '60vw', width: '60vw', height: 'auto', display: 'block', position: 'relative', marginTop: '-300px' }}
           onLoad={() => setImagesLoaded((prev) => ({ ...prev, hero: true }))}
         />
       </motion.section>
