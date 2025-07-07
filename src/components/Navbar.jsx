@@ -128,60 +128,60 @@ export default function Navbar() {
             pointerEvents: 'none',
           }}
         />
-        {/* Left: Nav Links */}
-        <div className="flex items-center space-x-6 mr-auto pr-16">
-          {/* Product Dropdown */}
-          <div
-            className="relative"
-            ref={productRef}
-            onMouseEnter={() => setProductOpen(true)}
-            onMouseLeave={() => setProductOpen(false)}
-          >
-            <button
-              className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded flex items-center gap-1"
-              aria-haspopup="true"
-              aria-expanded={productOpen}
-              style={{ background: 'none' }}
-              tabIndex={-1}
-              type="button"
+          {/* Left: Nav Links */}
+        <div className="flex flex-1 items-center space-x-1 min-w-0">
+            {/* Product Dropdown */}
+            <div
+              className="relative"
+              ref={productRef}
+              onMouseEnter={() => setProductOpen(true)}
+              onMouseLeave={() => setProductOpen(false)}
             >
-              Product
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-            </button>
-            {productOpen && (
-              <div
-                className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-lg shadow-white/10 border border-white/40 backdrop-blur-xl ring-1 ring-white/30 z-50 overflow-hidden animate-fadeIn"
-                style={{
-                  background: 'rgba(255,255,255,0.95)',
-                  WebkitBackdropFilter: 'blur(20px)',
-                  backdropFilter: 'blur(20px)',
-                  boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(0,0,0,0.10)',
-                  border: '1px solid rgba(255,255,255,0.4)',
-                  willChange: 'backdrop-filter'
-                }}
+              <button
+                className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded flex items-center gap-1"
+                aria-haspopup="true"
+                aria-expanded={productOpen}
+                style={{ background: 'none' }}
+                tabIndex={-1}
+                type="button"
               >
-                <div className="pt-2 p-4 grid grid-cols-1 gap-2">
-                  {PRODUCT_LINKS.map(link => (
-                    <a
-                      key={link.name}
-                      href={link.href}
-                      className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all duration-200 hover:bg-white/80 hover:backdrop-blur-2xl hover:shadow-[0_0_16px_2px_rgba(241,138,65,0.35)] focus:shadow-[0_0_16px_2px_rgba(241,138,65,0.45)]"
-                    >
-                      <span className="mt-1 text-[#F18A41]">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="currentColor" opacity="0.15"/><path d="M7 10l3 3 3-3" stroke="#F18A41" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      </span>
-                      <span>
-                        <span className="block font-semibold text-[#233831]">{link.name}</span>
-                        <span className="block text-xs text-[#233831] opacity-80">{link.desc}</span>
-                      </span>
-                    </a>
-                  ))}
+                Product
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {productOpen && (
+                <div
+                  className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-lg shadow-white/10 border border-white/40 backdrop-blur-xl ring-1 ring-white/30 z-50 overflow-hidden animate-fadeIn"
+                  style={{
+                    background: 'rgba(255,255,255,0.95)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    backdropFilter: 'blur(20px)',
+                    boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(0,0,0,0.10)',
+                    border: '1px solid rgba(255,255,255,0.4)',
+                    willChange: 'backdrop-filter'
+                  }}
+                >
+                  <div className="pt-2 p-4 grid grid-cols-1 gap-2">
+                    {PRODUCT_LINKS.map(link => (
+                      <a
+                        key={link.name}
+                        href={link.href}
+                        className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all duration-200 hover:bg-white/80 hover:backdrop-blur-2xl hover:shadow-[0_0_16px_2px_rgba(241,138,65,0.35)] focus:shadow-[0_0_16px_2px_rgba(241,138,65,0.45)]"
+                      >
+                        <span className="mt-1 text-[#F18A41]">
+                          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="currentColor" opacity="0.15"/><path d="M7 10l3 3 3-3" stroke="#F18A41" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        </span>
+                        <span>
+                          <span className="block font-semibold text-[#233831]">{link.name}</span>
+                          <span className="block text-xs text-[#233831] opacity-80">{link.desc}</span>
+                        </span>
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-          {/* Other nav links */}
-          <Link to="/aboutus" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</Link>
+              )}
+            </div>
+            {/* Other nav links */}
+            <Link to="/aboutus" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</Link>
           
           {/* Merchants Dropdown */}
           <div
@@ -233,7 +233,7 @@ export default function Navbar() {
               </div>
             )}
           </div>
-          
+
           <a href="https://apidocs.finzep.com/" target="_blank" rel="noopener noreferrer" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Developer API</a>
         </div>
 
@@ -247,65 +247,65 @@ export default function Navbar() {
               style={{ maxWidth: '120px' }}
             />
           </Link>
-        </div>
+          </div>
 
-        {/* Right Side Buttons - right on desktop, hamburger on mobile */}
+          {/* Right Side Buttons - right on desktop, hamburger on mobile */}
         <div className="flex items-center ml-auto min-w-0">
-          {/* Desktop login/signup */}
+            {/* Desktop login/signup */}
           <div className="hidden md:flex md:items-center md:space-x-4 pr-0">
             <Link
               to="/login"
               className="text-[#233831] hover:text-[#F18A41] font-medium px-5 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-            >
-              Login
+              >
+                Login
             </Link>
             <Link
               to="/signup"
               className="bg-[#F18A41] text-white font-semibold px-7 py-2 rounded-full shadow hover:bg-[#233831] hover:text-[#F18A41] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-            >
-              Sign Up
-            </Link>
-          </div>
-          {/* Hamburger - only on mobile */}
-          <div className="flex md:hidden">
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-[#F18A41] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#F18A41] shadow"
-              aria-label="Toggle menu"
-              style={{ background: 'rgba(34,34,34,0.25)' }}
-            >
-              <svg
-                className="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
               >
-                {mobileOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
+                Sign Up
+            </Link>
+            </div>
+            {/* Hamburger - only on mobile */}
+            <div className="flex md:hidden">
+              <button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-[#F18A41] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#F18A41] shadow"
+                aria-label="Toggle menu"
+                style={{ background: 'rgba(34,34,34,0.25)' }}
+              >
+                <svg
+                  className="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  {mobileOpen ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  )}
+                </svg>
+              </button>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        {mobileOpen && (
-          <div className="md:hidden bg-white/30 backdrop-blur-xl" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)' }}>
-            <div className="px-4 pt-2 pb-4 space-y-1 flex flex-col">
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="md:hidden bg-white/30 backdrop-blur-xl" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)' }}>
+          <div className="px-4 pt-2 pb-4 space-y-1 flex flex-col">
               {/* Mobile Logo */}
               <div className="flex justify-center py-4 border-b border-white/20">
                 <Link to="/" className="flex items-center" onClick={(e) => {
@@ -322,31 +322,31 @@ export default function Navbar() {
                   />
                 </Link>
               </div>
-              {/* Product Dropdown for Mobile */}
-              <button
-                className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] bg-white/10 shadow hover:bg-white"
-                onClick={() => setMobileProductOpen((open) => !open)}
-                aria-expanded={mobileProductOpen}
-                style={{ background: 'rgba(34,34,34,0.25)' }}
-              >
-                <span>Product</span>
-                <svg className={`w-4 h-4 ml-2 transition-transform ${mobileProductOpen ? 'rotate-180' : ''} group-hover:text-[#233831]`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-              </button>
-              {mobileProductOpen && (
-                <div className="pl-4 py-2 space-y-1">
-                  {PRODUCT_LINKS.map(link => (
-                    <a
-                      key={link.name}
-                      href={link.href}
-                      className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      <div className="font-semibold">{link.name}</div>
-                      <div className="text-xs text-gray-600">{link.desc}</div>
-                    </a>
-                  ))}
-                </div>
-              )}
+            {/* Product Dropdown for Mobile */}
+            <button
+              className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] bg-white/10 shadow hover:bg-white"
+              onClick={() => setMobileProductOpen((open) => !open)}
+              aria-expanded={mobileProductOpen}
+              style={{ background: 'rgba(34,34,34,0.25)' }}
+            >
+              <span>Product</span>
+              <svg className={`w-4 h-4 ml-2 transition-transform ${mobileProductOpen ? 'rotate-180' : ''} group-hover:text-[#233831]`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            {mobileProductOpen && (
+              <div className="pl-4 py-2 space-y-1">
+                {PRODUCT_LINKS.map(link => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <div className="font-semibold">{link.name}</div>
+                    <div className="text-xs text-gray-600">{link.desc}</div>
+                  </a>
+                ))}
+              </div>
+            )}
               
               {/* Merchants Dropdown for Mobile */}
               <button
@@ -373,17 +373,17 @@ export default function Navbar() {
                   ))}
                 </div>
               )}
-              {/* Other nav links */}
+            {/* Other nav links */}
               {NAV_LINKS.filter(link => link.name !== 'Merchants' && link.name !== 'Products').map((link) => (
-                link.name === 'About Us' ? (
-                  <Link
-                    key={link.name}
-                    to="/aboutus"
-                    className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
+              link.name === 'About Us' ? (
+                <Link
+                  key={link.name}
+                  to="/aboutus"
+                  className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.name}
+                </Link>
                 ) : link.name === 'Developer API' ? (
                   <a
                     key={link.name}
@@ -395,35 +395,35 @@ export default function Navbar() {
                   >
                     {link.name}
                   </a>
-                ) : (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {link.name}
-                  </a>
-                )
-              ))}
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.name}
+                </a>
+              )
+            ))}
               <Link
                 to="/login"
-                className="block text-[#233831] hover:text-[#F18A41] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-                onClick={() => setMobileOpen(false)}
-              >
-                Login
+              className="block text-[#233831] hover:text-[#F18A41] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
+              onClick={() => setMobileOpen(false)}
+            >
+              Login
               </Link>
               <Link
                 to="/signup"
-                className="block bg-[#F18A41] text-white font-semibold px-3 py-2 rounded-lg shadow hover:bg-[#233831] hover:text-[#F18A41] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-                onClick={() => setMobileOpen(false)}
-              >
-                Sign Up
+              className="block bg-[#F18A41] text-white font-semibold px-3 py-2 rounded-lg shadow hover:bg-[#233831] hover:text-[#F18A41] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
+              onClick={() => setMobileOpen(false)}
+            >
+              Sign Up
               </Link>
             </div>
-          </div>
-        )}
-      </nav>
+        </div>
+      )}
+    </nav>
     </>
   );
 } 
