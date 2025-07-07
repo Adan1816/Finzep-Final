@@ -9,14 +9,10 @@ const NAV_LINKS = [
 ];
 
 const PRODUCT_LINKS = [
-  { name: "Bulk Payment API", desc: "Efficiently Distribute Funds With Our API-Driven Bulk Payout Solutions", href: "/bulkPayment" },
-  { name: "UPI Payouts API", desc: "Enable Instant Cash Flow With API-Enabled UPI Transactions", href: "/upiPayouts" },
-  { name: "Initiate Payouts API", desc: "Schedule And Automate Payouts Seamlessly Through Our Flexible API", href: "#" },
-  { name: "Remittance API", desc: "Compliant And Reliable Remittance APIs For Secure Transfers", href: "#" },
-  { name: "PPI Wallets API", desc: "Offer A Digital Wallet Solution For Easy, API-Integrated Transactions", href: "#" },
-  { name: "AadhaarPay API", desc: "Expand Reach With Aadhaar-Based Payments Through Our Secure APIs", href: "#" },
-  { name: "Credit Card Bill Payment API", desc: "Simplify Credit Card Bill Payments For Customers With API-Powered Processing", href: "#" },
-  { name: "Utility Bill Payment API", desc: "Streamline Utility Payments With Our Convenient API Integration", href: "#" },
+  { name: "Payments", desc: "Comprehensive payment processing solutions for all your business needs", href: "#" },
+  { name: "Collections", desc: "Efficient collection services to streamline your receivables management", href: "#" },
+  { name: "Verifications", desc: "Advanced verification services for secure and compliant transactions", href: "#" },
+  { name: "Solutions", desc: "Tailored fintech solutions to drive your business growth", href: "#" },
 ];
 
 const MERCHANT_LINKS = [
