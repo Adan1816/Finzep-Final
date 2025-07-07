@@ -1,71 +1,53 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsStack from '../components/SectorsStack';
 import BlogCardsSection from '../components/BlogCardsSection';
-import ProgressLine from '../components/ProgressLine';
-import Navbar from '../components/Navbar';
 
-
-// Animated Counter component
 const AnimatedCounter = ({ target, duration = 2000 }) => {
   const [count, setCount] = useState(0);
+
   useEffect(() => {
-    let start = 0;
-    const increment = target / (duration / 16);
-    let frame;
-    const step = () => {
-      start += increment;
-      if (start < target) {
-        setCount(Math.floor(start));
-        frame = requestAnimationFrame(step);
-      } else {
-        setCount(target);
+    let startTime = null;
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      setCount(Math.floor(progress * target));
+      if (progress < 1) {
+        requestAnimationFrame(step);
       }
     };
-    frame = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frame);
+    requestAnimationFrame(step);
   }, [target, duration]);
-  return <span>{count.toLocaleString()}</span>;
-};
 
-// Carousel component
-const services = [
-  { title: 'Payments', description: 'Seamless payment solutions for your business needs.', image: '💸' },
-  { title: 'Collections', description: 'Efficient and automated collections for faster cash flow.', image: '📥' },
-  { title: 'Verification APIs', description: 'Robust APIs for KYC, bank, and identity verification.', image: '🔍' },
-  { title: 'SAAS', description: 'Powerful SaaS tools to streamline your financial operations.', image: '☁️' },
-];
+  return count.toLocaleString();
+};
 
 const Carousel = () => {
   const [current, setCurrent] = useState(0);
-  const visibleCount = 3;
-  const total = services.length;
-  
-  // Duplicate services for infinite scroll
-  const duplicatedServices = [...services, ...services];
-  
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => {
-        const next = prev + 1;
-        // Reset to 0 when we reach the end of original services
-        if (next >= total) {
-          // Use setTimeout to reset position after animation completes
-          setTimeout(() => setCurrent(0), 50);
-          return next;
-        }
-        return next;
-      });
-    }, 3000);
-    return () => clearInterval(timer);
-  }, [total]);
+  const services = [
+    { title: 'Bulk Payment API', description: 'Efficiently Distribute Funds With Our API-Driven Bulk Payout Solutions', image: '💰' },
+    { title: 'UPI Payouts API', description: 'Enable Instant Cash Flow With API-Enabled UPI Transactions', image: '⚡' },
+    { title: 'Initiate Payouts API', description: 'Schedule And Automate Payouts Seamlessly Through Our Flexible API', image: '🔄' },
+    { title: 'Remittance API', description: 'Compliant And Reliable Remittance APIs For Secure Transfers', image: '🌍' },
+    { title: 'PPI Wallets API', description: 'Offer A Digital Wallet Solution For Easy, API-Integrated Transactions', image: '💳' },
+    { title: 'AadhaarPay API', description: 'Expand Reach With Aadhaar-Based Payments Through Our Secure APIs', image: '🆔' },
+    { title: 'Credit Card Bill Payment API', description: 'Simplify Credit Card Bill Payments For Customers With API-Powered Processing', image: '💳' },
+    { title: 'Utility Bill Payment API', description: 'Streamline Utility Payments With Our Convenient API Integration', image: '⚡' },
+  ];
 
-  // Calculate transform percentage
+  const visibleCount = 4;
+  const duplicatedServices = [...services, ...services];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % services.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [services.length]);
+
   const getTransform = () => {
-    const cardWidth = 100 / visibleCount; // Each card takes 1/3 of visible width
-    return -(current * cardWidth);
+    return -(current * (100 / duplicatedServices.length));
   };
 
   return (
@@ -98,7 +80,7 @@ const Carousel = () => {
         {services.map((_, idx) => (
           <button
             key={idx}
-            className={`w-3 h-3 rounded-full transition-colors duration-200 ${(current % total) === idx ? 'bg-[#F18A41]' : 'bg-gray-300'}`}
+            className={`w-3 h-3 rounded-full transition-colors duration-200 ${(current % services.length) === idx ? 'bg-[#F18A41]' : 'bg-gray-300'}`}
             onClick={() => setCurrent(idx)}
             aria-label={`Go to slide ${idx + 1}`}
           />
@@ -114,67 +96,6 @@ const Home = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
-  const [logoProgress, setLogoProgress] = useState(0); // 0 = hero, 1 = navbar
-  const heroLogoRef = useRef(null);
-  const heroSectionRef = useRef(null);
-  const navbarLogoRef = useRef(null);
-  const [logoRects, setLogoRects] = useState({ hero: null, navbar: null });
-  const [imagesLoaded, setImagesLoaded] = useState({ hero: false, navbar: false });
-
-  // Measure logo positions/sizes
-  const measureRects = useCallback(() => {
-    const heroRect = heroLogoRef.current?.getBoundingClientRect();
-    const navbarRect = navbarLogoRef.current?.getBoundingClientRect();
-    setLogoRects({ hero: heroRect, navbar: navbarRect });
-  }, []);
-
-  useEffect(() => {
-    if (imagesLoaded.hero && imagesLoaded.navbar) {
-      measureRects();
-    }
-  }, [imagesLoaded, measureRects]);
-
-  useEffect(() => {
-    window.addEventListener('resize', measureRects);
-    return () => window.removeEventListener('resize', measureRects);
-  }, [measureRects]);
-
-  // Track scroll and interpolate logo position
-  useEffect(() => {
-    function onScroll() {
-      if (!heroSectionRef.current) return;
-      const scrollY = window.scrollY || window.pageYOffset;
-      // Animate between hero (start) and navbar (end) over a quick scroll (80px)
-      const maxScroll = 80;
-      let progress = Math.min(scrollY / maxScroll, 1);
-      setLogoProgress(Math.max(0, Math.min(1, progress)));
-    }
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // Calculate transform for the animated logo
-  let logoStyle = { opacity: 0, pointerEvents: 'none' };
-  if (logoRects.hero && logoRects.navbar && imagesLoaded.hero && imagesLoaded.navbar) {
-    // Interpolate position and scale
-    const x = logoRects.hero.left + (logoRects.navbar.left - logoRects.hero.left) * logoProgress;
-    const y = logoRects.hero.top + (logoRects.navbar.top - logoRects.hero.top) * logoProgress;
-    const w = logoRects.hero.width + (logoRects.navbar.width - logoRects.hero.width) * logoProgress;
-    const h = logoRects.hero.height + (logoRects.navbar.height - logoRects.hero.height) * logoProgress;
-    logoStyle = {
-      position: 'fixed',
-      left: 0,
-      top: 0,
-      width: w,
-      height: h,
-      transform: `translate(${x}px, ${y}px)` + (logoProgress === 0 ? '' : ''),
-      transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1), width 0.5s, height 0.5s',
-      zIndex: 200,
-      opacity: 1,
-      pointerEvents: 'none',
-    };
-  }
 
   useEffect(() => {
     const currentPhrase = phrases[phraseIndex];
@@ -203,30 +124,12 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, [text, isDeleting, phraseIndex, phrases, typingSpeed]);
 
-  useEffect(() => {
-    function onScroll() {
-      if (!heroSectionRef.current) return;
-      const rect = heroSectionRef.current.getBoundingClientRect();
-      // If the bottom of the hero section is above the navbar, trigger logo in navbar
-      if (rect.bottom <= 80) {
-        // setLogoInNavbar(true); // This state is no longer needed
-      } else {
-        // setLogoInNavbar(false); // This state is no longer needed
-      }
-    }
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   return (
     <div className="min-h-screen">
-      {/* ProgressLine removed */}
       {/* Hero Section */}
       <motion.section
         id="hero"
-        ref={heroSectionRef}
-        className="relative w-full min-h-[calc(150vh-4rem)] pt-24 pb-12 flex items-center justify-center"
+        className="relative w-full min-h-[calc(100vh-4rem)] pt-24 pb-12 flex items-center justify-center"
         style={{
           overflow: 'hidden',
           backgroundColor: '#fff',
@@ -234,26 +137,28 @@ const Home = () => {
           backgroundRepeat: 'repeat',
         }}
       >
-        {/* The hero logo is only visible for measurement, not shown to user */}
-        <img
-          ref={heroLogoRef}
-          src="/FINZEP-LOGO-hiDef.png"
-          alt="Finzep Logo Large"
-          className="mx-auto invisible"
-          style={{ maxWidth: '60vw', width: '60vw', height: 'auto', display: 'block', position: 'relative', marginTop: '-300px' }}
-          onLoad={() => setImagesLoaded((prev) => ({ ...prev, hero: true }))}
-        />
+        <div className="relative flex items-center justify-center flex-col w-full max-w-4xl text-center px-4 sm:px-6 lg:px-8">
+          <div className="block w-[80px] sm:w-[100px] lg:w-[120px] mb-6 sm:mb-8">
+            <img 
+              src="/finzep-logo-navbar.png" 
+              alt="Finzep Logo"
+              className="w-full h-auto"
+            />
+          </div>
+          
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 text-[#233831] max-w-full">
+            Finzep aims to revolutionize the Digital Payments & Collection system via 3 flagship solutions
+          </h1>
+          
+          <p className="text-base sm:text-lg lg:text-xl font-medium leading-relaxed text-gray-600 mb-16 sm:mb-20 max-w-3xl">
+            Transforming the future of financial technology with innovative solutions.
+          </p>
+          
+          <div className="absolute top-full mt-16 sm:mt-20 left-1/2 transform -translate-x-1/2 w-5 animate-bounce">
+            <div className="w-5 h-5 border-2 border-[#233831] border-t-0 border-l-0 transform rotate-45"></div>
+          </div>
+        </div>
       </motion.section>
-      {/* Animated logo morphs between hero and navbar */}
-      {logoRects.hero && logoRects.navbar && imagesLoaded.hero && imagesLoaded.navbar && (
-        <img
-          src="/FINZEP-LOGO-hiDef.png"
-          alt="Finzep Logo Animated"
-          style={logoStyle}
-        />
-      )}
-      {/* Pass navbarLogoRef to Navbar for measurement */}
-      <Navbar navbarLogoRef={navbarLogoRef} navbarLogoStyle={{ height: '6.5rem', marginLeft: '-300px' }} onLogoLoad={() => setImagesLoaded((prev) => ({ ...prev, navbar: true }))} />
 
       {/* Stats Section */}
       <motion.section
@@ -340,35 +245,50 @@ const Home = () => {
               Our comprehensive suite of financial solutions is designed to help your business grow and succeed.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {[
               {
-                title: 'User Friendly Solutions',
-                description: 'Intuitive and easy-to-use financial management tools for efficient operations.',
-                icon: '🎯',
+                title: 'Secure & Reliable',
+                description: 'Bank-level security with 99.9% uptime guarantee',
+                icon: '🔒'
               },
               {
-                title: 'Security and Compliance',
-                description: 'Advanced encryption and compliance measures to protect your data and transactions.',
-                icon: '🔒',
+                title: 'Easy Integration',
+                description: 'Simple APIs and comprehensive documentation',
+                icon: '⚡'
               },
               {
-                title: 'Financial Services',
-                description: 'Comprehensive range of services tailored to meet diverse financial needs.',
-                icon: '💼',
+                title: '24/7 Support',
+                description: 'Round-the-clock customer support and technical assistance',
+                icon: '🛟'
               },
-            ].map((feature, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-lg shadow-lg"
+              {
+                title: 'Scalable Solutions',
+                description: 'Grow with confidence using our scalable infrastructure',
+                icon: '📈'
+              },
+              {
+                title: 'Compliance Ready',
+                description: 'Built-in compliance with all major financial regulations',
+                icon: '✅'
+              },
+              {
+                title: 'Cost Effective',
+                description: 'Competitive pricing with transparent fee structure',
+                icon: '💰'
+              }
+            ].map((feature, idx) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
