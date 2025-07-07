@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const NAV_LINKS = [
   { name: "About Us", href: "#about" },
@@ -24,6 +24,7 @@ export default function Navbar() {
   const [productOpen, setProductOpen] = useState(false);
   const productRef = useRef(null);
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
+  const location = useLocation();
 
   // Close dropdown on click outside
   React.useEffect(() => {
@@ -35,6 +36,16 @@ export default function Navbar() {
     if (productOpen) document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [productOpen]);
+
+  // Handle logo click - scroll to top if on same page, navigate if different page
+  const handleLogoClick = (e) => {
+    if (location.pathname === '/') {
+      // If already on home page, scroll to top
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // If on different page, let the Link handle navigation (which will scroll to top via ScrollToTop component)
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] bg-white/20 backdrop-blur-xl transition-all duration-300" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)' }}>
@@ -100,7 +111,7 @@ export default function Navbar() {
 
           {/* Center: Logo - Absolutely positioned in exact center */}
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center" onClick={handleLogoClick}>
               <img
                 src="/finzep-logo-navbar.png"
                 alt="Finzep Logo"
@@ -170,7 +181,13 @@ export default function Navbar() {
           <div className="px-4 pt-2 pb-4 space-y-1 flex flex-col">
             {/* Mobile Logo */}
             <div className="flex justify-center py-4 border-b border-white/20">
-              <Link to="/" className="flex items-center" onClick={() => setMobileOpen(false)}>
+              <Link to="/" className="flex items-center" onClick={(e) => {
+                setMobileOpen(false);
+                if (location.pathname === '/') {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}>
                 <img
                   src="/finzep-logo-navbar.png"
                   alt="Finzep Logo"

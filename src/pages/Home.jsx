@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsStack from '../components/SectorsStack';
 import BlogCardsSection from '../components/BlogCardsSection';
 
-const AnimatedCounter = ({ target, duration = 2000 }) => {
+const AnimatedCounter = ({ target, duration = 2000, isVisible = false }) => {
   const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    let startTime = null;
-    const step = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      setCount(Math.floor(progress * target));
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-    requestAnimationFrame(step);
-  }, [target, duration]);
+    if (isVisible && !hasAnimated) {
+      setHasAnimated(true);
+      let startTime = null;
+      const step = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        setCount(Math.floor(progress * target));
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+      requestAnimationFrame(step);
+    }
+  }, [isVisible, hasAnimated, target, duration]);
 
   return count.toLocaleString();
 };
@@ -96,32 +100,62 @@ const Home = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
+  const [statsVisible, setStatsVisible] = useState(false);
+  const statsRef = useRef(null);
 
+  // Intersection Observer for stats section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsVisible(true);
+        }
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '0px 0px -100px 0px'
+      }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current);
+      }
+    };
+  }, []);
+
+  // Typing animation effect
   useEffect(() => {
     const currentPhrase = phrases[phraseIndex];
-    const shouldDelete = isDeleting;
-    const shouldMoveToNextPhrase = !shouldDelete && text === currentPhrase;
-    const shouldStartDeleting = shouldMoveToNextPhrase;
-    const shouldMoveToNextIndex = shouldDelete && text === '';
-
-    const timeout = setTimeout(() => {
-      if (shouldStartDeleting) {
-        setIsDeleting(true);
-        setTypingSpeed(50);
-      } else if (shouldMoveToNextIndex) {
-        setIsDeleting(false);
-        setPhraseIndex((phraseIndex + 1) % phrases.length);
-        setTypingSpeed(150);
+    
+    if (!isDeleting) {
+      if (text.length < currentPhrase.length) {
+        const timeout = setTimeout(() => {
+          setText(currentPhrase.slice(0, text.length + 1));
+        }, typingSpeed);
+        return () => clearTimeout(timeout);
       } else {
-        setText(
-          shouldDelete
-            ? currentPhrase.substring(0, text.length - 1)
-            : currentPhrase.substring(0, text.length + 1)
-        );
+        const timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+        return () => clearTimeout(timeout);
       }
-    }, typingSpeed);
-
-    return () => clearTimeout(timeout);
+    } else {
+      if (text.length > 0) {
+        const timeout = setTimeout(() => {
+          setText(text.slice(0, text.length - 1));
+        }, typingSpeed / 2);
+        return () => clearTimeout(timeout);
+      } else {
+        setIsDeleting(false);
+        setPhraseIndex((prev) => (prev + 1) % phrases.length);
+        setTypingSpeed(150);
+      }
+    }
   }, [text, isDeleting, phraseIndex, phrases, typingSpeed]);
 
   return (
@@ -162,6 +196,7 @@ const Home = () => {
 
       {/* Stats Section */}
       <motion.section
+        ref={statsRef}
         id="stats"
         className="relative py-20 bg-white w-full"
       >
@@ -191,7 +226,11 @@ const Home = () => {
             ].map((item, idx) => (
               <div key={idx} className="bg-gradient-to-br from-[#F18A41]/10 to-[#9DADE5]/10 rounded-xl shadow-lg p-8 flex flex-col items-center">
                 <div className="text-5xl font-extrabold text-[#F18A41] mb-2">
-                  <AnimatedCounter target={item.stat} duration={1800 + idx * 400} />
+                  <AnimatedCounter 
+                    target={item.stat} 
+                    duration={1800 + idx * 400} 
+                    isVisible={statsVisible}
+                  />
                 </div>
                 <div className="text-xl font-semibold text-gray-900 mb-2">{item.label}</div>
                 <div className="text-gray-600 text-center">{item.description}</div>

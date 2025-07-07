@@ -53,7 +53,7 @@ const ServicesCarousel = () => {
       
       .service-card {
         --card-color: #F18A41;
-        --card-bg-color: #233831;
+        --card-bg-color: #374151;
         --card-icon-size: 5rem;
         --card-title-font-size: 2.5rem;
         --card-title-margin-top: 2rem;
@@ -149,7 +149,7 @@ const ServicesCarousel = () => {
       }
       
       .service-card:hover {
-        --card-color: #233831;
+        --card-color: #374151;
         --card-bg-color: #F18A41;
         --card-icon-size: 2.5rem;
         --card-title-margin-top: 0;
@@ -188,8 +188,7 @@ const ServicesCarousel = () => {
   return (
     <div className="w-full flex justify-center py-12">
       <div
-        className="relative overflow-hidden w-full max-w-6xl"
-        style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
+        className="relative overflow-hidden w-full"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
