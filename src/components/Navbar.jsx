@@ -19,11 +19,21 @@ const PRODUCT_LINKS = [
   { name: "Utility Bill Payment API", desc: "Streamline Utility Payments With Our Convenient API Integration", href: "#" },
 ];
 
+const MERCHANT_LINKS = [
+  { name: "Private Ltd.", desc: "Solutions tailored for Private Limited Companies", href: "#" },
+  { name: "Sole Proprietorship", desc: "Payment solutions for individual business owners", href: "#" },
+  { name: "Partnership", desc: "Customized solutions for partnership firms", href: "#" },
+  { name: "LLP", desc: "Limited Liability Partnership payment solutions", href: "#" },
+];
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productOpen, setProductOpen] = useState(false);
   const productRef = useRef(null);
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
+  const [merchantOpen, setMerchantOpen] = useState(false);
+  const merchantRef = useRef(null);
+  const [mobileMerchantOpen, setMobileMerchantOpen] = useState(false);
   const location = useLocation();
 
   // Floating tablet nav visibility state
@@ -54,10 +64,13 @@ export default function Navbar() {
       if (productRef.current && !productRef.current.contains(e.target)) {
         setProductOpen(false);
       }
+      if (merchantRef.current && !merchantRef.current.contains(e.target)) {
+        setMerchantOpen(false);
+      }
     }
-    if (productOpen) document.addEventListener("mousedown", handleClick);
+    if (productOpen || merchantOpen) document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
-  }, [productOpen]);
+  }, [productOpen, merchantOpen]);
 
   // Handle logo click - scroll to top if on same page, navigate if different page
   const handleLogoClick = (e) => {
@@ -169,7 +182,58 @@ export default function Navbar() {
           </div>
           {/* Other nav links */}
           <Link to="/aboutus" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</Link>
-          <a href="#merchants" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Merchants</a>
+          
+          {/* Merchants Dropdown */}
+          <div
+            className="relative"
+            ref={merchantRef}
+            onMouseEnter={() => setMerchantOpen(true)}
+            onMouseLeave={() => setMerchantOpen(false)}
+          >
+            <button
+              className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded flex items-center gap-1"
+              aria-haspopup="true"
+              aria-expanded={merchantOpen}
+              style={{ background: 'none' }}
+              tabIndex={-1}
+              type="button"
+            >
+              Merchants
+              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            {merchantOpen && (
+              <div
+                className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-lg shadow-white/10 border border-white/40 backdrop-blur-xl ring-1 ring-white/30 z-50 overflow-hidden animate-fadeIn"
+                style={{
+                  background: 'rgba(255,255,255,0.95)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  backdropFilter: 'blur(20px)',
+                  boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(0,0,0,0.10)',
+                  border: '1px solid rgba(255,255,255,0.4)',
+                  willChange: 'backdrop-filter'
+                }}
+              >
+                <div className="pt-2 p-4 grid grid-cols-1 gap-2">
+                  {MERCHANT_LINKS.map(link => (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all duration-200 hover:bg-white/80 hover:backdrop-blur-2xl hover:shadow-[0_0_16px_2px_rgba(241,138,65,0.35)] focus:shadow-[0_0_16px_2px_rgba(241,138,65,0.45)]"
+                    >
+                      <span className="mt-1 text-[#F18A41]">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="currentColor" opacity="0.15"/><path d="M7 10l3 3 3-3" stroke="#F18A41" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </span>
+                      <span>
+                        <span className="block font-semibold text-[#233831]">{link.name}</span>
+                        <span className="block text-xs text-[#233831] opacity-80">{link.desc}</span>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          
           <a href="https://apidocs.finzep.com/" target="_blank" rel="noopener noreferrer" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Developer API</a>
         </div>
 
@@ -283,8 +347,34 @@ export default function Navbar() {
                   ))}
                 </div>
               )}
+              
+              {/* Merchants Dropdown for Mobile */}
+              <button
+                className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] bg-white/10 shadow hover:bg-white"
+                onClick={() => setMobileMerchantOpen((open) => !open)}
+                aria-expanded={mobileMerchantOpen}
+                style={{ background: 'rgba(34,34,34,0.25)' }}
+              >
+                <span>Merchants</span>
+                <svg className={`w-4 h-4 ml-2 transition-transform ${mobileMerchantOpen ? 'rotate-180' : ''} group-hover:text-[#233831]`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {mobileMerchantOpen && (
+                <div className="pl-4 py-2 space-y-1">
+                  {MERCHANT_LINKS.map(link => (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <div className="font-semibold">{link.name}</div>
+                      <div className="text-xs text-gray-600">{link.desc}</div>
+                    </a>
+                  ))}
+                </div>
+              )}
               {/* Other nav links */}
-              {NAV_LINKS.map((link) => (
+              {NAV_LINKS.filter(link => link.name !== 'Merchants' && link.name !== 'Products').map((link) => (
                 link.name === 'About Us' ? (
                   <Link
                     key={link.name}
