@@ -9,6 +9,7 @@ import UPIPayouts from './pages/UPIPayouts';
 
 import AboutUs from './pages/AboutUs';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/upiPayouts" element={<PageWrapper><UPIPayouts /></PageWrapper>} />
               <Route path="/aboutus" element={<PageWrapper><AboutUs /></PageWrapper>} />
               <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
+              <Route path="/signup" element={<PageWrapper><Signup /></PageWrapper>} />
             </Routes>
           </AnimatePresence>
         </main>

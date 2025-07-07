@@ -115,18 +115,18 @@ export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
           <div className="flex items-center">
             {/* Desktop login/signup */}
             <div className="hidden md:flex md:items-center md:space-x-3 pr-0">
-              <a
-                href="#login"
+              <Link
+                to="/login"
                 className="text-[#233831] hover:text-[#F18A41] font-medium px-3 py-1 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
               >
                 Login
-              </a>
-              <a
-                href="#signup"
+              </Link>
+              <Link
+                to="/signup"
                 className="bg-[#F18A41] text-white font-semibold px-4 py-1.5 rounded-lg shadow hover:bg-[#233831] hover:text-[#F18A41] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
               >
                 Sign Up
-              </a>
+              </Link>
             </div>
             {/* Hamburger - only on mobile */}
             <div className="flex md:hidden">
@@ -217,20 +217,20 @@ export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
                 </a>
               )
             ))}
-            <a
-              href="#login"
+            <Link
+              to="/login"
               className="block text-[#233831] hover:text-[#F18A41] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
               onClick={() => setMobileOpen(false)}
             >
               Login
-            </a>
-            <a
-              href="#signup"
+            </Link>
+            <Link
+              to="/signup"
               className="block bg-[#F18A41] text-white font-semibold px-3 py-2 rounded-lg shadow hover:bg-[#233831] hover:text-[#F18A41] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
               onClick={() => setMobileOpen(false)}
             >
               Sign Up
-            </a>
+            </Link>
           </div>
         </div>
       )}
