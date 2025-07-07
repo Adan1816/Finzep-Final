@@ -19,7 +19,7 @@ const PRODUCT_LINKS = [
   { name: "Utility Bill Payment API", desc: "Streamline Utility Payments With Our Convenient API Integration", href: "#" },
 ];
 
-export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
+export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productOpen, setProductOpen] = useState(false);
   const productRef = useRef(null);
@@ -39,7 +39,7 @@ export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] bg-white/20 backdrop-blur-xl transition-all duration-300" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center w-full justify-between md:relative">
+        <div className="flex h-16 items-center w-full relative">
           {/* Left: Nav Links */}
           <div className="flex flex-1 items-center space-x-6">
             {/* Product Dropdown */}
@@ -98,21 +98,19 @@ export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
             <a href="#developer-api" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Developer API</a>
           </div>
 
-          {/* Center: Animated logo appears here on scroll */}
-          <div className="flex-1 flex items-center justify-center">
-            {/* Hidden logo for measurement only */}
-            <img
-              ref={navbarLogoRef}
-              src="/FINZEP-LOGO-hiDef.png"
-              alt="Finzep Logo Navbar"
-              className="w-auto invisible"
-              style={{ maxHeight: 'none', position: 'relative', ...(navbarLogoStyle || {}) }}
-              onLoad={onLogoLoad}
-            />
+          {/* Center: Logo - Absolutely positioned in exact center */}
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <Link to="/" className="flex items-center">
+              <img
+                src="/finzep-logo-navbar.png"
+                alt="Finzep Logo"
+                className="h-8 w-auto hover:opacity-80 transition-opacity duration-200"
+              />
+            </Link>
           </div>
 
           {/* Right Side Buttons - right on desktop, hamburger on mobile */}
-          <div className="flex items-center">
+          <div className="flex items-center ml-auto">
             {/* Desktop login/signup */}
             <div className="hidden md:flex md:items-center md:space-x-3 pr-0">
               <Link
@@ -170,6 +168,16 @@ export default function Navbar({ navbarLogoRef, navbarLogoStyle, onLogoLoad }) {
       {mobileOpen && (
         <div className="md:hidden bg-white/30 backdrop-blur-xl" style={{ WebkitBackdropFilter: 'blur(20px)', backdropFilter: 'blur(20px)' }}>
           <div className="px-4 pt-2 pb-4 space-y-1 flex flex-col">
+            {/* Mobile Logo */}
+            <div className="flex justify-center py-4 border-b border-white/20">
+              <Link to="/" className="flex items-center" onClick={() => setMobileOpen(false)}>
+                <img
+                  src="/finzep-logo-navbar.png"
+                  alt="Finzep Logo"
+                  className="h-8 w-auto"
+                />
+              </Link>
+            </div>
             {/* Product Dropdown for Mobile */}
             <button
               className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] bg-white/10 shadow hover:bg-white"

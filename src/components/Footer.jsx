@@ -36,11 +36,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <img
-              src="public/finzep-logo-navbar.png"
-              alt="Finzep"
-              className="h-8 w-auto mb-4"
-            />
+            <Link to="/">
+              <img
+                src="/finzep-logo-navbar.png"
+                alt="Finzep"
+                className="h-8 w-auto mb-4 hover:opacity-80 transition-opacity duration-200"
+              />
+            </Link>
             <p className="text-gray-800 mb-4 font-medium">
               Elevate your business with Finzep's innovative solutions. Scalable platform and plug-and-play APIs simplify checkouts, payment management and more.
             </p>
