@@ -84,7 +84,7 @@ const Signup = () => {
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-white"
+        className="flex-1 flex items-start justify-center px-4 sm:px-6 lg:px-8 pt-24 pb-12 bg-white"
       >
         <div className="max-w-md w-full space-y-8">
           {/* Mobile Logo - only visible on mobile */}
