@@ -128,9 +128,9 @@ const Footer = () => {
             <div>
               <h4 className="text-sm font-bold text-orange-700 mb-1">Address</h4>
               <p className="text-gray-800 text-sm font-medium">
-                123 Business District<br />
-                Mumbai, Maharashtra 400001<br />
-                India
+                411, REGUS TOWER, 4TH FLOOR, PLOT NO 18, SEC-142<br />
+                Nepz Post Office, Gautam Buddha Nagar, Noida Uttar Pradesh<br />
+                India, 201305
               </p>
             </div>
           </div>
@@ -143,7 +143,7 @@ const Footer = () => {
             <div>
               <h4 className="text-sm font-bold text-orange-700 mb-1">Email</h4>
               <a href="mailto:contact@finzep.com" className="text-gray-800 hover:text-orange-600 transition-colors text-sm font-medium">
-                contact@finzep.com
+                info@finzep.com
               </a>
             </div>
           </div>
@@ -156,7 +156,7 @@ const Footer = () => {
             <div>
               <h4 className="text-sm font-bold text-orange-700 mb-1">Phone</h4>
               <a href="tel:+911234567890" className="text-gray-800 hover:text-orange-600 transition-colors text-sm font-medium">
-                +91 123 456 7890
+                +91-9151838538
               </a>
             </div>
           </div>
