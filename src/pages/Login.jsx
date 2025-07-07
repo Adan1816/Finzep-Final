@@ -69,12 +69,12 @@ const Login = () => {
       </motion.div>
 
       {/* Right Side - Form */}
-      <motion.div
+    <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-white"
-      >
+    >
         <div className="max-w-md w-full space-y-8">
           {/* Mobile Logo - only visible on mobile */}
           <div className="lg:hidden text-center">
@@ -90,50 +90,50 @@ const Login = () => {
           </div>
 
           <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-            <form className="space-y-6">
-              <div>
+          <form className="space-y-6">
+            <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email address
-                </label>
+                Email address
+              </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                     </svg>
                   </div>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
                     className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#F18A41] focus:border-transparent transition-all duration-200"
                     placeholder="john@example.com"
-                  />
-                </div>
+                />
               </div>
+            </div>
 
-              <div>
+            <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
+                Password
+              </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   </div>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
                     className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#F18A41] focus:border-transparent transition-all duration-200"
                     placeholder="••••••••"
-                  />
-                </div>
+                />
               </div>
+            </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -221,7 +221,7 @@ const Login = () => {
           </div>
         </div>
       </motion.div>
-    </div>
+      </div>
   );
 };
 

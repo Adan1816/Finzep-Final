@@ -172,13 +172,6 @@ const Home = () => {
         }}
       >
         <div className="relative flex items-center justify-center flex-col w-full max-w-4xl text-center px-4 sm:px-6 lg:px-8">
-          <div className="block w-[80px] sm:w-[100px] lg:w-[120px] mb-6 sm:mb-8">
-            <img 
-              src="/finzep-logo-navbar.png" 
-              alt="Finzep Logo"
-              className="w-full h-auto"
-            />
-          </div>
           
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 text-[#233831] max-w-full">
             Finzep aims to revolutionize the Digital Payments & Collection system via 3 flagship solutions
