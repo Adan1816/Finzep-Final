@@ -116,7 +116,7 @@ export default function Navbar() {
           }}
         />
         {/* Left: Nav Links */}
-        <div className="flex flex-1 items-center space-x-8 min-w-0">
+        <div className="flex items-center space-x-6 mr-auto pr-16">
           {/* Product Dropdown */}
           <div
             className="relative"
