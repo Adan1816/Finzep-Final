@@ -179,54 +179,13 @@ export default function Navbar() {
             <Link to="/aboutus" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded" style={{ paddingRight: 10 }}>About Us</Link>
           
           {/* Merchants Dropdown */}
-          <div
-            className="relative"
-            ref={merchantRef}
-            onMouseEnter={() => setMerchantOpen(true)}
-            onMouseLeave={() => setMerchantOpen(false)}
+          <Link
+            to="/merchants"
+            className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded"
+            style={{ paddingRight: 10 }}
           >
-            <button
-              className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded flex items-center gap-1"
-              aria-haspopup="true"
-              aria-expanded={merchantOpen}
-              style={{ background: 'none', paddingLeft: 0, paddingRight: 10 }}
-              tabIndex={-1}
-              type="button"
-            >
-              Merchants
-            </button>
-            {merchantOpen && (
-              <div
-                className="absolute left-0 min-w-full w-[420px] rounded-2xl shadow-lg shadow-white/10 border border-white/40 backdrop-blur-xl ring-1 ring-white/30 z-50 overflow-hidden animate-fadeIn"
-                style={{
-                  background: 'rgba(255,255,255,0.95)',
-                  WebkitBackdropFilter: 'blur(20px)',
-                  backdropFilter: 'blur(20px)',
-                  boxShadow: '0 4px 32px 0 rgba(31, 38, 135, 0.10) inset, 0 1.5px 8px 0 rgba(0,0,0,0.10)',
-                  border: '1px solid rgba(255,255,255,0.4)',
-                  willChange: 'backdrop-filter'
-                }}
-              >
-                <div className="pt-2 p-4 grid grid-cols-1 gap-2">
-                  {MERCHANT_LINKS.map(link => (
-                    <a
-                      key={link.name}
-                      href={link.href}
-                      className="flex items-start gap-3 rounded-xl px-3 py-2 transition-all duration-200 hover:bg-white/80 hover:backdrop-blur-2xl hover:shadow-[0_0_16px_2px_rgba(241,138,65,0.35)] focus:shadow-[0_0_16px_2px_rgba(241,138,65,0.45)]"
-                    >
-                      <span className="mt-1 text-[#F18A41]">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="currentColor" opacity="0.15"/><path d="M7 10l3 3 3-3" stroke="#F18A41" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      </span>
-                      <span>
-                        <span className="block font-semibold text-[#233831]">{link.name}</span>
-                        <span className="block text-xs text-[#233831] opacity-80">{link.desc}</span>
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+            Merchants
+          </Link>
 
           {/* Blogs Button */}
           <Link to="/blogs" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded" style={{ paddingRight: 10 }}>Blogs</Link>
@@ -345,29 +304,13 @@ export default function Navbar() {
             )}
               
               {/* Merchants Dropdown for Mobile */}
-              <button
-                className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors bg-white/10 shadow hover:bg-white"
-                onClick={() => setMobileMerchantOpen((open) => !open)}
-                aria-expanded={mobileMerchantOpen}
-                style={{ background: 'rgba(34,34,34,0.25)' }}
+              <Link
+                to="/merchants"
+                className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+                onClick={() => setMobileOpen(false)}
               >
-                <span>Merchants</span>
-              </button>
-              {mobileMerchantOpen && (
-                <div className="pl-4 py-2 space-y-1">
-                  {MERCHANT_LINKS.map(link => (
-                    <a
-                      key={link.name}
-                      href={link.href}
-                      className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      <div className="font-semibold">{link.name}</div>
-                      <div className="text-xs text-gray-600">{link.desc}</div>
-                    </a>
-                  ))}
-                </div>
-              )}
+                Merchants
+              </Link>
             {/* Other nav links */}
             <Link
               to="/aboutus"
