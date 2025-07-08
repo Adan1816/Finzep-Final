@@ -11,11 +11,8 @@ import UPIPayouts from './pages/UPIPayouts';
 import AboutUs from './pages/AboutUs';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-<<<<<<< HEAD
 import Merchants from './pages/Merchants';
-=======
 import Blogs from './pages/Blogs';
->>>>>>> 1acc3b428c5720c2f87741d806fff38d240aaf50
 
 // ScrollToTop component to handle scrolling to top on route changes
 function ScrollToTop() {
@@ -48,11 +45,8 @@ function App() {
               <Route path="/aboutus" element={<PageWrapper><AboutUs /></PageWrapper>} />
               <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
               <Route path="/signup" element={<PageWrapper><Signup /></PageWrapper>} />
-<<<<<<< HEAD
               <Route path="/merchants" element={<PageWrapper><Merchants /></PageWrapper>} />
-=======
               <Route path="/blogs" element={<PageWrapper><Blogs /></PageWrapper>} />
->>>>>>> 1acc3b428c5720c2f87741d806fff38d240aaf50
             </Routes>
           </AnimatePresence>
         </main>
