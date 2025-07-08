@@ -99,7 +99,7 @@ export default function Navbar() {
       <nav
         className={`fixed left-1/2 top-8 z-[100] transform -translate-x-1/2 transition-all duration-500
           ${showNav ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-8'}
-          w-[99vw] max-w-7xl rounded-full shadow-2xl bg-white/30 border border-white/40 flex items-center px-10 py-3
+          w-[99vw] max-w-7xl rounded-full shadow-2xl bg-white/30 border border-white/40 flex items-center px-20 py-4
         `}
         style={{
           WebkitBackdropFilter: 'blur(32px)',
@@ -125,7 +125,7 @@ export default function Navbar() {
           }}
         />
           {/* Left: Nav Links */}
-        <div className="flex flex-1 items-center space-x-1 min-w-0">
+        <div className="flex flex-1 items-center space-x-1 min-w-0 pr-16 justify-start">
             {/* Product Dropdown */}
             <div
               className="relative"
@@ -134,10 +134,10 @@ export default function Navbar() {
               onMouseLeave={() => setProductOpen(false)}
             >
               <button
-                className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded flex items-center gap-1"
+                className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 pl-0 rounded flex items-center gap-1"
                 aria-haspopup="true"
                 aria-expanded={productOpen}
-                style={{ background: 'none' }}
+                style={{ background: 'none', paddingLeft: 0, paddingRight: 10 }}
                 tabIndex={-1}
                 type="button"
               >
@@ -176,7 +176,7 @@ export default function Navbar() {
               )}
             </div>
             {/* Other nav links */}
-            <Link to="/aboutus" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">About Us</Link>
+            <Link to="/aboutus" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded" style={{ paddingRight: 10 }}>About Us</Link>
           
           {/* Merchants Dropdown */}
           <div
@@ -186,10 +186,10 @@ export default function Navbar() {
             onMouseLeave={() => setMerchantOpen(false)}
           >
             <button
-              className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded flex items-center gap-1"
+              className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded flex items-center gap-1"
               aria-haspopup="true"
               aria-expanded={merchantOpen}
-              style={{ background: 'none' }}
+              style={{ background: 'none', paddingLeft: 0, paddingRight: 10 }}
               tabIndex={-1}
               type="button"
             >
@@ -228,7 +228,10 @@ export default function Navbar() {
             )}
           </div>
 
-          <a href="https://apidocs.finzep.com/" target="_blank" rel="noopener noreferrer" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium px-2 py-1 rounded">Developer API</a>
+          {/* Blogs Button */}
+          <Link to="/blogs" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded" style={{ paddingRight: 10 }}>Blogs</Link>
+
+          <a href="https://apidocs.finzep.com/" target="_blank" rel="noopener noreferrer" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded" style={{ paddingRight: 10 }}>Developer API</a>
         </div>
 
         {/* Center: Logo - Absolutely positioned in exact center, with extra margin to avoid overlap */}
@@ -366,38 +369,30 @@ export default function Navbar() {
                 </div>
               )}
             {/* Other nav links */}
-              {NAV_LINKS.filter(link => link.name !== 'Merchants' && link.name !== 'Products').map((link) => (
-              link.name === 'About Us' ? (
-                <Link
-                  key={link.name}
-                  to="/aboutus"
-                  className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {link.name}
-                </Link>
-                ) : link.name === 'Developer API' ? (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {link.name}
-                  </a>
-              ) : (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {link.name}
-                </a>
-              )
-            ))}
+            <Link
+              to="/aboutus"
+              className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+              onClick={() => setMobileOpen(false)}
+            >
+              About Us
+            </Link>
+            {/* Blogs Button for Mobile */}
+            <Link
+              to="/blogs"
+              className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+              onClick={() => setMobileOpen(false)}
+            >
+              Blogs
+            </Link>
+            <a
+              href="https://apidocs.finzep.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+              onClick={() => setMobileOpen(false)}
+            >
+              Developer API
+            </a>
               <Link
                 to="/login"
               className="block text-[#233831] hover:text-[#F18A41] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
