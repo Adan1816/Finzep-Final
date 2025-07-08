@@ -142,7 +142,6 @@ export default function Navbar() {
                 type="button"
               >
                 Product
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
               {productOpen && (
                 <div
@@ -195,7 +194,6 @@ export default function Navbar() {
               type="button"
             >
               Merchants
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </button>
             {merchantOpen && (
               <div
@@ -320,13 +318,12 @@ export default function Navbar() {
               </div>
             {/* Product Dropdown for Mobile */}
             <button
-              className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] bg-white/10 shadow hover:bg-white"
+              className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors bg-white/10 shadow hover:bg-white"
               onClick={() => setMobileProductOpen((open) => !open)}
               aria-expanded={mobileProductOpen}
               style={{ background: 'rgba(34,34,34,0.25)' }}
             >
               <span>Product</span>
-              <svg className={`w-4 h-4 ml-2 transition-transform ${mobileProductOpen ? 'rotate-180' : ''} group-hover:text-[#233831]`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </button>
             {mobileProductOpen && (
               <div className="pl-4 py-2 space-y-1">
@@ -346,13 +343,12 @@ export default function Navbar() {
               
               {/* Merchants Dropdown for Mobile */}
               <button
-                className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] bg-white/10 shadow hover:bg-white"
+                className="flex items-center justify-between w-full text-white hover:text-[#233831] font-medium px-3 py-2 rounded transition-colors bg-white/10 shadow hover:bg-white"
                 onClick={() => setMobileMerchantOpen((open) => !open)}
                 aria-expanded={mobileMerchantOpen}
                 style={{ background: 'rgba(34,34,34,0.25)' }}
               >
                 <span>Merchants</span>
-                <svg className={`w-4 h-4 ml-2 transition-transform ${mobileMerchantOpen ? 'rotate-180' : ''} group-hover:text-[#233831]`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
               {mobileMerchantOpen && (
                 <div className="pl-4 py-2 space-y-1">
