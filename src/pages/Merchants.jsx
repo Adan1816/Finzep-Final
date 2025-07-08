@@ -37,7 +37,7 @@ const Merchants = () => {
       <div className="w-full max-w-5xl min-h-[520px] rounded-3xl bg-white/80 shadow-2xl border border-white/40 flex flex-col md:flex-row overflow-hidden relative" style={{backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)'}}>
         {/* Connected Tab Group */}
         <div className="relative flex flex-col items-center justify-center min-w-[260px] bg-white/60 py-10 px-4 md:px-6 border-r border-white/30">
-          <div className="relative w-full flex flex-col gap-0 rounded-2xl bg-white/60 shadow-inner overflow-hidden">
+          <div className="relative w-full flex flex-col gap-2 rounded-2xl bg-white/60 shadow-inner overflow-hidden">
             {/* Animated Marker */}
             <motion.div
               layout
@@ -49,21 +49,23 @@ const Merchants = () => {
                 pointerEvents: 'none',
                 boxShadow: '0 4px 24px 0 rgba(241,138,65,0.10)',
                 border: '1.5px solid #F18A41',
-                background: 'rgba(241,138,65,0.10)',
+                background: 'rgba(241,138,65,0.10)'
               }}
             />
             {tabNames.map((name, idx) => (
               <button
                 key={name}
                 ref={el => tabRefs.current[idx] = el}
-                className={`relative z-10 w-full h-14 flex items-center px-6 text-base md:text-lg font-semibold transition-all duration-200 focus:outline-none
+                className={`relative z-10 w-full h-14 flex items-center px-6 text-base md:text-lg font-semibold transition-all duration-200 outline-none focus:outline-none focus:ring-0 active:outline-none active:ring-0 border-none focus:border-none
                   ${selected === idx
                     ? 'text-[#F18A41] font-bold'
                     : 'text-[#233831] hover:bg-[#F18A41]/10 hover:text-[#F18A41]'}
                 `}
-                style={{ background: 'transparent', borderRadius: 0, borderBottom: idx !== tabNames.length - 1 ? '1px solid #f3f4f6' : 'none' }}
+                style={{ background: 'transparent', borderRadius: 12, border: 'none', outline: 'none' }}
                 onClick={() => setSelected(idx)}
                 tabIndex={0}
+                type="button"
+                autoComplete="off"
               >
                 {name}
               </button>
