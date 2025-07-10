@@ -195,31 +195,31 @@ const Merchants = () => {
       <div className="flex items-center justify-center w-full pt-32 pb-12 px-2">
         <div className="w-full max-w-5xl min-h-[520px] rounded-3xl bg-white/80 shadow-2xl border border-white/40 flex flex-col overflow-hidden relative" style={{backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)'}}>
           {/* Horizontal Tab Group */}
-          <div className="relative w-full flex flex-col items-center justify-center bg-white/60 pt-8 px-4 md:px-8 border-b border-white/30">
-            <div className="relative w-full max-w-4xl mx-auto flex gap-2 rounded-2xl bg-white/60 shadow-inner overflow-x-auto">
+          <div className="relative w-full flex flex-col items-center justify-center bg-gradient-to-b from-white/80 to-white/60 pt-6 pb-4 px-4 md:px-8 border-b border-white/40">
+            <div className="relative w-full max-w-4xl mx-auto flex justify-evenly rounded-2xl bg-white/80 shadow-lg border border-white/50 overflow-hidden">
               {/* Animated Marker */}
               <motion.div
                 layout
                 transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                className="absolute top-0 h-full z-0 rounded-2xl bg-[#F18A41]/20 shadow-lg"
+                className="absolute top-0 h-full z-0 rounded-xl bg-gradient-to-r from-[#F18A41]/20 to-[#F18A41]/10 shadow-lg"
                 style={{
                   left: markerStyle.left,
                   width: markerStyle.width,
                   height: '100%',
                   pointerEvents: 'none',
-                  boxShadow: '0 4px 24px 0 rgba(241,138,65,0.10)',
-                  border: '1.5px solid #F18A41',
-                  background: 'rgba(241,138,65,0.10)'
+                  boxShadow: '0 4px 20px 0 rgba(241,138,65,0.15)',
+                  border: '1px solid rgba(241,138,65,0.3)',
+                  background: 'linear-gradient(90deg, rgba(241,138,65,0.15) 0%, rgba(241,138,65,0.08) 100%)'
                 }}
               />
               {tabNames.map((name, idx) => (
                 <button
                   key={name}
                   ref={el => tabRefs.current[idx] = el}
-                  className={`relative z-10 h-12 px-6 flex items-center text-base md:text-lg font-semibold transition-all duration-200 outline-none focus:outline-none focus:ring-0 active:outline-none active:ring-0 border-none focus:border-none bg-transparent
+                  className={`relative z-10 h-14 px-8 flex items-center justify-center text-sm md:text-base font-medium transition-all duration-300 outline-none focus:outline-none focus:ring-0 active:outline-none active:ring-0 border-none focus:border-none bg-transparent whitespace-nowrap
                     ${selected === idx
-                      ? 'text-[#F18A41] font-bold'
-                      : 'text-[#233831] hover:bg-[#F18A41]/10 hover:text-[#F18A41]'}
+                      ? 'text-[#F18A41] font-bold drop-shadow-sm'
+                      : 'text-[#233831]/80 hover:text-[#F18A41] hover:bg-[#F18A41]/5'}
                   `}
                   style={{ borderRadius: 12, border: 'none', outline: 'none', background: 'transparent' }}
                   onClick={() => setSelected(idx)}
