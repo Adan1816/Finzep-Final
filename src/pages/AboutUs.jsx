@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import AboutScrollText from '../components/AboutScrollText';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -7,6 +7,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutUs = () => {
+  const teamGridRef = useRef(null);
+
   useEffect(() => {
     // Additional animations for the About Us page
     const ctx = gsap.context(() => {
@@ -52,6 +54,23 @@ const AboutUs = () => {
           }
         }
       );
+
+      // Animate team grid gap
+      if (teamGridRef.current) {
+        gsap.set(teamGridRef.current, { gap: '4rem' });
+        ScrollTrigger.create({
+          trigger: teamGridRef.current,
+          start: 'top 90%',
+          end: 'top 30%',
+          scrub: 1,
+          onUpdate: self => {
+            // Animate gap from 4rem (64px) to 2rem (32px)
+            const progress = Math.min(1, Math.max(0, self.progress));
+            const gap = 64 - (32 * progress);
+            teamGridRef.current.style.gap = `${gap}px`;
+          }
+        });
+      }
 
       // CTA section animation
       gsap.fromTo('.cta-content', 
@@ -156,9 +175,9 @@ const AboutUs = () => {
             </p>
           </div>
 
-          <div className="team-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="team-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4" ref={teamGridRef} style={{gap: '4rem'}}>
             {/* Team Member 1 */}
-            <div className="team-member rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center">
+            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center" style={{ boxShadow: '8px 8px 24px -8px #F18A41aa, 0 4px 16px 0 rgba(241,138,65,0.10)' }}>
               <div className="w-full h-64 bg-gradient-to-br from-[#23243a] to-[#181926] flex items-center justify-center">
                 <div className="w-24 h-24 bg-[#101014] rounded-full flex items-center justify-center border-2 border-[#23243a]">
                   <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
@@ -176,7 +195,7 @@ const AboutUs = () => {
             </div>
 
             {/* Team Member 2 */}
-            <div className="team-member rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center">
+            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center" style={{ boxShadow: '8px 8px 24px -8px #F18A41aa, 0 4px 16px 0 rgba(241,138,65,0.10)' }}>
               <div className="w-full h-64 bg-gradient-to-br from-[#23243a] to-[#181926] flex items-center justify-center">
                 <div className="w-24 h-24 bg-[#101014] rounded-full flex items-center justify-center border-2 border-[#23243a]">
                   <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
@@ -194,7 +213,7 @@ const AboutUs = () => {
             </div>
 
             {/* Team Member 3 */}
-            <div className="team-member rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center">
+            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center" style={{ boxShadow: '8px 8px 24px -8px #F18A41aa, 0 4px 16px 0 rgba(241,138,65,0.10)' }}>
               <div className="w-full h-64 bg-gradient-to-br from-[#23243a] to-[#181926] flex items-center justify-center">
                 <div className="w-24 h-24 bg-[#101014] rounded-full flex items-center justify-center border-2 border-[#23243a]">
                   <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
@@ -212,7 +231,7 @@ const AboutUs = () => {
             </div>
 
             {/* Team Member 4 */}
-            <div className="team-member rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center">
+            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center" style={{ boxShadow: '8px 8px 24px -8px #F18A41aa, 0 4px 16px 0 rgba(241,138,65,0.10)' }}>
               <div className="w-full h-64 bg-gradient-to-br from-[#23243a] to-[#181926] flex items-center justify-center">
                 <div className="w-24 h-24 bg-[#101014] rounded-full flex items-center justify-center border-2 border-[#23243a]">
                   <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
