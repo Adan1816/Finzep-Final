@@ -96,9 +96,9 @@ const AboutScrollText = () => {
       if (finalTextChars) {
         gsap.fromTo(
           finalTextChars,
-          { color: '#9DADE5' },
+          { color: '#23243a' },
           {
-            color: '#233831',
+            color: '#fff',
             stagger: 0.05,
             scrollTrigger: {
               trigger: finalRef.current,

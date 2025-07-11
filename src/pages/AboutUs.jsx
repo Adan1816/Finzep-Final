@@ -10,23 +10,31 @@ const AboutUs = () => {
   useEffect(() => {
     // Additional animations for the About Us page
     const ctx = gsap.context(() => {
-      // Cards animation with staggered fade-in from bottom - triggers every time
-      gsap.fromTo('.card-item', 
-        { y: 80, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.15,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.cards-container',
-            start: 'top 85%',
-            end: 'bottom 15%',
-            toggleActions: 'play none none reverse',
-          }
-        }
-      );
+      // Cards animation with smooth batch fade-in from bottom
+      ScrollTrigger.batch('.card-item', {
+        onEnter: batch => {
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            stagger: 0.10,
+            duration: 0.6,
+            ease: 'power2.out',
+          });
+        },
+        onLeaveBack: batch => {
+          gsap.to(batch, {
+            opacity: 0,
+            y: 40,
+            stagger: 0.10,
+            duration: 0.4,
+            ease: 'power2.in',
+          });
+        },
+        start: 'top 85%',
+        end: 'bottom 15%',
+        toggleActions: 'play none none reverse',
+      });
+      gsap.set('.card-item', { opacity: 0, y: 40 });
 
       // Team section animation
       gsap.fromTo('.team-member', 
