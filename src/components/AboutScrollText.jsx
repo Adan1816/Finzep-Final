@@ -54,37 +54,37 @@ const AboutScrollText = () => {
           onEnter: () => {
             // Expand wrapper
             gsap.to(wrapper, {
-              width: '8vw',
-              duration: 0.5,
+              width: '12vw',
+              duration: 0.6,
               ease: 'power2.out',
             });
             
             // Reveal animation
             gsap.to(revealLeft, {
               xPercent: -100,
-              duration: 0.5,
+              duration: 0.6,
               ease: 'power2.out',
             });
             
             gsap.to(revealRight, {
               xPercent: 100,
-              duration: 0.5,
+              duration: 0.6,
               ease: 'power2.out',
-              delay: 0.05,
+              delay: 0.08,
             });
           },
           onLeaveBack: () => {
             // Collapse wrapper
             gsap.to(wrapper, {
               width: 0,
-              duration: 0.5,
+              duration: 0.6,
               ease: 'power2.inOut',
             });
             
             // Hide animation
             gsap.to([revealLeft, revealRight], {
               xPercent: 0,
-              duration: 0.5,
+              duration: 0.6,
               ease: 'power2.inOut',
             });
           },
@@ -133,14 +133,14 @@ const AboutScrollText = () => {
     >
       <span className="relative inline-block">
         {/* Blur background */}
-        <span className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full max-w-[8vw] max-h-[3vw] rounded-full bg-orange-400 blur-[3vw] z-0 pointer-events-none"></span>
+        <span className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full max-w-[12vw] max-h-[4.5vw] rounded-full bg-orange-400 blur-[4vw] z-0 pointer-events-none"></span>
         
         {/* Image wrapper */}
-        <span className="image-wrapper relative inline-block flex-shrink-0 overflow-hidden mx-[0.2vw] w-0 max-w-[8vw] h-[3vw]">
+        <span className="image-wrapper relative inline-block flex-shrink-0 overflow-hidden mx-[0.3vw] w-0 max-w-[12vw] h-[4.5vw]">
           <img
             src={imageSrc}
             alt={`Animation ${imageIndex + 1}`}
-            className="absolute top-0 left-1/2 w-[8vw] h-full rounded object-cover transform -translate-x-1/2"
+            className="absolute top-0 left-1/2 w-[12vw] h-full rounded object-cover transform -translate-x-1/2"
             loading="lazy"
           />
           <div className="reveal-left absolute top-0 left-0 w-1/2 h-full bg-gray-900 z-10 pointer-events-none"></div>
@@ -148,7 +148,7 @@ const AboutScrollText = () => {
         </span>
       </span>
       
-      <span className="ml-1">{children}</span>
+      <span className="ml-2 text-[#F18A41]">{children}</span>
     </span>
   );
 
@@ -161,7 +161,9 @@ const AboutScrollText = () => {
   ];
 
   return (
-    <div className="w-full bg-gradient-to-br from-white to-[#9DADE5] text-[#233831] font-sans overflow-hidden">
+    <div className="w-full text-white font-sans overflow-hidden" style={{
+      background: 'radial-gradient(ellipse at top left, #23243a 0%, #101014 100%)'
+    }}>
       {/* Start Screen */}
       <section ref={startRef} className="relative flex items-center justify-center min-h-screen w-full px-0">
         {/* Blur background effect */}
@@ -176,16 +178,16 @@ const AboutScrollText = () => {
             />
           </div>
           
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 text-[#233831] max-w-full">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 text-white max-w-full">
             Finzep aims to revolutionize the Digital Payments & Collection system via 3 flagship solutions
           </h1>
           
-          <p className="text-base sm:text-lg lg:text-xl font-medium leading-relaxed text-gray-600 mb-16 sm:mb-20 max-w-3xl">
+          <p className="text-base sm:text-lg lg:text-xl font-medium leading-relaxed text-gray-300 mb-16 sm:mb-20 max-w-3xl">
             Transforming the future of financial technology with innovative solutions.
           </p>
           
           <div className="absolute top-full mt-16 sm:mt-20 left-1/2 transform -translate-x-1/2 w-5 animate-bounce">
-            <div className="w-5 h-5 border-2 border-[#233831] border-t-0 border-l-0 transform rotate-45"></div>
+            <div className="w-5 h-5 border-2 border-white border-t-0 border-l-0 transform rotate-45"></div>
           </div>
         </div>
       </section>
@@ -195,7 +197,7 @@ const AboutScrollText = () => {
         <div className="w-full max-w-7xl">
           <div 
             ref={textAnimationRef}
-            className="text-[5vw] sm:text-[4vw] md:text-[3.5vw] lg:text-[3vw] xl:text-[2.5vw] leading-tight font-bold text-center uppercase break-words"
+            className="text-[5.5vw] sm:text-[4.5vw] md:text-[4vw] lg:text-[3.5vw] xl:text-[3vw] leading-tight font-bold text-center uppercase break-words"
           >
             {renderTextWithChars('Transforming ', 'text-char')}
             <AnimatedWord imageIndex={0} wordIndex={0} imageSrc={images[0]}>
@@ -228,7 +230,7 @@ const AboutScrollText = () => {
         <div className="w-full max-w-5xl">
           <div 
             ref={finalRef}
-            className="text-lg sm:text-xl md:text-2xl font-medium leading-relaxed text-center max-w-full"
+            className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium leading-relaxed text-center max-w-full"
           >
             {renderTextWithChars(
               'Driving fintech innovation through cutting-edge API solutions, empowering businesses with scalability and efficiency across India.',
