@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsStack from '../components/SectorsStack';
 import BlogCardsSection from '../components/BlogCardsSection';
+import ScrollProgressCards from '../components/ScrollProgressCards';
 
 const AnimatedCounter = ({ target, duration = 2000, isVisible = false }) => {
   const [count, setCount] = useState(0);
@@ -263,67 +264,12 @@ const Home = () => {
         <BlogCardsSection />
       </motion.section>
 
-      {/* Features Section */}
+      {/* Why Choose Finzep Section */}
       <motion.section
         id="features"
-        className="relative py-20 bg-gray-50 w-full"
+        className="relative w-full"
       >
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Finzep?
-            </h2>
-            <p className="text-xl text-gray-600 w-full">
-              Our comprehensive suite of financial solutions is designed to help your business grow and succeed.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {[
-              {
-                title: 'Secure & Reliable',
-                description: 'Bank-level security with 99.9% uptime guarantee',
-                icon: '🔒'
-              },
-              {
-                title: 'Easy Integration',
-                description: 'Simple APIs and comprehensive documentation',
-                icon: '⚡'
-              },
-              {
-                title: '24/7 Support',
-                description: 'Round-the-clock customer support and technical assistance',
-                icon: '🛟'
-              },
-              {
-                title: 'Scalable Solutions',
-                description: 'Grow with confidence using our scalable infrastructure',
-                icon: '📈'
-              },
-              {
-                title: 'Compliance Ready',
-                description: 'Built-in compliance with all major financial regulations',
-                icon: '✅'
-              },
-              {
-                title: 'Cost Effective',
-                description: 'Competitive pricing with transparent fee structure',
-                icon: '💰'
-              }
-            ].map((feature, idx) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        <ScrollProgressCards />
       </motion.section>
     </div>
   );
