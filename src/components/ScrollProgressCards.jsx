@@ -76,28 +76,27 @@ const ScrollProgressCards = () => {
   ];
 
   return (
-    <div className="bg-white text-gray-900 min-h-screen">
+    <div className="bg-white text-gray-900">
       {/* Main Content */}
       <div
         ref={containerRef}
         className="w-full"
+        style={{ margin: 0, padding: 0 }}
       >
-        <div className="space-y-0">
+        <div>
           {cards.map((card, index) => (
             <div
               key={index}
               ref={(el) => (cardRefs.current[index] = el)}
-              className={`flex flex-col justify-center items-center px-2.5 py-2.5 transition-all duration-1000 ease-out ${
-                index === cards.length - 1 ? 'min-h-screen' : 'min-h-screen'
-              } ${
+              className={`flex flex-col justify-center items-center transition-all duration-1000 ease-out ${
                 visibleCards.has(index)
                   ? 'opacity-100 transform translate-y-0'
                   : 'opacity-0 transform translate-y-12'
               }`}
-              style={{ margin: '40px' }}
+              style={{ padding: '20px 40px' }}
             >
               {/* FINZEP Card */}
-              <div className={`bg-gradient-to-br from-[#F18A41]/10 to-[#9DADE5]/10 border border-[#F18A41]/20 text-gray-900 rounded-2xl p-12 mb-6 w-full max-w-5xl shadow-2xl min-h-[500px] flex flex-col transition-all duration-1000 ease-out delay-200 ${
+              <div className={`bg-gradient-to-br from-[#F18A41]/10 to-[#9DADE5]/10 border border-[#F18A41]/20 text-gray-900 rounded-2xl p-12 mb-4 w-full max-w-5xl shadow-2xl flex flex-col transition-all duration-1000 ease-out delay-200 ${
                 visibleCards.has(index)
                   ? 'opacity-100 transform translate-y-0'
                   : 'opacity-0 transform translate-y-8'
@@ -164,7 +163,7 @@ const ScrollProgressCards = () => {
               </div>
 
               {/* VS Card */}
-              <div className={`bg-gray-100 border border-gray-200 rounded-2xl p-12 w-full max-w-5xl min-h-[250px] flex flex-col transition-all duration-1000 ease-out delay-400 ${
+              <div className={`bg-gray-100 border border-gray-200 rounded-2xl p-12 w-full max-w-5xl flex flex-col transition-all duration-1000 ease-out delay-400 ${
                 visibleCards.has(index)
                   ? 'opacity-100 transform translate-y-0'
                   : 'opacity-0 transform translate-y-8'
