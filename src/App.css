@@ -40,3 +40,28 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Shine effect for sector card - DEBUG VERSION */
+.shine-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+.shine-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.5);
+  filter: blur(0px);
+  transition: 0.4s;
+  transform: skewX(45deg) translateX(0%);
+  pointer-events: none;
+  z-index: 100;
+}
+.shine-card:hover {
+  transform: translateY(-12px);
+}
+.shine-card:hover::before {
+  /* No transform for debug */
+}

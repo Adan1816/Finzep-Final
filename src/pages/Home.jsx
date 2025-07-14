@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import ServicesCarousel from '../components/ServicesCarousel';
-import SectorsStack from '../components/SectorsStack';
+import SectorsShowcase from '../components/SectorsShowcase';
 import BlogCardsSection from '../components/BlogCardsSection';
 import ScrollProgressCards from '../components/ScrollProgressCards';
 
@@ -250,10 +250,8 @@ const Home = () => {
         id="sectors"
         className="relative bg-white w-full"
       >
-        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
-          <SectorsStack />
-        </div>
+        <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
+        <SectorsShowcase />
       </motion.section>
 
       {/* Blog Section */}
