@@ -44,7 +44,8 @@ const ServicesCarousel = () => {
       }
       .services-carousel-track {
         display: flex;
-        width: calc(2 * ${services.length} * 18rem + 2 * ${services.length} * 2rem);
+        gap: 2rem;
+        width: calc(2 * ${services.length} * 28rem + 2 * ${services.length} * 2rem);
         animation: scroll-carousel ${ANIMATION_DURATION}s linear infinite;
       }
       .services-carousel-paused {
@@ -53,14 +54,15 @@ const ServicesCarousel = () => {
       
       .service-card {
         --card-color: #F18A41;
-        --card-bg-color: #374151;
+        --card-bg-color: #fff;
+        --card-border-color: #374151;
         --card-icon-size: 5rem;
         --card-title-font-size: 2.5rem;
         --card-title-margin-top: 2rem;
-        
         background-color: var(--card-bg-color);
+        border: 4px solid var(--card-border-color);
         padding: 1.5rem;
-        color: var(--card-color);
+        color: var(--card-border-color);
         display: grid;
         grid-template-columns: 1fr auto;
         grid-template-rows: auto 1fr 0 auto;
@@ -71,10 +73,10 @@ const ServicesCarousel = () => {
           "link";
         width: 100%;
         height: 360px;
-        border-radius: 0.5rem;
+        border-radius: 1.5rem;
         gap: 1rem;
         overflow: hidden;
-        transition: all 0.5s ease-in-out;
+        transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-radius 0.5s, border-color 0.5s;
         position: relative;
         z-index: 1;
       }
@@ -126,7 +128,7 @@ const ServicesCarousel = () => {
         opacity: 0;
         transform: translateY(1000px);
         transition: all 0.5s ease-in-out;
-        color: var(--card-bg-color);
+        color: var(--card-border-color);
       }
       
       .service-card__link {
@@ -151,21 +153,32 @@ const ServicesCarousel = () => {
       .service-card:hover {
         --card-color: #374151;
         --card-bg-color: #F18A41;
+        --card-border-color: #374151;
         --card-icon-size: 2.5rem;
         --card-title-margin-top: 0;
         --card-title-font-size: 1.5rem;
-        
+        border-radius: 1.5rem;
         grid-template-rows: auto auto auto auto;
         grid-template-areas:
           "icon"
           "title"
           "description"
           "link";
+        background-color: #F18A41 !important;
+        color: #374151 !important;
       }
       
       .service-card:hover .service-card__description {
         opacity: 1;
         transform: translateY(0);
+      }
+      .service-card:hover::before {
+        background-color: #F18A41;
+      }
+      .service-card:hover .service-card__icon,
+      .service-card:hover .service-card__title,
+      .service-card:hover .service-card__description {
+        color: #fff !important;
       }
     `;
     document.head.appendChild(style);
@@ -186,7 +199,7 @@ const ServicesCarousel = () => {
   };
 
   return (
-    <div className="w-full flex justify-center py-12">
+    <div className="w-full">
       <div
         className="relative overflow-hidden w-full"
         onMouseEnter={handleMouseEnter}
@@ -199,7 +212,7 @@ const ServicesCarousel = () => {
           {allServices.map((service, idx) => (
             <div
               key={service.title + idx}
-              className="flex-shrink-0 w-80 mx-5"
+              className="flex-shrink-0 w-[28rem]"
             >
               <div className="service-card">
                 <div className="service-card__icon" aria-hidden="true">

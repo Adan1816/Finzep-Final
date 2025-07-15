@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(108, 92, 231, 0.1);
+            color: #6c5ce7;
+            border-left-color: #6c5ce7;
+        }
+
+        .nav-link.active {
+            background: rgba(108, 92, 231, 0.1);
+            color: #6c5ce7;
+            border-left-color: #6c5ce7;
+        }
+
+        .nav-icon {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .nav-dropdown {
+            margin-left: 2rem;
+        }
+
+        .nav-dropdown .nav-link {
+            padding-left: 2.5rem;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            position: absolute;
+            right: 1.5rem;
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-toggle.open::after {
+            transform: rotate(180deg);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 0.5rem;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav a.active {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .nav a:hover {
+            background: #f1f2f6;
+            color: #333;
+        }
+
+        .nav a.active:hover {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-btn {
+            background: #f1f2f6;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 50%;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .welcome h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .status-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2ecc71;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-change {
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .positive {
+            color: #2ecc71;
+        }
+
+        .negative {
+            color: #e74c3c;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            transition: width 0.3s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #6c5ce7;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .transaction-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .transaction-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6c5ce7, #74b9ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .transaction-details h4 {
+            margin: 0;
+            color: #333;
+        }
+
+        .transaction-details p {
+            margin: 0;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+        }
+
+        .banking-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .banking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .bank-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bank-option {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bank-option:hover {
+            border-color: #6c5ce7;
+            transform: translateY(-2px);
+        }
+
+        .bank-option.selected {
+            border-color: #6c5ce7;
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        .error-message {
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .payout-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .payout-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payout-tab {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: #f1f2f6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payout-tab.active {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .mini-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-tooltip {
+            background: #333;
+            color: white;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .welcome h1 {
+                font-size: 2rem;
+            }
+            
+            .status-indicators {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <svg class="logo-icon" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                <!-- F with orange accent -->
+                <path d="M10 10 L10 70 L15 70 L15 45 L40 45 L40 40 L15 40 L15 15 L45 15 L45 10 Z" fill="#2d4a3a"/>
+                <rect x="20" y="20" width="8" height="15" fill="#ff8c42"/>
+                
+                <!-- N -->
+                <path d="M55 10 L55 70 L60 70 L60 25 L85 70 L90 70 L90 10 L85 10 L85 55 L60 10 Z" fill="#2d4a3a"/>
+                
+                <!-- Z -->
+                <path d="M100 10 L100 15 L120 15 L100 65 L100 70 L130 70 L130 65 L110 65 L130 15 L130 10 Z" fill="#2d4a3a"/>
+                
+                <!-- E -->
+                <path d="M140 10 L140 70 L170 70 L170 65 L145 65 L145 45 L165 45 L165 40 L145 40 L145 15 L170 15 L170 10 Z" fill="#2d4a3a"/>
+                
+                <!-- P -->
+                <path d="M180 10 L180 70 L185 70 L185 45 L195 45 C198 45 200 43 200 40 L200 20 C200 17 198 15 195 15 L185 15 L185 10 Z M185 15 L195 15 C196 15 195 16 195 17 L195 38 C195 39 196 40 195 40 L185 40 Z" fill="#2d4a3a"/>
+            </svg>
+            <span style="margin-left: 0.5rem; font-weight: bold; color: #2d4a3a;">FINZEP</span>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#" class="nav-link active">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    Fund Request
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">💼</span>
+                    Commission
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">👤</span>
+                    User Report
+                </a>
+                <div class="nav-dropdown" style="display: none;">
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">📈</span>
+                        User Analytics
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">📋</span>
+                        User Activity
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">🎯</span>
+                        User Performance
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">📄</span>
+                    Account Statement
+                </a>
+                <div class="nav-dropdown" style="display: none;">
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        Monthly Statement
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">📈</span>
+                        Yearly Statement
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">🔍</span>
+                        Custom Range
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">🧾</span>
+                    Invoices
+                </a>
+                <div class="nav-dropdown" style="display: none;">
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">➕</span>
+                        Create Invoice
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">📋</span>
+                        View All Invoices
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">⏳</span>
+                        Pending Invoices
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">✅</span>
+                        Paid Invoices
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">⚙</span>
+                    Settings
+                </a>
+                <div class="nav-dropdown" style="display: none;">
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">👤</span>
+                        Profile Settings
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">🔒</span>
+                        Security
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">💳</span>
+                        Payment Methods
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">🔔</span>
+                        Notifications
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="logo">
+                <button class="btn btn-secondary" onclick="toggleSidebar()" style="display: none; margin-right: 1rem;">☰</button>
+                <span>API User Dashboard</span>
+            </div>
+            <nav class="nav">
+                <a href="#" class="active">Home</a>
+                <a href="#">API User Dashboard</a>
+            </nav>
+            <div class="user-section">
+                <span>[Payout: 0.00 | Payin: 0.00]</span>
+                <button class="notification-btn">
+                    🔔
+                    <span class="notification-badge">10</span>
+                </button>
+                <button class="notification-btn">
+                    📧
+                    <span class="notification-badge">10</span>
+                </button>
+                <button class="notification-btn">
+                    💬
+                    <span class="notification-badge">10</span>
+                </button>
+                <div>👤</div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="welcome">
+                <h1>Hello Merchant</h1>
+                <div class="status-indicators">
+                    <div class="status-item">
+                        <div class="status-dot"></div>
+                        <span>Payment Gateway</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-dot"></div>
+                        <span>Banking</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-dot"></div>
+                        <span>KYC Verified</span>
+                    </div>
+                </div>
+            </div>
+
+        <div class="dashboard-grid">
+            <!-- Account Balance -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #2ecc71;">$</div>
+                    <div class="card-title">Account Balance</div>
+                    <span class="info-tooltip">ℹ</span>
+                </div>
+                <div class="card-value">₹2,785.56</div>
+                <div class="card-subtitle">Available Balance</div>
+                <div class="card-change positive">
+                    ↗ +12% from last month
+                </div>
+                <div style="margin-top: 1rem;">
+                    <button class="btn">Withdraw Funds</button>
+                </div>
+            </div>
+
+            <!-- Pending Balance -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #f39c12;">⏳</div>
+                    <div class="card-title">Pending Balance</div>
+                    <span class="info-tooltip">ℹ</span>
+                </div>
+                <div class="card-value">₹3,386.88</div>
+                <div class="card-subtitle">Processing</div>
+                <div class="card-change">
+                    Expected clearance: 2-3 days
+                </div>
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-secondary">View Details</button>
+                </div>
+            </div>
+
+            <!-- Daily Earnings -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #6c5ce7;">💰</div>
+                    <div class="card-title">Daily Earnings</div>
+                </div>
+                <div class="card-value">₹60.48</div>
+                <div class="card-subtitle">Today's Revenue</div>
+                <div class="card-change positive">
+                    ↗ +5.2% vs yesterday
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 68%;"></div>
+                </div>
+            </div>
+
+            <!-- Transaction Volume -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #e74c3c;">📊</div>
+                    <div class="card-title">Transaction Volume</div>
+                </div>
+                <div class="card-value">₹36.56</div>
+                <div class="card-subtitle">Last 24 hours</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">127</div>
+                        <div class="stat-label">Transactions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">₹288</div>
+                        <div class="stat-label">Avg. Value</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lifetime Earnings -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #9b59b6;">🏆</div>
+                    <div class="card-title">Lifetime Earnings</div>
+                </div>
+                <div class="card-value">₹0.05677855</div>
+                <div class="card-subtitle">Total Earned</div>
+                <div class="card-change positive">
+                    ↗ ₹3,971.73 this month
+                </div>
+                <div style="margin-top: 1rem;">
+                    <button class="btn">View Report</button>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #1abc9c;">📋</div>
+                    <div class="card-title">Recent Transactions</div>
+                </div>
+                <div class="transaction-list">
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-avatar">P</div>
+                            <div class="transaction-details">
+                                <h4>Payment Received</h4>
+                                <p>2 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount positive">+₹450.00</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-avatar">W</div>
+                            <div class="transaction-details">
+                                <h4>Withdrawal</h4>
+                                <p>1 day ago</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount negative">-₹200.00</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-avatar">R</div>
+                            <div class="transaction-details">
+                                <h4>Refund Processed</h4>
+                                <p>2 days ago</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount negative">-₹75.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banking Section -->
+        <div class="banking-section">
+            <div class="banking-header">
+                <h2>Connected Banking</h2>
+                <div class="card-change">2 accounts connected</div>
+            </div>
+            
+            <div class="error-message">
+                ⚠ No bank details available. Please connect your bank account to facilitate payouts.
+            </div>
+
+            <div class="bank-options">
+                <div class="bank-option selected">
+                    <span>🏦</span>
+                    <span>HDFC Bank</span>
+                </div>
+                <div class="bank-option">
+                    <span>🏛</span>
+                    <span>ICICI Bank</span>
+                </div>
+                <div class="bank-option">
+                    <span>🏪</span>
+                    <span>SBI</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                <input type="text" placeholder="Account Number" style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; width: 100%; margin-bottom: 1rem;">
+                <button class="btn">Connect Bank Account</button>
+            </div>
+        </div>
+
+        <!-- Payout Section -->
+        <div class="payout-section">
+            <h2>Payout Management</h2>
+            
+            <div class="payout-tabs">
+                <button class="payout-tab active">Pay In</button>
+                <button class="payout-tab">Pay Out</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="mini-card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #2ecc71;">💳</div>
+                        <div class="card-title">Received</div>
+                    </div>
+                    <div class="card-value">₹0.00</div>
+                    <div class="card-change positive">↗ +12%</div>
+                </div>
+
+                <div class="mini-card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #3498db;">✅</div>
+                        <div class="card-title">Settled</div>
+                    </div>
+                    <div class="card-value">₹0.00</div>
+                    <div class="card-change positive">↗ +8%</div>
+                </div>
+
+                <div class="mini-card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #e74c3c;">💸</div>
+                        <div class="card-title">Wallet Load</div>
+                    </div>
+                    <div class="card-value">₹0.00</div>
+                    <div class="card-change negative">↘ -12%</div>
+                </div>
+
+                <div class="mini-card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #f39c12;">📤</div>
+                        <div class="card-title">Payout</div>
+                    </div>
+                    <div class="card-value">₹0.00</div>
+                    <div class="card-change positive">↗ +3%</div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown(element) {
+            const dropdown = element.nextElementSibling;
+            const isOpen = dropdown.style.display === 'block';
+            
+            // Close all dropdowns first
+            const allDropdowns = document.querySelectorAll('.nav-dropdown');
+            const allToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            allDropdowns.forEach(dd => dd.style.display = 'none');
+            allToggles.forEach(toggle => toggle.classList.remove('open'));
+            
+            // Toggle current dropdown
+            if (!isOpen) {
+                dropdown.style.display = 'block';
+                element.classList.add('open');
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show mobile menu button on small screens
+            function handleResize() {
+                const mobileBtn = document.querySelector('.header .btn');
+                if (window.innerWidth <= 768) {
+                    mobileBtn.style.display = 'inline-block';
+                } else {
+                    mobileBtn.style.display = 'none';
+                }
+            }
+            
+            window.addEventListener('resize', handleResize);
+            handleResize();
+            
+            // Animate progress bars
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+
+            // Bank option selection
+            const bankOptions = document.querySelectorAll('.bank-option');
+            bankOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    bankOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Payout tab switching
+            const payoutTabs = document.querySelectorAll('.payout-tab');
+            payoutTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    payoutTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Card hover effects
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Sidebar navigation
+            const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -241,6 +241,8 @@ const Home = () => {
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Our Services</h2>
+        </div>
+        <div className="w-full">
           <ServicesCarousel />
         </div>
       </motion.section>
