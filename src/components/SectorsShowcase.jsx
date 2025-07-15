@@ -120,7 +120,7 @@ const SectorsShowcase = () => {
               <div
                 key={sector.title}
                 ref={el => (slideRefs.current[i] = el)}
-                className={`slide shine-card absolute w-4/5 h-[340px] md:h-[400px] right-0 top-0 opacity-0 invisible rounded-3xl shadow-3xl flex flex-col justify-center items-center bg-white border-2 border-[#e5e7eb] transition-all duration-500 z-20`}
+                className={`slide absolute w-4/5 h-[340px] md:h-[400px] right-0 top-0 opacity-0 invisible rounded-3xl shadow-3xl flex flex-col justify-center items-center bg-white border-2 border-[#e5e7eb] transition-all duration-500 z-20`}
                 style={{
                   color: '#233831',
                   padding: '2.5rem',
