@@ -165,7 +165,7 @@ const AboutScrollText = () => {
       background: 'radial-gradient(ellipse at top left, #23243a 0%, #101014 100%)'
     }}>
       {/* Start Screen */}
-      <section ref={startRef} className="relative flex items-center justify-center min-h-screen w-full px-0">
+      <section ref={startRef} className="relative flex items-center justify-center min-h-screen w-full px-0 bg-white">
         {/* Blur background effect */}
         <div className="absolute top-[35%] left-1/2 transform -translate-x-1/2 translate-y-1/2 -z-10 w-[300px] h-[120px] bg-orange-400 rounded-full blur-[200px]"></div>
         
@@ -178,22 +178,22 @@ const AboutScrollText = () => {
             />
           </div>
           
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 text-white max-w-full">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 text-[#233831] max-w-full">
             Finzep aims to revolutionize the Digital Payments & Collection system via 3 flagship solutions
           </h1>
           
-          <p className="text-base sm:text-lg lg:text-xl font-medium leading-relaxed text-gray-300 mb-16 sm:mb-20 max-w-3xl">
+          <p className="text-base sm:text-lg lg:text-xl font-medium leading-relaxed text-gray-600 mb-16 sm:mb-20 max-w-3xl">
             Transforming the future of financial technology with innovative solutions.
           </p>
           
           <div className="absolute top-full mt-16 sm:mt-20 left-1/2 transform -translate-x-1/2 w-5 animate-bounce">
-            <div className="w-5 h-5 border-2 border-white border-t-0 border-l-0 transform rotate-45"></div>
+            <div className="w-5 h-5 border-2 border-[#233831] border-t-0 border-l-0 transform rotate-45"></div>
           </div>
         </div>
       </section>
 
-      {/* Text Animation */}
-      <section className="flex items-center flex-col w-full px-2 sm:px-4 lg:px-6 py-12 sm:py-16">
+      {/* Animated Text and Final Text in One Section with Gradient */}
+      <section className="flex flex-col items-center w-full px-2 sm:px-4 lg:px-6 py-12 sm:py-16" style={{ background: 'linear-gradient(135deg, #002A76 0%, #001435 100%)' }}>
         <div className="w-full max-w-7xl">
           <div 
             ref={textAnimationRef}
@@ -223,11 +223,7 @@ const AboutScrollText = () => {
             {renderTextWithChars(' solutions.', 'text-char')}
           </div>
         </div>
-      </section>
-
-      {/* Final Screen */}
-      <section className="flex items-center flex-col w-full px-2 sm:px-4 lg:px-6 py-12 sm:py-16">
-        <div className="w-full max-w-5xl">
+        <div className="w-full max-w-5xl mt-12">
           <div 
             ref={finalRef}
             className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium leading-relaxed text-center max-w-full"
