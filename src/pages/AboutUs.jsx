@@ -105,13 +105,13 @@ const AboutUs = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="cards-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Mission Card */}
-            <div className="card-item rounded-3xl p-10 md:p-12 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 shadow-[0_4px_32px_0_rgba(31,38,135,0.10)] border border-[#23243a] flex flex-col items-center text-center backdrop-blur-md transition-all duration-300 hover:shadow-[0_8px_40px_0_rgba(241,138,65,0.10)]">
+            <div className="card-item rounded-3xl p-10 md:p-12 bg-white shadow-[0_4px_32px_0_rgba(31,38,135,0.10)] border-4 border-[#001435] flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_8px_40px_0_rgba(241,138,65,0.10)]">
               <div className="w-14 h-14 bg-transparent rounded-lg flex items-center justify-center mb-7">
                 <svg className="w-8 h-8 text-[#F18A41]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-semibold text-white mb-4 tracking-wide">Our <span className="text-[#F18A41]">Mission</span></h3>
+              <h3 className="text-2xl font-semibold text-white mb-4 tracking-wide"><span className="text-[#F18A41]">Mission</span></h3>
               <p className="text-gray-400 leading-relaxed text-base">
                 To enhance financial accessibility with user-friendly solutions, lead the transition to digital payments for a more
                 efficient ecosystem, and deliver top-tier financial products supported by exception customer service and technology.
@@ -119,14 +119,14 @@ const AboutUs = () => {
             </div>
 
             {/* Vision Card */}
-            <div className="card-item rounded-3xl p-10 md:p-12 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 shadow-[0_4px_32px_0_rgba(31,38,135,0.10)] border border-[#23243a] flex flex-col items-center text-center backdrop-blur-md transition-all duration-300 hover:shadow-[0_8px_40px_0_rgba(241,138,65,0.10)]">
+            <div className="card-item rounded-3xl p-10 md:p-12 bg-white shadow-[0_4px_32px_0_rgba(31,38,135,0.10)] border-4 border-[#001435] flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_8px_40px_0_rgba(241,138,65,0.10)]">
               <div className="w-14 h-14 bg-transparent rounded-lg flex items-center justify-center mb-7">
                 <svg className="w-8 h-8 text-[#F18A41]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-semibold text-white mb-4 tracking-wide">Our <span className="text-[#F18A41]">Vision</span></h3>
+              <h3 className="text-2xl font-semibold text-white mb-4 tracking-wide"><span className="text-[#F18A41]">Vision</span></h3>
               <p className="text-gray-400 leading-relaxed text-base">
               Finzep envisions a future of 
               financial inclusion, enabling 
@@ -140,7 +140,7 @@ const AboutUs = () => {
             </div>
 
             {/* Purpose Card */}
-            <div className="card-item rounded-3xl p-10 md:p-12 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 shadow-[0_4px_32px_0_rgba(31,38,135,0.10)] border border-[#23243a] flex flex-col items-center text-center backdrop-blur-md transition-all duration-300 hover:shadow-[0_8px_40px_0_rgba(241,138,65,0.10)]">
+            <div className="card-item rounded-3xl p-10 md:p-12 bg-white shadow-[0_4px_32px_0_rgba(31,38,135,0.10)] border-4 border-[#001435] flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_8px_40px_0_rgba(241,138,65,0.10)]">
               <div className="w-14 h-14 bg-transparent rounded-lg flex items-center justify-center mb-7">
                 <svg className="w-8 h-8 text-[#F18A41]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
