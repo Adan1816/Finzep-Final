@@ -7,7 +7,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutUs = () => {
-  const teamGridRef = useRef(null);
   const graffitiRef = useRef(null);
 
   useEffect(() => {
@@ -52,26 +51,12 @@ const AboutUs = () => {
             trigger: '.team-container',
             start: 'top 80%',
             end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
           }
         }
       );
 
-      // Animate team grid gap
-      if (teamGridRef.current) {
-        gsap.set(teamGridRef.current, { gap: '4rem' });
-        ScrollTrigger.create({
-          trigger: teamGridRef.current,
-          start: 'top 90%',
-          end: 'top 30%',
-          scrub: 1,
-          onUpdate: self => {
-            // Animate gap from 4rem (64px) to 2rem (32px)
-            const progress = Math.min(1, Math.max(0, self.progress));
-            const gap = 64 - (32 * progress);
-            teamGridRef.current.style.gap = `${gap}px`;
-          }
-        });
-      }
+
 
       // CTA section animation
       gsap.fromTo('.cta-content', 
@@ -286,74 +271,78 @@ const AboutUs = () => {
             </p>
           </div>
 
-          <div className="team-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4" ref={teamGridRef} style={{gap: '4rem'}}>
+          <div className="team-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Team Member 1 */}
-            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center" style={{ boxShadow: '8px 8px 24px -8px #F18A41aa, 0 4px 16px 0 rgba(241,138,65,0.10)' }}>
-              <div className="w-full h-64 bg-gradient-to-br from-[#23243a] to-[#181926] flex items-center justify-center">
-                <div className="w-24 h-24 bg-[#101014] rounded-full flex items-center justify-center border-2 border-[#23243a]">
-                  <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                </div>
+            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 flex flex-col items-center text-center">
+              <div className="w-full h-64 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center relative overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
+                  alt="Alex Johnson" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">Alex Johnson</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Alex Johnson</h3>
                 <p className="text-[#F18A41] font-medium mb-3">Chief Technology Officer</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-600 text-sm">
                   Leading technical innovation and ensuring our payment solutions meet the highest standards.
                 </p>
               </div>
             </div>
 
             {/* Team Member 2 */}
-            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center" style={{ boxShadow: '8px 8px 24px -8px #F18A41aa, 0 4px 16px 0 rgba(241,138,65,0.10)' }}>
-              <div className="w-full h-64 bg-gradient-to-br from-[#23243a] to-[#181926] flex items-center justify-center">
-                <div className="w-24 h-24 bg-[#101014] rounded-full flex items-center justify-center border-2 border-[#23243a]">
-                  <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                </div>
+            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 flex flex-col items-center text-center">
+              <div className="w-full h-64 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center relative overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face" 
+                  alt="Sarah Chen" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">Sarah Chen</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Sarah Chen</h3>
                 <p className="text-[#F18A41] font-medium mb-3">Head of Product</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-600 text-sm">
                   Bringing product expertise and user-focused solutions to our fintech platform.
                 </p>
               </div>
             </div>
 
             {/* Team Member 3 */}
-            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center" style={{ boxShadow: '8px 8px 24px -8px #F18A41aa, 0 4px 16px 0 rgba(241,138,65,0.10)' }}>
-              <div className="w-full h-64 bg-gradient-to-br from-[#23243a] to-[#181926] flex items-center justify-center">
-                <div className="w-24 h-24 bg-[#101014] rounded-full flex items-center justify-center border-2 border-[#23243a]">
-                  <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                </div>
+            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 flex flex-col items-center text-center">
+              <div className="w-full h-64 bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center relative overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" 
+                  alt="Mike Rodriguez" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">Mike Rodriguez</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Mike Rodriguez</h3>
                 <p className="text-[#F18A41] font-medium mb-3">Security Director</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-600 text-sm">
                   Ensuring the highest security standards for all our payment processing solutions.
                 </p>
               </div>
             </div>
 
             {/* Team Member 4 */}
-            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-[#181926]/80 to-[#101014]/90 border border-[#23243a] flex flex-col items-center text-center" style={{ boxShadow: '8px 8px 24px -8px #F18A41aa, 0 4px 16px 0 rgba(241,138,65,0.10)' }}>
-              <div className="w-full h-64 bg-gradient-to-br from-[#23243a] to-[#181926] flex items-center justify-center">
-                <div className="w-24 h-24 bg-[#101014] rounded-full flex items-center justify-center border-2 border-[#23243a]">
-                  <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                </div>
+            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 flex flex-col items-center text-center">
+              <div className="w-full h-64 bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center relative overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face" 
+                  alt="Emma Thompson" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">Emma Thompson</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Emma Thompson</h3>
                 <p className="text-[#F18A41] font-medium mb-3">Business Development</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-600 text-sm">
                   Building strategic partnerships and driving business growth across markets.
                 </p>
               </div>
