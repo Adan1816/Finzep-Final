@@ -40,6 +40,7 @@ const sectors = [
 
 const SectorsShowcase = () => {
   const [activeSector, setActiveSector] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const sectionRef = useRef(null);
   const cardsRef = useRef([]);
   const progressRef = useRef(null);
@@ -50,6 +51,9 @@ const SectorsShowcase = () => {
     const progress = progressRef.current;
 
     if (!section || !cards.length || !progress) return;
+
+    // Set initial progress bar state
+    gsap.set(progress, { scaleX: 0, transformOrigin: 'left' });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -63,10 +67,25 @@ const SectorsShowcase = () => {
           const sectorIndex = Math.floor(progress * sectors.length);
           const clampedIndex = Math.min(sectorIndex, sectors.length - 1);
           
+          // Update scroll progress for smooth progress bar
+          setScrollProgress(progress);
+          
           if (clampedIndex !== activeSector) {
             setActiveSector(clampedIndex);
           }
         }
+      }
+    });
+
+    // Animate progress bar smoothly with GSAP
+    gsap.to(progress, {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: `+=${sectors.length * 100}vh`,
+        scrub: 1
       }
     });
 
@@ -91,17 +110,13 @@ const SectorsShowcase = () => {
               Exploring Sectors ({activeSector + 1} of {sectors.length})
             </h3>
             <div className="text-sm text-[#233831]/70">
-              {Math.round(((activeSector + 1) / sectors.length) * 100)}% Complete
+              {Math.round(scrollProgress * 100)}% Complete
             </div>
           </div>
           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
             <div 
               ref={progressRef}
-              className="h-full bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full transition-all duration-300"
-              style={{ 
-                transform: `scaleX(${(activeSector + 1) / sectors.length})`,
-                transformOrigin: 'left'
-              }}
+              className="h-full bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full"
             />
           </div>
         </div>
