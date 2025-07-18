@@ -51,14 +51,12 @@ const SectorsShowcase = () => {
 
     if (!section || !cards.length || !progress) return;
 
-    // Set initial states
-    gsap.set(progress, { scaleX: 0, transformOrigin: 'left' });
-
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top center',
-        end: 'bottom center',
+        start: 'top top',
+        end: `+=${sectors.length * 100}vh`,
+        pin: true,
         scrub: 1,
         onUpdate: (self) => {
           const progress = self.progress;
@@ -69,19 +67,6 @@ const SectorsShowcase = () => {
             setActiveSector(clampedIndex);
           }
         }
-      }
-    });
-
-    // Progress bar animation
-    gsap.to(progress, {
-      scaleX: 1,
-      duration: 1,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top center',
-        end: 'bottom center',
-        scrub: 1
       }
     });
 
@@ -100,11 +85,25 @@ const SectorsShowcase = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Progress Bar */}
-        <div className="w-full h-1 bg-gray-200 rounded-full mb-16 overflow-hidden">
-          <div 
-            ref={progressRef}
-            className="h-full bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full"
-          />
+        <div className="w-full mb-16">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-[#233831]">
+              Exploring Sectors ({activeSector + 1} of {sectors.length})
+            </h3>
+            <div className="text-sm text-[#233831]/70">
+              {Math.round(((activeSector + 1) / sectors.length) * 100)}% Complete
+            </div>
+          </div>
+          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div 
+              ref={progressRef}
+              className="h-full bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full transition-all duration-300"
+              style={{ 
+                transform: `scaleX(${(activeSector + 1) / sectors.length})`,
+                transformOrigin: 'left'
+              }}
+            />
+          </div>
         </div>
 
         {/* Sector Navigation */}
@@ -193,6 +192,18 @@ const SectorsShowcase = () => {
             />
           ))}
         </div>
+
+        {/* Scroll Indicator */}
+        {activeSector < sectors.length - 1 && (
+          <div className="flex flex-col items-center mt-8 text-[#233831]/60">
+            <div className="text-sm font-medium mb-2">Scroll to continue</div>
+            <div className="w-6 h-6 animate-bounce">
+              <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
