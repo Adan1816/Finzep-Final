@@ -352,16 +352,16 @@ const AboutUs = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-br from-[#F18A41]/90 to-[#9DADE5]/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="cta-content">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-              Ready to <span className="text-[#F18A41]">Transform</span> Your Payment System?
+              Ready to <span className="text-white">Transform</span> Your Payment System?
             </h2>
-            <p className="text-xl mb-8 text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
               Let's discuss how our innovative fintech solutions can revolutionize your business operations.
             </p>
-            <button className="bg-[#F18A41] text-white font-semibold px-8 py-3 rounded-lg hover:bg-[#ffb26b] hover:text-[#23243a] transition-colors duration-300 transform hover:scale-105 shadow-lg">
+            <button className="bg-white text-[#F18A41] font-semibold px-8 py-3 rounded-lg hover:bg-white/90 hover:text-[#e07935] transition-colors duration-300 transform hover:scale-105 shadow-lg">
               Get Started
             </button>
           </div>
