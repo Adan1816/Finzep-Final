@@ -95,16 +95,14 @@ const SectorsShowcase = () => {
     };
   }, [activeSector]);
 
-  const handleSectorClick = (index) => {
-    setActiveSector(index);
-  };
+
 
   return (
     <section ref={sectionRef} className="w-full py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Progress Bar */}
-        <div className="w-full mb-16">
+        <div className="w-full mb-8">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold text-[#233831]">
               Exploring Sectors ({activeSector + 1} of {sectors.length})
@@ -121,26 +119,8 @@ const SectorsShowcase = () => {
           </div>
         </div>
 
-        {/* Sector Navigation */}
-        <div className="flex flex-wrap justify-center gap-4 mb-16">
-          {sectors.map((sector, index) => (
-            <button
-              key={sector.title}
-              onClick={() => handleSectorClick(index)}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
-                activeSector === index
-                  ? 'bg-gradient-to-r from-[#F18A41] to-[#9DADE5] text-white shadow-lg'
-                  : 'bg-white text-[#233831] border-2 border-gray-200 hover:border-[#F18A41]/50 hover:bg-[#F18A41]/5'
-              }`}
-            >
-              <span className="mr-2">{sector.icon}</span>
-              {sector.title}
-            </button>
-          ))}
-        </div>
-
         {/* Sector Cards */}
-        <div className="relative min-h-[500px] flex items-center justify-center">
+        <div className="relative min-h-[400px] flex items-center justify-center">
           <div className="w-full h-full">
             {sectors.map((sector, index) => (
               activeSector === index && (
@@ -149,30 +129,30 @@ const SectorsShowcase = () => {
                   ref={(el) => (cardsRef.current[index] = el)}
                   className="w-full h-full animate-in fade-in-0 zoom-in-95 duration-500"
                 >
-                  <div className={`bg-gradient-to-br ${sector.color} backdrop-blur-sm border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl h-full flex flex-col justify-center items-center text-center`}>
+                  <div className={`bg-gradient-to-br ${sector.color} backdrop-blur-sm border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl h-full flex flex-col justify-center items-center text-center`}>
                     
                     {/* Icon */}
-                    <div className="text-8xl mb-6 filter drop-shadow-lg">
+                    <div className="text-6xl mb-4 filter drop-shadow-lg">
                       {sector.icon}
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-4xl md:text-5xl font-bold text-[#233831] mb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#233831] mb-3">
                       {sector.title}
                     </h2>
 
                     {/* Subtitle */}
-                    <p className="text-xl md:text-2xl text-[#233831]/80 font-medium mb-6">
+                    <p className="text-lg md:text-xl text-[#233831]/80 font-medium mb-4">
                       {sector.subtitle}
                     </p>
 
                     {/* Description */}
-                    <p className="text-lg text-[#233831]/70 max-w-2xl leading-relaxed mb-8">
+                    <p className="text-base text-[#233831]/70 max-w-2xl leading-relaxed mb-6">
                       {sector.desc}
                     </p>
 
                     {/* Stats */}
-                    <div className="flex items-center gap-4 mb-8">
+                    <div className="flex items-center gap-4 mb-6">
                       <div className="bg-white/50 backdrop-blur-sm rounded-full px-6 py-3 border border-white/30">
                         <span className="text-[#233831] font-bold text-lg">{sector.stats}</span>
                       </div>
@@ -196,13 +176,12 @@ const SectorsShowcase = () => {
         {/* Sector Indicators */}
         <div className="flex justify-center gap-3 mt-12">
           {sectors.map((_, index) => (
-            <button
+            <div
               key={index}
-              onClick={() => handleSectorClick(index)}
               className={`w-4 h-4 rounded-full transition-all duration-300 ${
                 activeSector === index
                   ? 'bg-gradient-to-r from-[#F18A41] to-[#9DADE5] scale-125'
-                  : 'bg-gray-300 hover:bg-[#F18A41]/50'
+                  : 'bg-gray-300'
               }`}
             />
           ))}
