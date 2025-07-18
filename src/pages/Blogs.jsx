@@ -222,19 +222,49 @@ const Blogs = () => {
   const [filteredPosts, setFilteredPosts] = useState(blogPosts);
   const headerRef = useRef(null);
   const filterRef = useRef(null);
+  const graffitiRef = useRef(null);
 
   useEffect(() => {
-    // Header animation
+    // Dramatic header animation on page load/reload
     gsap.fromTo(headerRef.current,
-      { opacity: 0, y: -50 },
-      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+      { 
+        opacity: 0, 
+        y: -100, 
+        scale: 0.5,
+        rotationX: -90
+      },
+      { 
+        opacity: 1, 
+        y: 0, 
+        scale: 1,
+        rotationX: 0,
+        duration: 1.2, 
+        ease: "back.out(1.7)",
+        delay: 0.2
+      }
     );
 
     // Filter animation
     gsap.fromTo(filterRef.current,
       { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.6, delay: 0.3, ease: "power3.out" }
+      { opacity: 1, y: 0, duration: 0.6, delay: 0.8, ease: "power3.out" }
     );
+
+    // Graffiti scroll animation
+    const handleScroll = () => {
+      const section = document.getElementById('blogs-graffiti-section');
+      if (!section || !graffitiRef.current) return;
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      // Calculate scroll progress (0 at top, 1 at bottom)
+      const progress = Math.min(1, Math.max(0, 1 - rect.top / (rect.height - windowHeight/2)));
+      // Move inward up to 80px from each side
+      const translate = 80 * progress;
+      graffitiRef.current.style.transform = `translate(${translate}px, ${translate}px)`;
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -249,23 +279,237 @@ const Blogs = () => {
   };
 
   return (
-    <section className="w-full pt-32 pb-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-[#F18A41] rounded-full mix-blend-multiply filter blur-xl animate-pulse" />
-        <div className="absolute top-40 right-20 w-72 h-72 bg-[#9DADE5] rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-[#233831] rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{ animationDelay: '4s' }} />
+    <section id="blogs-graffiti-section" className="w-full pt-32 pb-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen relative overflow-hidden">
+      {/* Animated Graffiti Background */}
+      <div ref={graffitiRef} className="absolute left-0 top-0 w-full h-full pointer-events-none z-0" style={{opacity: 0.15, transition: 'transform 0.5s cubic-bezier(0.22,1,0.36,1)'}}>
+        <svg width="100vw" height="100%" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <style>
+              {`
+                .float-left-to-right-1 {
+                  animation: floatLeftToRight1 45s linear infinite;
+                }
+                .float-left-to-right-2 {
+                  animation: floatLeftToRight2 50s linear infinite;
+                }
+                .float-left-to-right-3 {
+                  animation: floatLeftToRight3 55s linear infinite;
+                }
+                .float-left-to-right-4 {
+                  animation: floatLeftToRight4 48s linear infinite;
+                }
+                .float-left-to-right-5 {
+                  animation: floatLeftToRight5 52s linear infinite;
+                }
+                .float-left-to-right-6 {
+                  animation: floatLeftToRight6 47s linear infinite;
+                }
+                .float-left-to-right-7 {
+                  animation: floatLeftToRight7 53s linear infinite;
+                }
+                .float-left-to-right-8 {
+                  animation: floatLeftToRight8 49s linear infinite;
+                }
+                
+                @keyframes floatLeftToRight1 {
+                  0% { transform: translateX(-100px) translateY(0px) rotate(0deg); }
+                  25% { transform: translateX(480px) translateY(-10px) rotate(90deg); }
+                  50% { transform: translateX(960px) translateY(5px) rotate(180deg); }
+                  75% { transform: translateX(1440px) translateY(-5px) rotate(270deg); }
+                  100% { transform: translateX(2020px) translateY(0px) rotate(360deg); }
+                }
+                
+                @keyframes floatLeftToRight2 {
+                  0% { transform: translateX(-120px) translateY(0px) rotate(0deg); }
+                  25% { transform: translateX(460px) translateY(8px) rotate(-90deg); }
+                  50% { transform: translateX(940px) translateY(-8px) rotate(-180deg); }
+                  75% { transform: translateX(1420px) translateY(12px) rotate(-270deg); }
+                  100% { transform: translateX(2040px) translateY(0px) rotate(-360deg); }
+                }
+                
+                @keyframes floatLeftToRight3 {
+                  0% { transform: translateX(-80px) translateY(0px) rotate(0deg); }
+                  25% { transform: translateX(500px) translateY(-15px) rotate(120deg); }
+                  50% { transform: translateX(980px) translateY(10px) rotate(240deg); }
+                  75% { transform: translateX(1460px) translateY(-8px) rotate(360deg); }
+                  100% { transform: translateX(2000px) translateY(0px) rotate(480deg); }
+                }
+                
+                @keyframes floatLeftToRight4 {
+                  0% { transform: translateX(-110px) translateY(0px) rotate(0deg); }
+                  25% { transform: translateX(470px) translateY(12px) rotate(-120deg); }
+                  50% { transform: translateX(950px) translateY(-12px) rotate(-240deg); }
+                  75% { transform: translateX(1430px) translateY(8px) rotate(-360deg); }
+                  100% { transform: translateX(2030px) translateY(0px) rotate(-480deg); }
+                }
+                
+                @keyframes floatLeftToRight5 {
+                  0% { transform: translateX(-90px) translateY(0px) rotate(0deg); }
+                  25% { transform: translateX(490px) translateY(-8px) rotate(180deg); }
+                  50% { transform: translateX(970px) translateY(15px) rotate(360deg); }
+                  75% { transform: translateX(1450px) translateY(-10px) rotate(540deg); }
+                  100% { transform: translateX(2010px) translateY(0px) rotate(720deg); }
+                }
+                
+                @keyframes floatLeftToRight6 {
+                  0% { transform: translateX(-100px) translateY(0px) rotate(0deg); }
+                  25% { transform: translateX(485px) translateY(10px) rotate(-180deg); }
+                  50% { transform: translateX(965px) translateY(-10px) rotate(-360deg); }
+                  75% { transform: translateX(1445px) translateY(6px) rotate(-540deg); }
+                  100% { transform: translateX(2025px) translateY(0px) rotate(-720deg); }
+                }
+                
+                @keyframes floatLeftToRight7 {
+                  0% { transform: translateX(-130px) translateY(0px) rotate(0deg); }
+                  25% { transform: translateX(450px) translateY(-12px) rotate(150deg); }
+                  50% { transform: translateX(930px) translateY(12px) rotate(300deg); }
+                  75% { transform: translateX(1410px) translateY(-6px) rotate(450deg); }
+                  100% { transform: translateX(2050px) translateY(0px) rotate(600deg); }
+                }
+                
+                @keyframes floatLeftToRight8 {
+                  0% { transform: translateX(-70px) translateY(0px) rotate(0deg); }
+                  25% { transform: translateX(510px) translateY(6px) rotate(-150deg); }
+                  50% { transform: translateX(990px) translateY(-6px) rotate(-300deg); }
+                  75% { transform: translateX(1470px) translateY(10px) rotate(-450deg); }
+                  100% { transform: translateX(1990px) translateY(0px) rotate(-600deg); }
+                }
+              `}
+            </style>
+          </defs>
+          <g>
+            {/* Row 1 - Top - Floating Icons */}
+            <text x="80" y="80" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-1">₹</text>
+            <text x="200" y="120" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-2">💸</text>
+            <text x="350" y="90" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-3">↑</text>
+            <text x="500" y="110" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-4">₹</text>
+            <text x="650" y="85" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-5">📈</text>
+            <text x="800" y="105" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-6">₹</text>
+            <text x="950" y="95" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-7">💰</text>
+            <text x="1100" y="115" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-8">↓</text>
+            <text x="1250" y="80" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-1">₹</text>
+            <text x="1400" y="100" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-2">💳</text>
+            <text x="1550" y="90" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-3">↑</text>
+            <text x="1700" y="110" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-4">₹</text>
+            <text x="1820" y="85" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-5">🏦</text>
+            <text x="50" y="140" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-6">💎</text>
+            <text x="300" y="60" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-7">🔒</text>
+            <text x="750" y="140" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-8">⚡</text>
+            
+                         {/* Row 2 - Floating Icons */}
+             <text x="120" y="220" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-3">💰</text>
+             <text x="280" y="240" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-4">₹</text>
+             <text x="420" y="210" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-5">↓</text>
+             <text x="580" y="230" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-6">💸</text>
+             <text x="720" y="220" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-7">₹</text>
+             <text x="880" y="240" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-8">📈</text>
+             <text x="1020" y="210" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-1">↑</text>
+             <text x="1180" y="230" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-2">₹</text>
+             <text x="1320" y="220" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-3">🏧</text>
+             <text x="1480" y="240" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-4">💎</text>
+             <text x="1620" y="210" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-5">₹</text>
+             <text x="1780" y="230" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-6">📊</text>
+             <text x="40" y="260" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-7">🔐</text>
+             <text x="500" y="180" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-8">💹</text>
+             <text x="900" y="190" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-1">⭐</text>
+            
+                         {/* Row 3 - Floating Icons */}
+             <text x="60" y="360" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-2">↑</text>
+             <text x="220" y="340" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-3">📈</text>
+             <text x="360" y="370" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-4">₹</text>
+             <text x="520" y="350" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-5">💰</text>
+             <text x="660" y="360" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-6">↓</text>
+             <text x="820" y="340" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-7">₹</text>
+             <text x="960" y="370" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-8">💸</text>
+             <text x="1120" y="350" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-1">↑</text>
+             <text x="1260" y="360" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-2">₹</text>
+             <text x="1420" y="340" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-3">🏪</text>
+             <text x="1560" y="370" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-4">🚀</text>
+             <text x="1720" y="350" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-5">₹</text>
+             <text x="30" y="390" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-6">🔑</text>
+             <text x="450" y="320" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-7">💫</text>
+             <text x="1050" y="320" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-8">🎯</text>
+             
+             {/* Row 4 - Floating Icons */}
+             <text x="140" y="480" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-1">💰</text>
+             <text x="300" y="500" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-2">₹</text>
+             <text x="440" y="470" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-3">↑</text>
+             <text x="600" y="490" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-4">💸</text>
+             <text x="740" y="480" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-5">₹</text>
+             <text x="900" y="500" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-6">📈</text>
+             <text x="1040" y="470" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-7">↓</text>
+             <text x="1200" y="490" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-8">₹</text>
+             <text x="1340" y="480" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-1">💼</text>
+             <text x="1500" y="500" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-2">🌟</text>
+             <text x="1640" y="470" fontSize="45" fontFamily="monospace" fill="#F18A41" className="float-left-to-right-3">₹</text>
+             <text x="1800" y="490" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-4">🏆</text>
+             <text x="80" y="520" fontSize="30" fontFamily="monospace" fill="#9DADE5" className="float-left-to-right-5">💡</text>
+             <text x="550" y="440" fontSize="35" fontFamily="monospace" fill="#233831" className="float-left-to-right-6">🎨</text>
+            
+            {/* Row 5 */}
+            <text x="80" y="620" fontSize="30" fontFamily="monospace" fill="#9DADE5">↓</text>
+            <text x="240" y="600" fontSize="35" fontFamily="monospace" fill="#233831">📈</text>
+            <text x="380" y="630" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="540" y="610" fontSize="35" fontFamily="monospace" fill="#233831">💰</text>
+            <text x="680" y="620" fontSize="30" fontFamily="monospace" fill="#9DADE5">↑</text>
+            <text x="840" y="600" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="980" y="630" fontSize="35" fontFamily="monospace" fill="#233831">💸</text>
+            <text x="1140" y="610" fontSize="30" fontFamily="monospace" fill="#9DADE5">↓</text>
+            <text x="1280" y="620" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="1440" y="600" fontSize="35" fontFamily="monospace" fill="#233831">📈</text>
+            <text x="1580" y="630" fontSize="30" fontFamily="monospace" fill="#9DADE5">↑</text>
+            <text x="1740" y="610" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            
+            {/* Row 6 */}
+            <text x="160" y="740" fontSize="35" fontFamily="monospace" fill="#233831">💰</text>
+            <text x="320" y="760" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="460" y="730" fontSize="30" fontFamily="monospace" fill="#9DADE5">↓</text>
+            <text x="620" y="750" fontSize="35" fontFamily="monospace" fill="#233831">💸</text>
+            <text x="760" y="740" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="920" y="760" fontSize="35" fontFamily="monospace" fill="#233831">📈</text>
+            <text x="1060" y="730" fontSize="30" fontFamily="monospace" fill="#9DADE5">↑</text>
+            <text x="1220" y="750" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="1360" y="740" fontSize="35" fontFamily="monospace" fill="#233831">💰</text>
+            <text x="1520" y="760" fontSize="30" fontFamily="monospace" fill="#9DADE5">↓</text>
+            <text x="1660" y="730" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="1820" y="750" fontSize="35" fontFamily="monospace" fill="#233831">💸</text>
+            
+            {/* Row 7 */}
+            <text x="100" y="880" fontSize="30" fontFamily="monospace" fill="#9DADE5">↑</text>
+            <text x="260" y="860" fontSize="35" fontFamily="monospace" fill="#233831">📈</text>
+            <text x="400" y="890" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="560" y="870" fontSize="35" fontFamily="monospace" fill="#233831">💰</text>
+            <text x="700" y="880" fontSize="30" fontFamily="monospace" fill="#9DADE5">↓</text>
+            <text x="860" y="860" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="1000" y="890" fontSize="35" fontFamily="monospace" fill="#233831">💸</text>
+            <text x="1160" y="870" fontSize="30" fontFamily="monospace" fill="#9DADE5">↑</text>
+            <text x="1300" y="880" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="1460" y="860" fontSize="35" fontFamily="monospace" fill="#233831">📈</text>
+            <text x="1600" y="890" fontSize="30" fontFamily="monospace" fill="#9DADE5">↓</text>
+            <text x="1760" y="870" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            
+            {/* Row 8 - Bottom */}
+            <text x="180" y="1020" fontSize="35" fontFamily="monospace" fill="#233831">💰</text>
+            <text x="340" y="1000" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="480" y="1030" fontSize="30" fontFamily="monospace" fill="#9DADE5">↑</text>
+            <text x="640" y="1010" fontSize="35" fontFamily="monospace" fill="#233831">💸</text>
+            <text x="780" y="1020" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="940" y="1000" fontSize="35" fontFamily="monospace" fill="#233831">📈</text>
+            <text x="1080" y="1030" fontSize="30" fontFamily="monospace" fill="#9DADE5">↓</text>
+            <text x="1240" y="1010" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+            <text x="1380" y="1020" fontSize="35" fontFamily="monospace" fill="#233831">💰</text>
+            <text x="1540" y="1000" fontSize="30" fontFamily="monospace" fill="#9DADE5">↑</text>
+            <text x="1680" y="1030" fontSize="45" fontFamily="monospace" fill="#F18A41">₹</text>
+          </g>
+        </svg>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-[#233831] mb-6 bg-gradient-to-r from-[#233831] via-[#F18A41] to-[#9DADE5] bg-clip-text text-transparent">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold text-[#233831] bg-gradient-to-r from-[#233831] via-[#F18A41] to-[#9DADE5] bg-clip-text text-transparent">
             Finzep Blog
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Insights, trends, and innovations in fintech, digital payments, and financial services
-          </p>
         </div>
 
         {/* Category Filter */}
