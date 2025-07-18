@@ -55,30 +55,130 @@ const SectorsShowcase = () => {
 
   useEffect(() => {
     const section = sectionRef.current;
-    const cards = cardsRef.current;
     const progress = progressRef.current;
+    const imageContainer = cardsRef.current[0]; // Image container
+    const contentContainer = cardsRef.current[2]; // Content container
+    const contentElements = cardsRef.current.slice(3); // Text elements
 
-    if (!section || !cards.length || !progress) return;
+    if (!section || !progress || !imageContainer || !contentContainer) return;
 
     // Set initial progress bar state
     gsap.set(progress, { scaleX: 0, transformOrigin: 'left' });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: `+=${sectors.length * 100}vh`,
-        pin: true,
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const sectorIndex = Math.floor(progress * sectors.length);
-          const clampedIndex = Math.min(sectorIndex, sectors.length - 1);
-          // Update scroll progress for smooth progress bar
-          setScrollProgress(progress);
-          if (clampedIndex !== activeSector) {
-            setActiveSector(clampedIndex);
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    const animateToSector = (newIndex) => {
+      if (isAnimating || newIndex === currentIndex) return;
+      
+      isAnimating = true;
+      const prevSector = sectors[currentIndex];
+      const newSector = sectors[newIndex];
+      
+      const tl = gsap.timeline({
+        onComplete: () => {
+          isAnimating = false;
+          currentIndex = newIndex;
+        }
+      });
+
+      // Animate content fade out first
+      tl.to(contentElements, {
+        opacity: 0,
+        y: 20,
+        duration: 0.3,
+        ease: "power2.in",
+        stagger: 0.05
+      });
+
+      // Check if we're on desktop (md breakpoint and above)
+      const isDesktop = window.innerWidth >= 768;
+      
+      // If switching between left and right positioning and on desktop
+      if (prevSector.imagePosition !== newSector.imagePosition && isDesktop) {
+        if (newSector.imagePosition === 'right') {
+          // Slide image from left to right
+          tl.to(imageContainer, {
+            x: '100%',
+            duration: 0.5,
+            ease: "power2.inOut"
+          }, 0.2)
+          .call(() => {
+            // Update content and change layout order
+            setActiveSector(newIndex);
+            imageContainer.style.order = '2';
+            contentContainer.style.order = '1';
+          })
+          .fromTo(imageContainer, 
+            { x: '-100%' },
+            { 
+              x: '0%',
+              duration: 0.5,
+              ease: "power2.out"
+            }
+          );
+        } else {
+          // Slide image from right to left
+          tl.to(imageContainer, {
+            x: '-100%',
+            duration: 0.5,
+            ease: "power2.inOut"
+          }, 0.2)
+          .call(() => {
+            // Update content and change layout order
+            setActiveSector(newIndex);
+            imageContainer.style.order = '1';
+            contentContainer.style.order = '2';
+          })
+          .fromTo(imageContainer, 
+            { x: '100%' },
+            { 
+              x: '0%',
+              duration: 0.5,
+              ease: "power2.out"
+            }
+          );
+        }
+      } else {
+        // Same position or mobile - just update content with order change
+        tl.call(() => {
+          setActiveSector(newIndex);
+          if (newSector.imagePosition === 'right') {
+            imageContainer.style.order = '2';
+            contentContainer.style.order = '1';
+          } else {
+            imageContainer.style.order = '1';
+            contentContainer.style.order = '2';
           }
+        }, null, 0.3);
+      }
+
+      // Animate content fade in
+      tl.to(contentElements, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out",
+        stagger: 0.05
+      }, "-=0.3");
+    };
+
+    const mainST = ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: `+=${sectors.length * 100}vh`,
+      pin: true,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const totalSectors = sectors.length;
+        const exactIndex = progress * (totalSectors - 1);
+        const targetIndex = Math.round(exactIndex);
+        const clampedIndex = Math.max(0, Math.min(targetIndex, totalSectors - 1));
+        
+        setScrollProgress(progress);
+        
+        if (clampedIndex !== currentIndex && !isAnimating) {
+          animateToSector(clampedIndex);
         }
       }
     });
@@ -95,11 +195,38 @@ const SectorsShowcase = () => {
       }
     });
 
+    // Set initial flex order based on first sector
+    if (sectors[0].imagePosition === 'right') {
+      imageContainer.style.order = '2';
+      contentContainer.style.order = '1';
+    } else {
+      imageContainer.style.order = '1';
+      contentContainer.style.order = '2';
+    }
+
+    // Handle window resize
+    const handleResize = () => {
+      // Reset any transforms on resize
+      gsap.set(imageContainer, { x: 0 });
+      
+      // Update order based on current sector and screen size
+      const currentSector = sectors[activeSector];
+      if (currentSector.imagePosition === 'right') {
+        imageContainer.style.order = '2';
+        contentContainer.style.order = '1';
+      } else {
+        imageContainer.style.order = '1';
+        contentContainer.style.order = '2';
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      tl.kill();
+      window.removeEventListener('resize', handleResize);
     };
-  }, [activeSector]);
+  }, []);
 
   return (
     <section ref={sectionRef} className="w-full py-10 bg-gradient-to-br from-gray-50 to-white">
@@ -116,92 +243,83 @@ const SectorsShowcase = () => {
             />
           </div>
         </div>
-        {/* Sector Cards */}
+                {/* Sector Cards */}
         <div className="relative min-h-[500px] flex items-center justify-center mt-2">
           <div className="w-full h-full">
-            {sectors.map((sector, index) => (
-              activeSector === index && (
-                <div
-                  key={sector.title}
-                  ref={(el) => (cardsRef.current[index] = el)}
-                  className="w-full animate-in fade-in-0 zoom-in-95 duration-500"
-                >
-                  <div className={`bg-gradient-to-br ${sector.color} backdrop-blur-sm border border-white/20 rounded-3xl shadow-2xl min-h-[500px] flex flex-col md:flex-row overflow-hidden`}>
-                    {/* Image Section - 30% (Left Position) */}
-                    {sector.imagePosition === 'left' && (
-                      <div className="w-full h-64 md:w-[30%] md:h-auto flex-shrink-0 relative">
-                        <img 
-                          src={sector.image} 
-                          alt={sector.title}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextSibling.style.display = 'flex';
-                          }}
-                        />
-                        {/* Fallback icon */}
-                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                          <div className="text-8xl filter drop-shadow-lg">
-                            {sector.icon}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Content Section - 70% */}
-                    <div className="w-full md:w-[70%] p-6 md:p-8 flex flex-col justify-center flex-1">
-                      {/* Title */}
-                      <h2 className="text-2xl md:text-4xl font-bold text-[#233831] mb-3">
-                        {sector.title}
-                      </h2>
-                      {/* Subtitle */}
-                      <p className="text-lg md:text-xl text-[#233831]/80 font-medium mb-4">
-                        {sector.subtitle}
-                      </p>
-                      {/* Description */}
-                      <p className="text-base text-[#233831]/70 leading-relaxed mb-6">
-                        {sector.desc}
-                      </p>
-                      {/* Stats */}
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
-                        <div className="bg-white/50 backdrop-blur-sm rounded-full px-6 py-3 border border-white/30">
-                          <span className="text-[#233831] font-bold text-lg">{sector.stats}</span>
-                        </div>
-                        <div className="bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full px-6 py-3 text-white font-semibold">
-                          Active Now
-                        </div>
-                      </div>
-                      {/* Call to Action */}
-                      <button className="bg-gradient-to-r from-[#F18A41] to-[#9DADE5] text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-[#9DADE5] hover:to-[#F18A41] w-fit">
-                        Learn More
-                        <span className="ml-2">→</span>
-                      </button>
-                    </div>
-
-                    {/* Image Section - 30% (Right Position) */}
-                    {sector.imagePosition === 'right' && (
-                      <div className="w-full h-64 md:w-[30%] md:h-auto flex-shrink-0 relative order-first md:order-last">
-                        <img 
-                          src={sector.image} 
-                          alt={sector.title}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextSibling.style.display = 'flex';
-                          }}
-                        />
-                        {/* Fallback icon */}
-                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                          <div className="text-8xl filter drop-shadow-lg">
-                            {sector.icon}
-                          </div>
-                        </div>
-                      </div>
-                    )}
+            {/* Single Card Container */}
+            <div className={`bg-gradient-to-br ${sectors[activeSector]?.color} backdrop-blur-sm border border-white/20 rounded-3xl shadow-2xl min-h-[500px] flex flex-col md:flex-row overflow-hidden transition-all duration-500 ease-in-out`}>
+              
+              {/* Image Section - 30% */}
+              <div 
+                ref={(el) => (cardsRef.current[0] = el)}
+                className="w-full h-64 md:w-[30%] md:h-auto flex-shrink-0 relative overflow-hidden"
+              >
+                <img 
+                  ref={(el) => (cardsRef.current[1] = el)}
+                  src={sectors[activeSector]?.image} 
+                  alt={sectors[activeSector]?.title}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                {/* Fallback icon */}
+                <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                  <div className="text-8xl filter drop-shadow-lg">
+                    {sectors[activeSector]?.icon}
                   </div>
                 </div>
-              )
-            ))}
+              </div>
+              
+              {/* Content Section - 70% */}
+              <div 
+                ref={(el) => (cardsRef.current[2] = el)}
+                className="w-full md:w-[70%] p-6 md:p-8 flex flex-col justify-center flex-1"
+              >
+                {/* Title */}
+                <h2 
+                  ref={(el) => (cardsRef.current[3] = el)}
+                  className="text-2xl md:text-4xl font-bold text-[#233831] mb-3"
+                >
+                  {sectors[activeSector]?.title}
+                </h2>
+                {/* Subtitle */}
+                <p 
+                  ref={(el) => (cardsRef.current[4] = el)}
+                  className="text-lg md:text-xl text-[#233831]/80 font-medium mb-4"
+                >
+                  {sectors[activeSector]?.subtitle}
+                </p>
+                {/* Description */}
+                <p 
+                  ref={(el) => (cardsRef.current[5] = el)}
+                  className="text-base text-[#233831]/70 leading-relaxed mb-6"
+                >
+                  {sectors[activeSector]?.desc}
+                </p>
+                {/* Stats */}
+                <div 
+                  ref={(el) => (cardsRef.current[6] = el)}
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6"
+                >
+                  <div className="bg-white/50 backdrop-blur-sm rounded-full px-6 py-3 border border-white/30">
+                    <span className="text-[#233831] font-bold text-lg">{sectors[activeSector]?.stats}</span>
+                  </div>
+                  <div className="bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full px-6 py-3 text-white font-semibold">
+                    Active Now
+                  </div>
+                </div>
+                {/* Call to Action */}
+                <button 
+                  ref={(el) => (cardsRef.current[7] = el)}
+                  className="bg-gradient-to-r from-[#F18A41] to-[#9DADE5] text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-[#9DADE5] hover:to-[#F18A41] w-fit"
+                >
+                  Learn More
+                  <span className="ml-2">→</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         {/* Sector Indicators */}
