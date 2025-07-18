@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import AnimatedHeading from './AnimatedHeading';
 import { Link } from 'react-router-dom';
 
 const blogPosts = [
@@ -55,14 +56,9 @@ const BlogCardsSection = () => {
   return (
     <section className="w-full py-24 bg-gradient-to-br from-[#f8fafc] to-[#e0e7ef] m-0 p-0">
       <div className="max-w-screen-xl mx-auto w-full px-8">
-        <motion.h2 
-          className="text-4xl font-bold text-[#233831] mb-16 text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          Finzep Blog
-        </motion.h2>
+        <div className="flex justify-center mb-16">
+          <AnimatedHeading delay={0.4} gradient={true}>Finzep Blog</AnimatedHeading>
+        </div>
         <motion.ul 
           className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-8 w-full"
           variants={containerVariants}

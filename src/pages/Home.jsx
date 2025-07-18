@@ -4,6 +4,7 @@ import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsShowcase from '../components/SectorsShowcase';
 import BlogCardsSection from '../components/BlogCardsSection';
 import ScrollProgressCards from '../components/ScrollProgressCards';
+import AnimatedHeading from '../components/AnimatedHeading';
 
 const AnimatedCounter = ({ target, duration = 2000, isVisible = false }) => {
   const [count, setCount] = useState(0);
@@ -240,7 +241,9 @@ const Home = () => {
         className="relative py-20 bg-white w-full"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Our Services</h2>
+          <div className="flex justify-center mb-16">
+            <AnimatedHeading delay={0.2}>Our Services</AnimatedHeading>
+          </div>
         </div>
         <div className="w-full">
           <ServicesCarousel />
@@ -252,7 +255,9 @@ const Home = () => {
         id="sectors"
         className="relative bg-white w-full"
       >
-        <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
+        <div className="flex justify-center mb-8 px-4 sm:px-6 lg:px-8">
+          <AnimatedHeading delay={0.3} gradient={true}>Sectors We Serve</AnimatedHeading>
+        </div>
         <SectorsShowcase />
       </motion.section>
 

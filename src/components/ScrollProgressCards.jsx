@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+     import React, { useRef, useState, useEffect } from 'react';
 
 const ScrollProgressCards = () => {
   const containerRef = useRef(null);
