@@ -103,7 +103,7 @@ const SectorsShowcase = () => {
 
   return (
     <section className="w-full py-0">
-      <div ref={sectionRef} className="w-screen relative left-1/2 right-1/2 -mx-[50vw] border-t-2 border-b-2 border-gray-200 pt-[150px] pr-[100px] py-0" style={{ background: 'linear-gradient(135deg, #002A76 0%, #001435 100%)' }}>
+      <div ref={sectionRef} className="w-full border-t-2 border-b-2 border-gray-200 pt-[150px] pr-[100px] py-0" style={{ background: 'linear-gradient(135deg, #002A76 0%, #001435 100%)' }}>
         <div className="w-full flex flex-row items-stretch relative py-0 min-h-[80vh]" style={{minHeight:'80vh'}}>
           {/* Left: List and fill */}
           <div className="flex flex-col justify-center relative z-10 pr-8" style={{minWidth: '180px', height: '100%'}}>
