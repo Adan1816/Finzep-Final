@@ -252,7 +252,6 @@ const Home = () => {
         id="sectors"
         className="relative bg-white w-full"
       >
-        <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
         <SectorsShowcase />
       </motion.section>
 

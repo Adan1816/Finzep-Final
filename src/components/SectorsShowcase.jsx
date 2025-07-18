@@ -10,7 +10,9 @@ const sectors = [
     desc: 'Finzep streamlines fee collection, payroll, and vendor payments for schools, colleges, and edtech platforms.',
     icon: '🎓',
     stats: '500+ Schools',
-    color: 'from-[#F18A41]/20 to-[#9DADE5]/20'
+    color: 'from-[#F18A41]/20 to-[#9DADE5]/20',
+    imagePosition: 'left',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
   },
   {
     title: 'Hospitality',
@@ -18,7 +20,9 @@ const sectors = [
     desc: 'Hotels and restaurants use Finzep for instant payouts, supplier settlements, and digital tips.',
     icon: '🏨',
     stats: '200+ Hotels',
-    color: 'from-[#9DADE5]/20 to-[#F18A41]/20'
+    color: 'from-[#9DADE5]/20 to-[#F18A41]/20',
+    imagePosition: 'right',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
   },
   {
     title: 'Logistics',
@@ -26,7 +30,9 @@ const sectors = [
     desc: 'Automate driver payments, COD settlements, and vendor disbursements with Finzep.',
     icon: '🚛',
     stats: '1000+ Drivers',
-    color: 'from-[#F18A41]/20 to-[#9DADE5]/20'
+    color: 'from-[#F18A41]/20 to-[#9DADE5]/20',
+    imagePosition: 'left',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
   },
   {
     title: 'E-commerce',
@@ -34,7 +40,9 @@ const sectors = [
     desc: 'Finzep enables instant refunds, seller payouts, and seamless checkout for e-commerce platforms.',
     icon: '🛒',
     stats: '300+ Platforms',
-    color: 'from-[#9DADE5]/20 to-[#F18A41]/20'
+    color: 'from-[#9DADE5]/20 to-[#F18A41]/20',
+    imagePosition: 'right',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
   }
 ];
 
@@ -96,6 +104,9 @@ const SectorsShowcase = () => {
   return (
     <section ref={sectionRef} className="w-full py-10 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Heading */}
+        <h2 className="text-3xl font-bold text-[#233831] mb-8 text-center">Sectors We Serve</h2>
+        
         {/* Progress Bar Only (no headings/percent) */}
         <div className="w-full mb-4">
           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -106,46 +117,87 @@ const SectorsShowcase = () => {
           </div>
         </div>
         {/* Sector Cards */}
-        <div className="relative min-h-[400px] flex items-center justify-center mt-2">
+        <div className="relative min-h-[500px] flex items-center justify-center mt-2">
           <div className="w-full h-full">
             {sectors.map((sector, index) => (
               activeSector === index && (
                 <div
                   key={sector.title}
                   ref={(el) => (cardsRef.current[index] = el)}
-                  className="w-full h-full animate-in fade-in-0 zoom-in-95 duration-500"
+                  className="w-full animate-in fade-in-0 zoom-in-95 duration-500"
                 >
-                  <div className={`bg-gradient-to-br ${sector.color} backdrop-blur-sm border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl h-full flex flex-col justify-center items-center text-center`}>
-                    {/* Icon */}
-                    <div className="text-6xl mb-4 filter drop-shadow-lg">
-                      {sector.icon}
-                    </div>
-                    {/* Title */}
-                    <h2 className="text-3xl md:text-4xl font-bold text-[#233831] mb-3">
-                      {sector.title}
-                    </h2>
-                    {/* Subtitle */}
-                    <p className="text-lg md:text-xl text-[#233831]/80 font-medium mb-4">
-                      {sector.subtitle}
-                    </p>
-                    {/* Description */}
-                    <p className="text-base text-[#233831]/70 max-w-2xl leading-relaxed mb-6">
-                      {sector.desc}
-                    </p>
-                    {/* Stats */}
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="bg-white/50 backdrop-blur-sm rounded-full px-6 py-3 border border-white/30">
-                        <span className="text-[#233831] font-bold text-lg">{sector.stats}</span>
+                  <div className={`bg-gradient-to-br ${sector.color} backdrop-blur-sm border border-white/20 rounded-3xl shadow-2xl min-h-[500px] flex flex-col md:flex-row overflow-hidden`}>
+                    {/* Image Section - 30% (Left Position) */}
+                    {sector.imagePosition === 'left' && (
+                      <div className="w-full h-64 md:w-[30%] md:h-auto flex-shrink-0 relative">
+                        <img 
+                          src={sector.image} 
+                          alt={sector.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        {/* Fallback icon */}
+                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                          <div className="text-8xl filter drop-shadow-lg">
+                            {sector.icon}
+                          </div>
+                        </div>
                       </div>
-                      <div className="bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full px-6 py-3 text-white font-semibold">
-                        Active Now
+                    )}
+                    
+                    {/* Content Section - 70% */}
+                    <div className="w-full md:w-[70%] p-6 md:p-8 flex flex-col justify-center flex-1">
+                      {/* Title */}
+                      <h2 className="text-2xl md:text-4xl font-bold text-[#233831] mb-3">
+                        {sector.title}
+                      </h2>
+                      {/* Subtitle */}
+                      <p className="text-lg md:text-xl text-[#233831]/80 font-medium mb-4">
+                        {sector.subtitle}
+                      </p>
+                      {/* Description */}
+                      <p className="text-base text-[#233831]/70 leading-relaxed mb-6">
+                        {sector.desc}
+                      </p>
+                      {/* Stats */}
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+                        <div className="bg-white/50 backdrop-blur-sm rounded-full px-6 py-3 border border-white/30">
+                          <span className="text-[#233831] font-bold text-lg">{sector.stats}</span>
+                        </div>
+                        <div className="bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full px-6 py-3 text-white font-semibold">
+                          Active Now
+                        </div>
                       </div>
+                      {/* Call to Action */}
+                      <button className="bg-gradient-to-r from-[#F18A41] to-[#9DADE5] text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-[#9DADE5] hover:to-[#F18A41] w-fit">
+                        Learn More
+                        <span className="ml-2">→</span>
+                      </button>
                     </div>
-                    {/* Call to Action */}
-                    <button className="bg-gradient-to-r from-[#F18A41] to-[#9DADE5] text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-[#9DADE5] hover:to-[#F18A41]">
-                      Learn More
-                      <span className="ml-2">→</span>
-                    </button>
+
+                    {/* Image Section - 30% (Right Position) */}
+                    {sector.imagePosition === 'right' && (
+                      <div className="w-full h-64 md:w-[30%] md:h-auto flex-shrink-0 relative order-first md:order-last">
+                        <img 
+                          src={sector.image} 
+                          alt={sector.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        {/* Fallback icon */}
+                        <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                          <div className="text-8xl filter drop-shadow-lg">
+                            {sector.icon}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )
