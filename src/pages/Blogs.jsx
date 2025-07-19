@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -145,12 +145,9 @@ const BlogCard = ({ post, index }) => {
   }, [index]);
 
   return (
-    <motion.div
+    <div
       ref={cardRef}
       className="group relative bg-white/90 backdrop-blur-xl rounded-3xl overflow-hidden shadow-xl border border-white/20 cursor-pointer"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
     >
       {/* Image Section */}
       <div className="relative h-64 overflow-hidden">
@@ -213,13 +210,14 @@ const BlogCard = ({ post, index }) => {
 
       {/* Hover Effect Border */}
       <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-[#F18A41]/30 transition-colors duration-500 pointer-events-none" />
-    </motion.div>
+    </div>
   );
 };
 
 const Blogs = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [filteredPosts, setFilteredPosts] = useState(blogPosts);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const headerRef = useRef(null);
   const filterRef = useRef(null);
   const graffitiRef = useRef(null);
@@ -512,58 +510,74 @@ const Blogs = () => {
           </h1>
         </div>
 
-        {/* Category Filter */}
+        {/* Category Filter - Hamburger Style */}
         <div ref={filterRef} className="mb-16">
-          <div className="flex flex-wrap justify-start gap-3">
-            {categories.map((category) => (
-              <motion.button
-                key={category}
-                onClick={() => handleCategoryChange(category)}
-                className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105 relative overflow-hidden ${
-                  activeCategory === category
-                    ? 'bg-gradient-to-r from-[#F18A41] to-[#9DADE5] text-white shadow-lg shadow-[#F18A41]/25'
-                    : 'bg-white/60 text-gray-400 border border-gray-100 hover:border-[#F18A41]/30 hover:bg-[#F18A41]/5 hover:text-[#F18A41] backdrop-blur-sm shadow-sm'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {/* Subtle glow effect for active button */}
-                {activeCategory === category && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#F18A41]/20 to-[#9DADE5]/20 rounded-full blur-sm -z-10" />
-                )}
-                {category}
-              </motion.button>
-            ))}
+          {/* Filter Header with Hamburger */}
+          <div className="flex items-center justify-start mb-4">
+            <button
+              onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+              className="flex items-center gap-3 px-4 py-2 bg-white/70 rounded-lg border border-gray-200 hover:border-[#F18A41]/30 hover:bg-[#F18A41]/5 transition-all duration-500 ease-out"
+            >
+              <div className="flex flex-col gap-1">
+                <div className={`w-5 h-0.5 bg-[#233831] transition-all duration-500 ease-in-out ${isFiltersOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+                <div className={`w-5 h-0.5 bg-[#233831] transition-all duration-500 ease-in-out ${isFiltersOpen ? 'opacity-0' : ''}`} />
+                <div className={`w-5 h-0.5 bg-[#233831] transition-all duration-500 ease-in-out ${isFiltersOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+              </div>
+              <span className="font-medium text-[#233831]">
+                {activeCategory === 'All' ? 'Filters' : `Filter: ${activeCategory}`}
+              </span>
+              <div className="flex items-center justify-center w-6 h-6 bg-gradient-to-r from-[#F18A41] to-[#9DADE5] rounded-full text-white text-xs font-bold">
+                {activeCategory === 'All' ? categories.length - 1 : '1'}
+              </div>
+            </button>
+            
+
           </div>
+
+          {/* Expandable Filter Options */}
+          {isFiltersOpen && (
+            <div className="overflow-hidden">
+              <div className="flex flex-wrap justify-start gap-3 pt-4 border-t border-gray-200/50">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => {
+                      handleCategoryChange(category);
+                      setIsFiltersOpen(false);
+                    }}
+                    className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105 relative overflow-hidden ${
+                      activeCategory === category
+                        ? 'bg-gradient-to-r from-[#F18A41] to-[#9DADE5] text-white shadow-lg shadow-[#F18A41]/25'
+                        : 'bg-white/60 text-gray-400 border border-gray-100 hover:border-[#F18A41]/30 hover:bg-[#F18A41]/5 hover:text-[#F18A41] backdrop-blur-sm shadow-sm'
+                    }`}
+                  >
+                    {/* Subtle glow effect for active button */}
+                    {activeCategory === category && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#F18A41]/20 to-[#9DADE5]/20 rounded-full blur-sm -z-10" />
+                    )}
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
         </div>
 
         {/* Blog Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {filteredPosts.map((post, index) => (
-              <BlogCard key={`${post.title}-${activeCategory}`} post={post} index={index} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredPosts.map((post, index) => (
+            <BlogCard key={`${post.title}-${activeCategory}`} post={post} index={index} />
+          ))}
+        </div>
 
         {/* No Results */}
         {filteredPosts.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16"
-          >
+          <div className="text-center py-16">
             <div className="text-6xl mb-4">📝</div>
             <h3 className="text-2xl font-bold text-[#233831] mb-2">No articles found</h3>
             <p className="text-gray-600">Try selecting a different category</p>
-          </motion.div>
+          </div>
         )}
       </div>
     </section>
