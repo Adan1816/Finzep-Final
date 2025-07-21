@@ -176,19 +176,43 @@ export default function Navbar() {
               )}
             </div>
             {/* Other nav links */}
-            <Link to="/aboutus" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded" style={{ paddingRight: 10 }}>About Us</Link>
+            <Link 
+              to="/aboutus" 
+              className={`font-medium py-1 rounded transition-colors ${
+                location.pathname === '/aboutus' 
+                  ? 'text-[#F18A41]' 
+                  : 'text-[#233831] hover:text-[#F18A41]'
+              }`} 
+              style={{ paddingRight: 10 }}
+            >
+              About Us
+            </Link>
           
           {/* Merchants Dropdown */}
           <Link
             to="/merchants"
-            className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded"
+            className={`font-medium py-1 rounded transition-colors ${
+              location.pathname === '/merchants' 
+                ? 'text-[#F18A41]' 
+                : 'text-[#233831] hover:text-[#F18A41]'
+            }`}
             style={{ paddingRight: 10 }}
           >
             Merchants
           </Link>
 
           {/* Blogs Button */}
-          <Link to="/blogs" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded" style={{ paddingRight: 10 }}>Blogs</Link>
+          <Link 
+            to="/blogs" 
+            className={`font-medium py-1 rounded transition-colors ${
+              location.pathname === '/blogs' 
+                ? 'text-[#F18A41]' 
+                : 'text-[#233831] hover:text-[#F18A41]'
+            }`} 
+            style={{ paddingRight: 10 }}
+          >
+            Blogs
+          </Link>
 
           <a href="https://apidocs.finzep.com/" target="_blank" rel="noopener noreferrer" className="text-[#233831] hover:text-[#F18A41] transition-colors font-medium py-1 rounded" style={{ paddingRight: 10 }}>Developer API</a>
         </div>
@@ -211,15 +235,23 @@ export default function Navbar() {
           <div className="hidden md:flex md:items-center md:space-x-4 pr-0">
             <Link
               to="/login"
-              className="text-[#233831] hover:text-[#F18A41] font-medium px-5 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-              >
-                Login
+              className={`font-medium px-5 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] ${
+                location.pathname === '/login' 
+                  ? 'text-[#F18A41]' 
+                  : 'text-[#233831] hover:text-[#F18A41]'
+              }`}
+            >
+              Login
             </Link>
             <Link
               to="/signup"
-              className="bg-[#F18A41] text-white font-semibold px-7 py-2 rounded-full shadow hover:bg-[#233831] hover:text-[#F18A41] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-              >
-                Sign Up
+              className={`font-semibold px-7 py-2 rounded-full shadow transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] ${
+                location.pathname === '/signup' 
+                  ? 'bg-[#F18A41] text-white' 
+                  : 'bg-[#F18A41] text-white hover:bg-[#233831] hover:text-[#F18A41]'
+              }`}
+            >
+              Sign Up
             </Link>
             </div>
             {/* Hamburger - only on mobile */}
@@ -306,7 +338,11 @@ export default function Navbar() {
               {/* Merchants Dropdown for Mobile */}
               <Link
                 to="/merchants"
-                className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+                className={`block font-medium px-2 py-2 rounded transition-colors bg-white/90 ${
+                  location.pathname === '/merchants' 
+                    ? 'text-[#F18A41]' 
+                    : 'text-[#233831] hover:text-[#F18A41]'
+                }`}
                 onClick={() => setMobileOpen(false)}
               >
                 Merchants
@@ -314,7 +350,11 @@ export default function Navbar() {
             {/* Other nav links */}
             <Link
               to="/aboutus"
-              className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+              className={`block font-medium px-2 py-2 rounded transition-colors bg-white/90 ${
+                location.pathname === '/aboutus' 
+                  ? 'text-[#F18A41]' 
+                  : 'text-[#233831] hover:text-[#F18A41]'
+              }`}
               onClick={() => setMobileOpen(false)}
             >
               About Us
@@ -322,7 +362,11 @@ export default function Navbar() {
             {/* Blogs Button for Mobile */}
             <Link
               to="/blogs"
-              className="block text-[#233831] hover:text-[#F18A41] font-medium px-2 py-2 rounded transition-colors bg-white/90"
+              className={`block font-medium px-2 py-2 rounded transition-colors bg-white/90 ${
+                location.pathname === '/blogs' 
+                  ? 'text-[#F18A41]' 
+                  : 'text-[#233831] hover:text-[#F18A41]'
+              }`}
               onClick={() => setMobileOpen(false)}
             >
               Blogs
@@ -338,17 +382,25 @@ export default function Navbar() {
             </a>
               <Link
                 to="/login"
-              className="block text-[#233831] hover:text-[#F18A41] font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-              onClick={() => setMobileOpen(false)}
-            >
-              Login
+                className={`block font-medium px-3 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] ${
+                  location.pathname === '/login' 
+                    ? 'text-[#F18A41]' 
+                    : 'text-[#233831] hover:text-[#F18A41]'
+                }`}
+                onClick={() => setMobileOpen(false)}
+              >
+                Login
               </Link>
               <Link
                 to="/signup"
-              className="block bg-[#F18A41] text-white font-semibold px-3 py-2 rounded-lg shadow hover:bg-[#233831] hover:text-[#F18A41] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41]"
-              onClick={() => setMobileOpen(false)}
-            >
-              Sign Up
+                className={`block font-semibold px-3 py-2 rounded-lg shadow transition-colors focus:outline-none focus:ring-2 focus:ring-[#F18A41] ${
+                  location.pathname === '/signup' 
+                    ? 'bg-[#F18A41] text-white' 
+                    : 'bg-[#F18A41] text-white hover:bg-[#233831] hover:text-[#F18A41]'
+                }`}
+                onClick={() => setMobileOpen(false)}
+              >
+                Sign Up
               </Link>
             </div>
         </div>

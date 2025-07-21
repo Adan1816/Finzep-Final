@@ -167,8 +167,8 @@ const TeamScrollGallery = () => {
     const trigger = ScrollTrigger.create({
       trigger: galleryRef.current.parentElement, // Use team section as trigger
       start: "top top",
-      end: "+=1000vh", // Much longer scroll distance for very low sensitivity
-      scrub: 3,
+      end: "+=1500vh", // Even longer scroll distance for slower scrolling
+      scrub: 8, // Higher scrub value for slower, more controlled animation
       onUpdate(self) {
         // Calculate progress to show exactly all unique team members
         const progress = self.progress;
