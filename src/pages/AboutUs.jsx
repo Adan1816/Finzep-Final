@@ -52,7 +52,7 @@ const AboutUs = () => {
       ScrollTrigger.create({
         trigger: '.team-section',
         start: 'top top',
-        end: '+=1500vh', // Even longer scroll distance for slower scrolling
+        end: '+=700vh', // Precise scroll distance for 7 team members (100vh each)
         pin: true,
         pinSpacing: true, // Allow space for pinned content
         anticipatePin: 1,

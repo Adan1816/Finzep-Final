@@ -163,11 +163,14 @@ const TeamScrollGallery = () => {
     const timePerMember = spacing; // 0.1
     const totalTimeForAllMembers = uniqueTeamCount * timePerMember; // Time to show all 7 members
     
+    // Calculate precise scroll distance needed (100vh per team member for smooth experience)
+    const scrollDistanceNeeded = `+=${uniqueTeamCount * 100}vh`; // 700vh for 7 members
+    
     // ScrollTrigger that drives the animation within the pinned section
     const trigger = ScrollTrigger.create({
       trigger: galleryRef.current.parentElement, // Use team section as trigger
       start: "top top",
-      end: "+=1500vh", // Even longer scroll distance for slower scrolling
+      end: scrollDistanceNeeded, // Precise scroll distance based on team count
       scrub: 8, // Higher scrub value for slower, more controlled animation
       onUpdate(self) {
         // Calculate progress to show exactly all unique team members
@@ -198,12 +201,12 @@ const TeamScrollGallery = () => {
   // Removed handleNext and handlePrev
 
   return (
-    <div className="relative w-full h-96 overflow-hidden bg-gradient-to-r from-[#002A76] to-[#001435] rounded-2xl mb-16" ref={galleryRef}>
-      <ul className="absolute w-56 h-72 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" ref={cardsRef}>
+    <div className="relative w-full h-[500px] overflow-hidden bg-gradient-to-r from-[#002A76] to-[#001435] rounded-2xl mb-16" ref={galleryRef}>
+      <ul className="absolute w-80 h-96 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" ref={cardsRef}>
         {visualTeamMembers.map((member, index) => (
           <li
             key={index}
-            className="list-none p-0 m-0 w-56 h-72 text-center absolute top-0 left-0 rounded-xl flex flex-col items-center justify-end pb-6"
+            className="list-none p-0 m-0 w-80 h-96 text-center absolute top-0 left-0 rounded-xl flex flex-col items-center justify-end pb-8"
           >
             <img
               src={member.img}
@@ -211,9 +214,9 @@ const TeamScrollGallery = () => {
               className="max-w-[90%] opacity-0 h-full object-cover rounded-xl border-4 border-[#F18A41]"
             />
             {/* Name and Title overlay */}
-            <div className="w-full px-2 mt-2">
-              <div className="text-white font-semibold text-lg leading-tight truncate">{member.name}</div>
-              <div className="text-[#F18A41] text-sm leading-tight truncate">{member.title}</div>
+            <div className="w-full px-3 mt-3">
+              <div className="text-white font-semibold text-xl leading-tight truncate">{member.name}</div>
+              <div className="text-[#F18A41] text-base leading-tight truncate">{member.title}</div>
             </div>
           </li>
         ))}
