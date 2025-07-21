@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import AboutScrollText from '../components/AboutScrollText';
+import TeamScrollGallery from '../components/TeamScrollGallery';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,6 +9,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const AboutUs = () => {
   const graffitiRef = useRef(null);
+  
+  // Immediate scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     // Additional animations for the About Us page
@@ -38,25 +44,23 @@ const AboutUs = () => {
       });
       gsap.set('.card-item', { opacity: 0, y: 40 });
 
-      // Team section animation
-      gsap.fromTo('.team-member', 
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.team-container',
-            start: 'top 80%',
-            end: 'bottom 20%',
-            toggleActions: 'play none none reverse',
-          }
+
+
+
+
+      // Team section pinning animation
+      ScrollTrigger.create({
+        trigger: '.team-section',
+        start: 'top top',
+        end: '+=1000vh', // Much longer scroll distance for very low sensitivity
+        pin: true,
+        pinSpacing: true, // Allow space for pinned content
+        anticipatePin: 1,
+        onUpdate(self) {
+          // Let the inner gallery handle its own animation
+          // When animation completes, this will automatically release the pin
         }
-      );
-
-
+      });
 
       // CTA section animation
       gsap.fromTo('.cta-content', 
@@ -73,6 +77,12 @@ const AboutUs = () => {
         }
       );
     });
+
+    // Ensure page starts from top after all ScrollTrigger setup
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      ScrollTrigger.refresh();
+    }, 100);
 
     return () => ctx.revert();
   }, []);
@@ -259,7 +269,7 @@ const AboutUs = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-20" style={{ background: 'linear-gradient(135deg, #002A76 0%, #001435 100%)' }}>
+      <section className="team-section py-20 relative z-10" style={{ background: 'linear-gradient(135deg, #002A76 0%, #001435 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -271,88 +281,15 @@ const AboutUs = () => {
             </p>
           </div>
 
-          <div className="team-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Team Member 1 */}
-            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 flex flex-col items-center text-center">
-              <div className="w-full h-64 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center relative overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
-                  alt="Alex Johnson" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Alex Johnson</h3>
-                <p className="text-[#F18A41] font-medium mb-3">Chief Technology Officer</p>
-                <p className="text-gray-600 text-sm">
-                  Leading technical innovation and ensuring our payment solutions meet the highest standards.
-                </p>
-              </div>
-            </div>
+          {/* Team Scroll Gallery Animation */}
+          <TeamScrollGallery />
 
-            {/* Team Member 2 */}
-            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 flex flex-col items-center text-center">
-              <div className="w-full h-64 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center relative overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face" 
-                  alt="Sarah Chen" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Sarah Chen</h3>
-                <p className="text-[#F18A41] font-medium mb-3">Head of Product</p>
-                <p className="text-gray-600 text-sm">
-                  Bringing product expertise and user-focused solutions to our fintech platform.
-                </p>
-              </div>
-            </div>
 
-            {/* Team Member 3 */}
-            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 flex flex-col items-center text-center">
-              <div className="w-full h-64 bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center relative overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face" 
-                  alt="Mike Rodriguez" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Mike Rodriguez</h3>
-                <p className="text-[#F18A41] font-medium mb-3">Security Director</p>
-                <p className="text-gray-600 text-sm">
-                  Ensuring the highest security standards for all our payment processing solutions.
-                </p>
-              </div>
-            </div>
-
-            {/* Team Member 4 */}
-            <div className="team-member max-w-xs w-full rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 flex flex-col items-center text-center">
-              <div className="w-full h-64 bg-gradient-to-br from-pink-50 to-pink-100 flex items-center justify-center relative overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face" 
-                  alt="Emma Thompson" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Emma Thompson</h3>
-                <p className="text-[#F18A41] font-medium mb-3">Business Development</p>
-                <p className="text-gray-600 text-sm">
-                  Building strategic partnerships and driving business growth across markets.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-[#F18A41]/90 to-[#9DADE5]/90">
+      <section className="cta-section py-20 mt-20 bg-gradient-to-br from-[#F18A41]/90 to-[#9DADE5]/90 relative z-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="cta-content">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
