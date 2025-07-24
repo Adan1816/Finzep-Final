@@ -240,8 +240,8 @@ export default function Navbar() {
                   ? 'text-[#F18A41]' 
                   : 'text-[#233831] hover:text-[#F18A41]'
               }`}
-            >
-              Login
+              >
+                Login
             </Link>
             <Link
               to="/signup"
@@ -250,8 +250,8 @@ export default function Navbar() {
                   ? 'bg-[#F18A41] text-white' 
                   : 'bg-[#F18A41] text-white hover:bg-[#233831] hover:text-[#F18A41]'
               }`}
-            >
-              Sign Up
+              >
+                Sign Up
             </Link>
             </div>
             {/* Hamburger - only on mobile */}
@@ -387,9 +387,9 @@ export default function Navbar() {
                     ? 'text-[#F18A41]' 
                     : 'text-[#233831] hover:text-[#F18A41]'
                 }`}
-                onClick={() => setMobileOpen(false)}
-              >
-                Login
+              onClick={() => setMobileOpen(false)}
+            >
+              Login
               </Link>
               <Link
                 to="/signup"
@@ -398,9 +398,9 @@ export default function Navbar() {
                     ? 'bg-[#F18A41] text-white' 
                     : 'bg-[#F18A41] text-white hover:bg-[#233831] hover:text-[#F18A41]'
                 }`}
-                onClick={() => setMobileOpen(false)}
-              >
-                Sign Up
+              onClick={() => setMobileOpen(false)}
+            >
+              Sign Up
               </Link>
             </div>
         </div>

@@ -4,6 +4,7 @@ import ServicesCarousel from '../components/ServicesCarousel';
 import SectorsShowcase from '../components/SectorsShowcase';
 import BlogCardsSection from '../components/BlogCardsSection';
 import ScrollProgressCards from '../components/ScrollProgressCards';
+import HeroGlobe from '../components/HeroGlobe';
 
 const AnimatedCounter = ({ target, duration = 2000, isVisible = false }) => {
   const [count, setCount] = useState(0);
@@ -161,32 +162,8 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <motion.section
-        id="hero"
-        className="relative w-full min-h-[calc(100vh-4rem)] pt-24 pb-12 flex items-center justify-center"
-        style={{
-          overflow: 'hidden',
-          backgroundColor: '#fff',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 600 600' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.08'%3E%3Ctext x='40' y='120' font-size='60' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Ctext x='200' y='200' font-size='48' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Crect x='350' y='100' width='80' height='20' rx='6' fill='%23233831'/%3E%3Crect x='370' y='140' width='40' height='20' rx='6' fill='%23233831'/%3E%3Cpath d='M100 400 l40 -40 l40 40' stroke='%23233831' stroke-width='8' fill='none'/%3E%3Crect x='120' y='320' width='20' height='60' rx='6' fill='%23233831'/%3E%3Crect x='160' y='340' width='20' height='40' rx='6' fill='%23233831'/%3E%3Crect x='200' y='360' width='20' height='20' rx='6' fill='%23233831'/%3E%3Ctext x='500' y='500' font-size='60' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Ctext x='420' y='420' font-size='48' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Ctext x='300' y='80' font-size='36' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Ctext x='100' y='500' font-size='36' font-family='monospace' fill='%23233831'%3E%E2%82%B9%3C/text%3E%3Crect x='250' y='300' width='30' height='10' rx='3' fill='%23233831'/%3E%3Crect x='280' y='320' width='20' height='10' rx='3' fill='%23233831'/%3E%3Crect x='310' y='340' width='10' height='10' rx='3' fill='%23233831'/%3E%3Cpath d='M500 200 l20 -20 l20 20' stroke='%23233831' stroke-width='5' fill='none'/%3E%3Crect x='520' y='220' width='10' height='30' rx='3' fill='%23233831'/%3E%3Crect x='540' y='240' width='10' height='20' rx='3' fill='%23233831'/%3E%3Crect x='560' y='260' width='10' height='10' rx='3' fill='%23233831'/%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat',
-        }}
-      >
-        <div className="relative flex items-center justify-center flex-col w-full max-w-4xl text-center px-4 sm:px-6 lg:px-8">
-          
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 text-[#233831] max-w-full">
-            Finzep aims to revolutionize the Digital Payments & Collection system via 3 flagship solutions
-          </h1>
-          
-          <p className="text-base sm:text-lg lg:text-xl font-medium leading-relaxed text-gray-600 mb-16 sm:mb-20 max-w-3xl">
-            Transforming the future of financial technology with innovative solutions.
-          </p>
-          
-          <div className="absolute top-full mt-16 sm:mt-20 left-1/2 transform -translate-x-1/2 w-5 animate-bounce">
-            <div className="w-5 h-5 border-2 border-[#233831] border-t-0 border-l-0 transform rotate-45"></div>
-          </div>
-        </div>
-      </motion.section>
+      {/* Hero Section - 3D Globe */}
+      <HeroGlobe />
 
       {/* Stats Section */}
       <motion.section
