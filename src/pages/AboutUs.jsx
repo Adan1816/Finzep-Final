@@ -289,7 +289,7 @@ const AboutUs = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="cta-section py-20 mt-20 bg-gradient-to-br from-[#F18A41]/90 to-[#9DADE5]/90 relative z-0">
+      <section className="cta-section py-20 bg-gradient-to-br from-[#F18A41]/90 to-[#9DADE5]/90 relative z-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="cta-content">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">

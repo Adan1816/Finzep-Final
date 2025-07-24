@@ -96,6 +96,178 @@ const Carousel = () => {
   );
 };
 
+// --- Data for the cards ---
+const cardData = [
+  {
+    id: 1,
+    category: 'Education',
+    title: 'Empowering learning with digital payments',
+    description: 'Finzep streamlines fee collection, payroll, and vendor payments for schools, colleges, and edtech platforms.',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 2,
+    category: 'Hospitality',
+    title: 'Seamless guest experiences',
+    description: 'Hotels and restaurants use Finzep for instant payouts, supplier settlements, and digital tips.',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 3,
+    category: 'Logistics',
+    title: 'Fast, reliable, and secure',
+    description: 'Automate driver payments, COD settlements, and vendor disbursements with Finzep.',
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 4,
+    category: 'E-commerce',
+    title: 'Powering online business',
+    description: 'Finzep enables instant refunds, seller payouts, and seamless checkout for e-commerce platforms.',
+    image: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop',
+  },
+];
+
+// --- Reusable Text Component ---
+const TextContent = ({ card, style }) => (
+  <div 
+    className="absolute inset-0 flex flex-col justify-center p-8 md:p-16"
+    style={{...style, transition: 'opacity 0.4s ease-in-out 0.3s'}}
+  >
+    <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-2">{card.category}</h2>
+    <h3 className="text-lg md:text-xl font-medium text-gray-600 mb-4">{card.title}</h3>
+    <p className="text-gray-500 text-base md:text-lg leading-relaxed">
+      {card.description}
+    </p>
+  </div>
+);
+
+// --- Reusable Image Component ---
+const ImageContent = ({ src, alt, style }) => (
+    <img 
+      src={src} 
+      alt={alt} 
+      className="absolute inset-0 object-cover w-full h-full"
+      style={{...style, transition: 'opacity 0.7s ease-in-out'}}
+      onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x800/1f2937/ffffff?text=Image+Error'; }}
+    />
+);
+
+// --- Main Carousel Component ---
+const ScrollCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef(null);
+  const animationDuration = 800; // ms
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.5 } // Trigger when 50% of the component is visible
+    );
+    const currentContainer = containerRef.current;
+    if (currentContainer) observer.observe(currentContainer);
+    return () => {
+      if (currentContainer) observer.unobserve(currentContainer);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (!isInView || isAnimating) return;
+      const isScrollingDown = e.deltaY > 0;
+      if (isScrollingDown) {
+        if (currentIndex < cardData.length - 1) {
+          e.preventDefault();
+          setIsAnimating(true);
+          setCurrentIndex(prev => prev + 1);
+        }
+      } else {
+        if (currentIndex > 0) {
+          e.preventDefault();
+          setIsAnimating(true);
+          setCurrentIndex(prev => prev - 1);
+        }
+      }
+    };
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [currentIndex, isAnimating, isInView]);
+
+  useEffect(() => {
+    if (isAnimating) {
+      const timer = setTimeout(() => setIsAnimating(false), animationDuration);
+      return () => clearTimeout(timer);
+    }
+  }, [isAnimating]);
+
+  const isEvenCard = currentIndex % 2 === 0;
+  // This layout matches your images: Image left for even cards, Image right for odd cards
+  const textContainerLeft = isEvenCard ? '30%' : '0%';
+  const imageContainerLeft = isEvenCard ? '0%' : '70%';
+
+  const progress = (currentIndex / (cardData.length - 1)) * 100;
+
+  return (
+    <div ref={containerRef} className="h-screen w-full flex items-center justify-center bg-white py-16 px-4 sm:px-8">
+      <div className="w-full max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">Sectors We Serve</h2>
+        {/* Progress Bar Container - now separate from the card */}
+        <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden mb-4">
+            <div 
+              className="h-full bg-gradient-to-r from-orange-500 to-purple-600"
+              style={{ width: `${progress}%`, transition: `width ${animationDuration}ms ease-in-out` }}
+            />
+        </div>
+        {/* Main Card Container */}
+        <div className="relative w-full h-[500px] bg-gradient-to-r from-gray-50 via-white to-gray-100 rounded-3xl shadow-lg border border-gray-200">
+          {/* Text Container - 70% width */}
+          <div 
+            className="absolute top-0 h-full z-10"
+            style={{ 
+              left: textContainerLeft,
+              width: '70%',
+              transition: `left ${animationDuration}ms ease-in-out`
+            }}
+          >
+            {cardData.map((card, index) => (
+              <TextContent 
+                key={card.id} 
+                card={card} 
+                style={{ opacity: index === currentIndex && !isAnimating ? 1 : 0 }} 
+              />
+            ))}
+          </div>
+          {/* Image Container (the moving part) - 30% width */}
+          <div 
+            className="absolute top-0 h-full overflow-hidden"
+            style={{ 
+              left: imageContainerLeft,
+              width: '30%',
+              transition: `all ${animationDuration}ms ease-in-out`,
+              willChange: 'left',
+              // Dynamic rounding based on position
+              borderRadius: isEvenCard ? '1.5rem 0 0 1.5rem' : '0 1.5rem 1.5rem 0'
+            }}
+          >
+            <div className="relative w-full h-full">
+              {cardData.map((card, index) => (
+                <ImageContent 
+                  key={card.id}
+                  src={card.image} 
+                  alt={card.title}
+                  style={{ opacity: index === currentIndex ? 1 : 0 }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Home = () => {
   const [text, setText] = useState('');
   const phrases = ["Finzep's Innovative Solutions", "Payment Solutions", "Business Growth"];
@@ -229,7 +401,7 @@ const Home = () => {
         id="sectors"
         className="relative bg-white w-full"
       >
-        <SectorsShowcase />
+        <ScrollCarousel />
       </motion.section>
 
       {/* Blog Section */}
