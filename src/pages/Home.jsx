@@ -224,7 +224,7 @@ const ScrollCarousel = () => {
         <div className="relative w-full h-[500px] bg-gradient-to-r from-gray-50 via-white to-gray-100 rounded-3xl shadow-lg border border-gray-200">
           {/* Text Container - 70% width */}
           <div 
-            className="absolute top-0 h-full z-10"
+            className="absolute top-0 h-full z-10 bg-gradient-to-br from-[#F18A41]/10 to-[#9DADE5]/10 rounded-3xl"
             style={{ 
               left: textContainerLeft,
               width: '70%',
@@ -241,7 +241,7 @@ const ScrollCarousel = () => {
           </div>
           {/* Image Container (the moving part) - 30% width */}
           <div 
-            className="absolute top-0 h-full overflow-hidden"
+            className="absolute top-0 h-full overflow-hidden bg-gradient-to-br from-[#F18A41]/10 to-[#9DADE5]/10 rounded-3xl"
             style={{ 
               left: imageContainerLeft,
               width: '30%',
